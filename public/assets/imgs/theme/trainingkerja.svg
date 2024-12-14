@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1292.5 334.76">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        font-family: CooperBlack, 'Cooper Black';
+        font-size: 121.34px;
+      }
+
+      .cls-3 {
+        fill: #ff157e;
+      }
+
+      .cls-3, .cls-4, .cls-5, .cls-6 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-7 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-4 {
+        fill: #0014b4;
+      }
+
+      .cls-5 {
+        fill: #2ac6ff;
+      }
+
+      .cls-6 {
+        fill: #fcff35;
+      }
+
+      .cls-8 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <rect class="cls-3" x="182.84" y="-27.29" width="11.34" height="334.91" transform="translate(152.96 372.36) rotate(-117.93)"/>
+  <rect class="cls-3" x="194.18" y="-11.09" width="11.34" height="334.91" transform="translate(155.29 406.17) rotate(-117.93)"/>
+  <rect class="cls-5" x="214.36" y="63.69" width="11.34" height="270.57" transform="translate(440.07 397.94) rotate(180)"/>
+  <rect class="cls-5" x="253.25" y=".5" width="14.58" height="281.91" transform="translate(521.07 282.91) rotate(180)"/>
+  <rect class="cls-4" x="42.62" y="253.25" width="281.91" height="12.96" transform="translate(367.16 519.45) rotate(180)"/>
+  <rect class="cls-4" x=".5" y="277.55" width="324.03" height="12.96" transform="translate(325.03 568.06) rotate(180)"/>
+  <polygon class="cls-6" points="353.7 207.76 353.7 266.25 413.64 266.25 413.64 132.94 331.01 84.1 332.64 52.35 443.84 117.52 444.43 117.52 444.43 117.86 475.21 135.9 475.21 169.33 444.43 151.13 444.43 291.32 428.23 291.32 413.64 291.32 353.7 291.32 314.81 291.32 314.81 266.25 314.81 207.76 353.7 207.76"/>
+  <text class="cls-2" transform="translate(504.47 290.25) scale(.68 1)"><tspan class="cls-8" x="0" y="0">T</tspan><tspan class="cls-1" x="83.13" y="0">r</tspan><tspan x="146.82" y="0">aining</tspan><tspan class="cls-7" x="535.08" y="0">k</tspan><tspan x="622" y="0">e</tspan><tspan class="cls-9" x="686.34" y="0">r</tspan><tspan x="751.99" y="0">ja.com</tspan></text>
+</svg>

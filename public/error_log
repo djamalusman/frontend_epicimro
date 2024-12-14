@@ -1,0 +1,194 @@
+[02-Jul-2024 10:27:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:27:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:27:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:28:06 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:28:06 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:28:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[02-Jul-2024 10:33:16 Asia/Jakarta] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 8.1.29. in /home/trai5544/frontend/vendor/composer/platform_check.php on line 24
+[02-Jul-2024 10:33:18 Asia/Jakarta] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 8.1.29. in /home/trai5544/frontend/vendor/composer/platform_check.php on line 24
+[21-Jul-2024 17:55:54 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:54 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:55 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:55 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:56 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:56 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:59 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:59 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[21-Jul-2024 17:55:59 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:41:51 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:41:51 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:41:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:55 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:55 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:55 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:57 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:45:58 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:48:24 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:48:24 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:48:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:19 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:19 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:19 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:20 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:20 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:22 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:23 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:24 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:24 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:52:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:07 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:07 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:45 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:45 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:53:45 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:55:20 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:55:20 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:55:20 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:08 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:10 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:10 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:56:10 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:57:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:57:21 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[01-Aug-2024 18:57:21 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
+[19-Aug-2024 18:11:28 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[19-Aug-2024 18:11:28 Asia/Jakarta] PHP Warning:  require(/home/trai5544/public_html/../frontend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/trai5544/public_html/index.php on line 34
+[19-Aug-2024 18:11:28 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/trai5544/public_html/../frontend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/trai5544/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/trai5544/public_html/index.php on line 34
