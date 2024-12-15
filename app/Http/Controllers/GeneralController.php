@@ -34,10 +34,6 @@ class GeneralController extends Controller
             'm_type_training_course.nama as namaonlineofline',
             'dtc_file_training_course.nama as image_path'
         );
-        // ->where('dtc_training_course_detail.status', 1)
-        // ->orderBy('dtc_training_course_detail.updated_at', 'desc')
-        // ->limit(6)
-        // ->get();
 
         $trainings = $query->orderBy('dtc_training_course_detail.updated_at', 'desc')->limit(3)->get();
 

@@ -19,7 +19,7 @@
         min-height: 50px;
         display: flex;
         align-items: baseline;
-        font-family: 'Montserrat';
+        font-family: 'Open Sans';
         font-weight: bold;
         font-size: 22px;
         line-height: 1.2; /* Line height to control spacing between lines */
@@ -67,30 +67,31 @@
                 <div class="card-block-info">
 
 
-                    <div class="card-title-certificate" >
-                        <i class="fa-solid fa-graduation-cap text-black"></i> &nbsp;&nbsp;&nbsp; <h6 style="font-size: 16px;color:black" >{{$value->cetificate_type}}</h6>
+
+                    <div class="mt-10" style="color:black">
+                        <span class="fa fa-graduation-cap"></span>  &nbsp;&nbsp;{{$value->cetificate_type}}
                     </div>
-                    <div class="card-title mt-10 text-light" style="font-family: 'Montserrat'; font-weight: bold; font-size: 20px;">
+                    <div class="card-title mt-10 text-light" style="font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
                         <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">{{$value->traning_name}}</a>
                     </div>
 
 
                     <div class="mt-10">
-                        <h6 class="mt-5" style="color:blueviolet;font-family: 'Montserrat';font-weight;font-size: 14px;">{{$value->category}}</h6>
-                        <h5 class=" mt-10" style="color:black;font-family: 'Montserrat';font-weight;font-size: 17px;">{{$value->company_name}}</h5>
+                        <h6 class="mt-5" style="color:blueviolet;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->category}}</h6>
+                        <h5 class=" mt-10" style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->company_name}}</h5>
                     </div>
                     <div class="mt-10">
-                        <span class="fi-rr-marker"  style="color:blueviolet;"> {{$value->nama_provinsi}},{{$value->lokasi}}</span>
+                        <span class="fi-rr-marker"  style="color:blueviolet;"> &nbsp;&nbsp;{{$value->nama_provinsi}},{{$value->lokasi}}</span>
                     </div>
                     <div class="mt-10">
-                        <span class="fi-rr-clock" style="color:black;">  {{ \Carbon\Carbon::parse($value->startdate)->format('d M Y') }}</span>
+                        <span class="fi-rr-clock" style="color:black;">  &nbsp;&nbsp;{{ \Carbon\Carbon::parse($value->startdate)->format('d M Y') }}</span>
                     </div>
                     <div class="card-2-bottom mt-10">
-                        <h6 style="color:black;font-family: 'Montserrat';font-weight;font-size: 18px;">{{$value->registrationfee}}</h6>
+                        <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->registrationfee}}</h6>
                     </div>
                     <div class="mt-15">
                         <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">
-                            <h6 style="color:black;font-family: 'Montserrat';font-weight;font-size: 18px;">{{$value->namaonlineofline}}</h6>
+                            <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->namaonlineofline}}</h6>
                         </a>
                     </div>
                     <div class="card-2-bottom mt-5">
@@ -100,12 +101,12 @@
                             <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
                                     data-wow-delay=".1s"
                                     style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
-                                    onclick="handleRegisterClick()">Register</button>
+                                    onclick="window.location.href='/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}'">viewmore</button>
                         @else
                             <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
                                     data-wow-delay=".1s"
                                     style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
-                                    onclick="window.location.href='{{$value->link_pendaftaran}}'">Register</button>
+                                    onclick="window.location.href='/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}'">viewmore</button>
                         @endif
 
                         </div>

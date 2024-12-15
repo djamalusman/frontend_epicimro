@@ -10,6 +10,7 @@ use App\Models\Dtc_Fasilitas_TrainingCourseModel;
 use App\Models\TrainingCourseDetailModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TranningCourseController extends Controller
 {
@@ -48,6 +49,7 @@ class TranningCourseController extends Controller
         $data['listmateri'] =  Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
         $data['listfasilitas']=  Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
         $data['listfiles']=  dtc_File_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
+        $data['imagetraining']=  dtc_File_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->first();
 
         $query = DB::table('dtc_training_course_detail')
             ->leftjoin('m_category_training_course', 'm_category_training_course.id', '=', 'dtc_training_course_detail.id_m_category_training_course') // Bergabung dengan tabel tipe_master
@@ -68,25 +70,47 @@ class TranningCourseController extends Controller
     }
 
 
-    // public function previewFilter_jenis_sertifikasi(Request $request)
-    // {
-    //     $filters = $request->all();
-    //     $filterData_jenis_sertifikasi = DB::table('m_jenis_sertifikasi_training_course');
+    public function getTabContent($id, $tabId)
+    {
+        // Decode ID yang diterima dalam base64
+        $decodedId = base64_decode($id);
 
-    //     $filterData_jenis_sertifikasi = $filterData_jenis_sertifikasi->get();
+        // Validasi apakah ID kosong atau tidak valid
+        if (empty($decodedId)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'ID tidak valid.'
+            ]);
+        }
 
-    //     return view('partials.filter_jenis_sertifikasi_preview', ['filter_jenis_sertifikasi' => $filterData_jenis_sertifikasi]);
-    // }
+        // Ambil data dari model terkait
+        $listpersyaratan = Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
+        $listmateri = Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
+        $listfasilitas = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
+        $listfiles = dtc_File_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
 
-    // public function previewFilter_Type_course(Request $request)
-    // {
-    //     $filters = $request->all();
-    //     $filterData_jenis_sertifikasi = DB::table('m_jenis_sertifikasi_training_course');
+        // Render HTML menggunakan Blade View
+        if ($tabId == 1 ) {
+            $htmlContent = view('partials.course.tab_content_trainer', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+        }
+        if ($tabId == 2 ) {
+            $htmlContent = view('partials.course.tab_content_about_training', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+        }
+        if ($tabId == 3 ) {
+            $htmlContent = view('partials.course.tab_content_career', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+        }
 
-    //     $filterData_jenis_sertifikasi = $filterData_jenis_sertifikasi->get();
+        // Kembalikan hasil HTML dalam JSON
+        return response()->json([
+            'success' => true,
+            'content' => $htmlContent
+        ]);
+    }
 
-    //     return view('partials.filter_jenis_sertifikasi_preview', ['filter_jenis_sertifikasi' => $filterData_jenis_sertifikasi]);
-    // }
+
+
+
+
 
     public function loadDataCategory(Request $request)
     {
