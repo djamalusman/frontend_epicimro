@@ -20,7 +20,7 @@
         min-height: 50px;
         display: flex;
         align-items: baseline;
-        font-family: 'Montserrat';
+        font-family: 'Open Sans';
         font-weight: bold;
         font-size: 22px;
         line-height: 1.2; /* Line height to control spacing between lines */
@@ -74,39 +74,39 @@
                     <span class="fi-rr-briefcase" style="color:black"></span>
                 </div>
                 <div class="col-md-3">
-                    <h6 style="color:black;font-family: 'Montserrat';font-weight;font-size: 18px;">{{$value->nama_status}}</h6>
+                    <h6 style="color:black;font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">  &nbsp;&nbsp;{{$value->nama_status}}</h6>
                 </div>
             </div>
-            <div class="card-title-job-title mt-5">
+            <div class="card-title-job-title mt-5" style="font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
                 <a href="/detail-job/{{ base64_encode($value->id)}}/{{Str::slug($value->job_title)}}">{{$value->job_title}}</a>
             </div>
 
 
             <div class="card-title-job-location mt-15">
-                <h6 style="font-family: 'Montserrat';font-weight;font-size: 15px;">
-                    <span class="fi-rr-marker" style="color:blueviolet"> {{$value->work_location}}</span>
+                <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
+                    <span class="fi-rr-marker" style="color:blueviolet">  &nbsp;&nbsp;{{$value->work_location}}</span>
                 </h6>
             </div>
 
             <div class="mt-10">
                 <a href="/detail-job/{{base64_encode($value->id)}}" class="mt-10">
-                    <span style="font-size: 25px"><b style="color:black;font-size: 15px;">{{$value->companyName}}</b></span>
+                    <span style="font-size: 25px"><b style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->companyName}}</b></span>
                 </a>
             </div>
-            <div class="mt-10">
-                <span class="fi-rr-briefcase" style="color:blueviolet"> {{$value->sector}}</span>
+            <div class="mt-10" style="font-family: 'Open Sans'; font-weight; font-size: 16px;>
+                <span class="fi-rr-briefcase" style="color:blueviolet">  &nbsp;&nbsp;{{$value->sector}}</span>
             </div>
-            <div class="mt-10" style="color:black">
-                <span class="fa fa-graduation-cap"></span> {{$value->education}}
+            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                <span class="fa fa-graduation-cap"></span>  &nbsp;&nbsp;{{$value->education}}
             </div>
-            <div class="mt-10" style="color:black">
-                <span class="fi-rr-clock"> {{$value->name_experience_level}} Tahun</span>
+            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                <span class="fi-rr-clock">  &nbsp;&nbsp;{{$value->name_experience_level}} Tahun</span>
             </div>
-            <div class="mt-10" style="color:black">
-                <span class="fi-rr-marker"> {{$value->namaprovinsi}}</span>
+            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                <span class="fi-rr-marker">  &nbsp;&nbsp;{{$value->namaprovinsi}}</span>
             </div>
             <div class="mt-10" >
-                <span class="card-text-price" style="color:black">Salary Range Est.  IDR {{$value->salary}}<span style="color:white">/{{$value->fee}}</span> </span>
+                <span class="card-text-price" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">Salary Range Est.  IDR {{$value->salary}}<span style="color:white">/{{$value->fee}}</span> </span>
             </div>
 
             <div class="card-2-bottom mt-10">

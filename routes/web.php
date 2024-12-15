@@ -48,6 +48,7 @@ Route::get('/course-list', [TranningCourseController::class, 'CourseList'])->nam
 Route::get('/course-grid', [TranningCourseController::class, 'CourseGrid'])->name('course-grid');
 //Route::get('/detail-course/{id}', [TranningCourseController::class, 'detailCourse'])->name('detail-course');
 Route::get('/detail-course/{id}/{slug}', [TranningCourseController::class, 'detailCourse'])->name('detail-course');
+Route::get('/detail-course-content/{courseId}/{tabId}', [TranningCourseController::class, 'getTabContent'])->name('detail-course-content');
 Route::get('/get-content-list-course', [TranningCourseController::class, 'getContentListCourse'])->name('get-content-list-course');
 Route::get('/get-content-grid-course', [TranningCourseController::class, 'getContentGridCourse'])->name('get-content-grid-course');
 // Route::get('/preview-filter-jenis-sertifikasi-course', [TranningCourseController::class, 'previewFilter_jenis_sertifikasi'])->name('preview-filter-jenis-sertifikasi-course');

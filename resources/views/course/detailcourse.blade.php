@@ -98,6 +98,124 @@
         font-size: 16px;
         font-weight: bold;
     }
+/* Gambar */
+.course-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+/* Container for the course details */
+.course-detail-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Image container */
+.course-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.course-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+/* Container for the course details */
+.course-detail-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Image container */
+.course-image {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.course-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Tabs container positioned at the bottom of the image */
+.tabs-container {
+    position: absolute;
+    bottom: 10px;  /* Position the tabs near the bottom of the image */
+    left: 50%;     /* Center the tabs horizontally */
+    transform: translateX(-50%); /* Adjust the center alignment */
+    display: flex;
+    gap: 10px; /* Reduced gap between tabs */
+    padding: 10px;
+    /* background-color: rgba(255, 255, 255, 0.7); Semi-transparent white background */
+    border-radius: 20px; /* Rounded corners */
+}
+
+/* Tab styling with black border */
+.tab {
+    color: #333;
+    cursor: pointer;
+    padding: 5px 0px;  /* Increase padding for larger tab buttons */
+    font-weight: bold;
+    /* border-radius: 20px;  Rounded corners for each tab */
+    border: 2px solid black;  /* Black border around each tab */
+    transition: background-color 0.3s ease, border-color 0.3s ease;  /* Smooth transition for background and border color */
+    background-color: #f0f0f0; /* Light grey background for inactive tabs */
+    text-align: center; /* Center text inside each tab */
+    width: 280px;
+}
+
+/* Active tab styling with black border */
+.tab.active {
+    background-color: #f39c12; /* Active tab color (yellow) */
+    color: #fff; /* White text for active tab */
+    border-color: #f39c12; /* Active tab's border color */
+}
+
+/* Hover effect for tabs */
+.tab:hover {
+    background-color: #e67e22; /* Darker shade for hover effect */
+    color: #fff; /* White text on hover */
+    border-color: #e67e22; /* Change border color on hover */
+}
+
+/* Tab content section */
+.tab-content {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    /* Adjust position for smaller screens */
+    .tabs-container {
+        bottom: 5px; /* Adjust position for smaller screens */
+        padding: 8px;
+        max-width: 85%; /* Adjust tab width */
+    }
+
+    /* Override default values for mobile */
+    :root {
+        --tab-font-size: 10px;   /* Smaller font size on mobile */
+        --tab-padding: 8px 15px; /* Adjust padding for smaller screens */
+    }
+
+    .tab {
+        font-size: var(--tab-font-size);  /* Apply adjusted font size */
+
+    }
+
+    .tab.active {
+        background-color: #f0a500; /* Active tab color */
+        color: white;
+    }
+}
+
 
 </style>
     <section class="section-box">
@@ -113,42 +231,31 @@
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-sm-12 col-12">
 
-                    <div class="content-single">
+                    <div class="course-detail-container">
+                        <!-- Gambar di atas -->
+                        <div class="course-image">
+                            <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" alt="Course Image">
 
-                        {{-- @foreach ($listfiles as $valFile)
-                            <div class="image-container">
-                                <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($valFile->nama ?? '')) }}" class="custom-image" />
+                            <!-- Tabs inside the image, positioned at the bottom -->
+                            <div class="tabs-container">
+                                <div class="tab" data-id="1">About Training</div>
+                                <div class="tab active" data-id="2">Trainer</div>
+                                <div class="tab" data-id="3">Career</div>
                             </div>
-                            @break
-                        @endforeach<br> --}}
-                        <h2><b>Training requirements</b></h2>
-                        @php $counter = 1; @endphp
-                        @foreach($listpersyaratan as $persyaratan)
-                            <p style="border: 0px; margin: 6px; padding: 0px; vertical-align: baseline; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; list-style-type: decimal;">{{ $counter }}. {{ $persyaratan->nama }}</p>
-                            @php $counter++; @endphp
-                        @endforeach
+                        </div>
 
-                        <h2 class="mt-20"><b>Training material</b></h2>
-                        @php $counterm = 1; @endphp
-                        @foreach($listmateri as $materi)
-                            <p style="border: 0px; margin: 6px; padding: 0px; vertical-align: baseline; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; list-style-type: decimal;">{{ $counterm }}. {{ $materi->nama }}</p>
-                            @php $counterm++; @endphp
-                        @endforeach
-
-                        <h2 class="mt-20"><b>Facility</b></h2>
-                            @php $counterf = 1; @endphp
-                            @foreach($listfasilitas as $fasilitas)
-                                <p style="border: 0px; margin: 6px; padding: 0px; vertical-align: baseline; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; list-style-type: decimal;">{{ $counterf }}. {{ $fasilitas->nama }}</p>
-                                @php $counterf++; @endphp
-                            @endforeach
-                    </div>
-                    <div class="single-apply-jobs">
-                        <div class="row align-items-center">
-
+                        <!-- Tab content -->
+                        <div id="tabContentContainer" class="tab-content">
+                            <p>Konten untuk tab Trainer akan muncul di sini.</p>
                         </div>
                     </div>
 
+
+
+
+
                 </div>
+
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                     <div class="iframe-container">
                         <!-- Responsive iframe container -->
@@ -240,21 +347,49 @@
     </section>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // var myIndex = 0;
-        // carousel();
+        $(document).ready(function () {
+            // Ambil courseId dari elemen atau backend (contoh, pastikan courseId benar)
+            const courseId = '{{ base64_encode($getdataDetail->id) }}';
 
-        // function carousel() {
-        //   var i;
-        //   var x = document.getElementsByClassName("mySlides");
-        //   for (i = 0; i < x.length; i++) {
-        //     x[i].style.display = "none";
-        //   }
-        //   myIndex++;
-        //   if (myIndex > x.length) {myIndex = 1}
-        //   x[myIndex-1].style.display = "block";
-        //   setTimeout(carousel, 2000); // Change image every 2 seconds
-        // }
+            // Event listener untuk tab
+            $('.tab').on('click', function () {
+                // Hapus kelas active dari semua tab
+                $('.tab').removeClass('active');
+
+                // Tambahkan kelas active pada tab yang diklik
+                $(this).addClass('active');
+
+                // Ambil ID tab
+                const tabId = $(this).data('id');
+                console.log(tabId);
+
+                // AJAX request untuk mendapatkan konten berdasarkan tabId
+                $.ajax({
+                    url: `/detail-course-content/${courseId}/${tabId}`,
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            // Update konten tab sesuai dengan respons
+                            $('#tabContentContainer').html(response.content);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (error) {
+                        // Tangani error jika AJAX gagal
+                        console.error('Error:', error);
+                        $('#tabContentContainer').html('<p>Data tidak ada</p>');
+                    }
+                });
+            });
+
+            // Klik tab pertama secara otomatis saat halaman dimuat
+            $('.tab.active').click();
+        });
+
+
         function copyToClipboard(event) {
             event.preventDefault(); // Prevent default link behavior
 
@@ -282,25 +417,7 @@
             });
         }
     </script>
-    {{-- <script>
-        var slideIndex = 1;
-        showDivs(slideIndex);
 
-        function plusDivs(n) {
-          showDivs(slideIndex += n);
-        }
-
-        function showDivs(n) {
-          var i;
-          var x = document.getElementsByClassName("mySlides");
-          if (n > x.length) {slideIndex = 1}
-          if (n < 1) {slideIndex = x.length}
-          for (i = 0; i < x.length; i++) {
-             x[i].style.display = "none";
-          }
-          x[slideIndex-1].style.display = "block";
-        }
-    </script> --}}
 
 
 @endsection
