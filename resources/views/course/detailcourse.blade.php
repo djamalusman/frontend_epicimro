@@ -185,9 +185,9 @@
 .tab-content {
     margin-top: 20px;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 /* Mobile responsiveness */

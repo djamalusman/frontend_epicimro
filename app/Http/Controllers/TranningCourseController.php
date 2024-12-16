@@ -8,6 +8,7 @@ use App\Models\dtc_File_TrainingCourseModel;
 use App\Models\Dtc_Materi_TrainingCourseModel;
 use App\Models\Dtc_Fasilitas_TrainingCourseModel;
 use App\Models\TrainingCourseDetailModel;
+use App\Models\TraningCourseDetailsModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -89,15 +90,17 @@ class TranningCourseController extends Controller
         $listfasilitas = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
         $listfiles = dtc_File_TrainingCourseModel::where('id_training_course_dtl', $decodedId)->get();
 
+        $datadetail = TraningCourseDetailsModel::where('id', $decodedId)->get();
+
         // Render HTML menggunakan Blade View
         if ($tabId == 1 ) {
-            $htmlContent = view('partials.course.tab_content_trainer', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+            $htmlContent = view('partials.course.tab_content_trainer', compact('datadetail'))->render();
         }
         if ($tabId == 2 ) {
-            $htmlContent = view('partials.course.tab_content_about_training', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+            $htmlContent = view('partials.course.tab_content_about_training', compact('datadetail'))->render();
         }
         if ($tabId == 3 ) {
-            $htmlContent = view('partials.course.tab_content_career', compact('listpersyaratan', 'listmateri', 'listfasilitas', 'listfiles'))->render();
+            $htmlContent = view('partials.course.tab_content_career', compact('datadetail'))->render();
         }
 
         // Kembalikan hasil HTML dalam JSON
