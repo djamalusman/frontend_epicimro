@@ -3,6 +3,27 @@
 HOME
 @endsection
 
+@section('meta')
+    <!-- Meta Tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Kerjateknik Academy" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kerjateknik.id" />
+    <meta property="og:image" content="https://kerjateknik.id/assets/imgs/theme/kerjateknik.png" />
+    <meta property="og:description" content="Kerjateknik Academy: Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul" />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kerjateknik Academy">
+    <meta name="twitter:description" content="Kerjateknik Academy: Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul">
+    <meta name="twitter:image" content="https://kerjateknik.id/assets/imgs/theme/kerjateknik.png">
+@endsection
+
 @section('content')
 <style>
 
@@ -602,7 +623,7 @@ HOME
                                 </div>
                             </div>
                              @endforeach
-                            
+
                         </div>
                     </div>
                     <div class="swiper-button-next"></div>

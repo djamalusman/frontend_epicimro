@@ -85,7 +85,6 @@
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:image" content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" />
     <meta property="og:description" content={{ $getdataDetail->job_description }} />
-    <meta property="og:description" content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," />
 
     <!-- Twitter Tags -->
     <meta name="twitter:card" content="summary_large_image">
