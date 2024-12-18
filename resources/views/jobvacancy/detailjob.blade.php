@@ -3,11 +3,13 @@
     {{$title}}
 @endsection
 @section('content')
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+
     .copy-button:hover {
             background-color: #45a049;
-        }
-        .popup {
+    }
+    .popup {
             display: none; /* Initially hidden */
             position: absolute;
             background-color: #f9f9f9;
@@ -19,10 +21,10 @@
             top: 505px !important; /* Position it directly below the button */
             left: 0; /* Align with the left edge of the button */
             width: max-content; /* Adjust width to fit content */
-        }
-        .popup.show {
+    }
+    .popup.show {
             display: block;
-        }
+    }
     .single-image-feature {
         max-width: 100%; /* Ensure container scales with screen size */
     }
@@ -50,7 +52,49 @@
         height: 100%;
         object-fit: cover; /* Ensures the image covers the container */
     }
+
+    div#social-links {
+            margin: 0 auto;
+            max-width: 500px;
+    }
+
+    div#social-links ul li {
+            display: inline-block;
+    }
+
+    div#social-links ul li a {
+            padding: 10px 20px;
+            border: 0px solid #ccc;
+            margin: 1px;
+            font-size: 30px;
+            background-color: #ffffff;
+    }
 </style>
+@section('head')
+
+    <meta charset="utf-8" />
+    <title>{{ $getdataDetail->job_title }}</title>
+
+    <meta name="description" content="{{ $getdataDetail->job_description }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="{{ $getdataDetail->job_title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:image" content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" />
+    <meta property="og:description" content={{ $getdataDetail->job_description }} />
+    <meta property="og:description" content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," />
+
+    <!-- Twitter Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $getdataDetail->job_title }}">
+    <meta name="twitter:description" content={{ $getdataDetail->job_description }} />
+
+    <meta name="twitter:image" content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}">
+
+    @endsection
     <section class="section-box">
         <div class="box-head-single">
             <div class="container">
@@ -94,13 +138,15 @@
                     <div class="sidebar-shadow">
                         <div class="text-start mt-20">
                             <input type="text" hidden id="textToCopy" value="https://trainingkerja.com/detail-job/{{base64_encode($getdataDetail->id)}}" readonly>
-                            <a href="{{$getdataDetail->linkpendaftaran}}" class="btn btn-default mr-10">Apply now</a>
-                            <a href="#" class="btn btn-default mr-10" onclick="copyToClipboard(event)">Share</a>
-
+                            <a href="{{$getdataDetail->linkpendaftaran}}" class="btn btn-default mr-10" style="font-size:15px;">Apply now</a>
+                            <button class="btn btn-default mr-10" data-bs-toggle="modal" data-bs-target="#shareModal"style="font-size:15px;">
+                                Share Link
+                            </button>
                             <div id="popup" class="popup">
                                 <p>Tautan telah disalin</p>
                             </div>
                         </div>
+
                         <div class="sidebar-list-job">
                             <ul>
                                 <li>
@@ -174,9 +220,37 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
     </section>
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shareModalLabel">Silahkan share ke akun media sosial anda.</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid p-2 py-0 pb-3">
+                        <div class="row p-0 p-md-2 py-0 py-md-0">
+                          <div class="col-12 text-center">
+
+                              <div class="text-center">
+                                  <div>{!! $share_buttons !!}</div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var olElements = document.querySelectorAll('ol');
@@ -185,7 +259,16 @@
                 ol.style.setProperty('margin', '15px', 'important');
             });
         });
-
+        function copyToClipboard() {
+                const shareUrl = "{{ url()->current() }}"; // URL halaman artikel
+                navigator.clipboard.writeText(shareUrl) // Salin URL ke clipboard
+                    .then(() => {
+                        alert('Link berhasil disalin ke clipboard!');
+                    })
+                    .catch(err => {
+                        console.error('Error copying text: ', err);
+                    });
+            }
         function copyToClipboard(event) {
             event.preventDefault(); // Prevent default link behavior
 

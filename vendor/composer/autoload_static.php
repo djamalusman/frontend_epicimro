@@ -131,6 +131,10 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
             'Laravel\\Sail\\' => 13,
             'Laravel\\Prompts\\' => 16,
         ),
+        'J' => 
+        array (
+            'Jorenvh\\Share\\' => 14,
+        ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
@@ -435,6 +439,10 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         array (
             0 => __DIR__ . '/..' . '/laravel/prompts/src',
         ),
+        'Jorenvh\\Share\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -583,6 +591,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'App\\Models\\SideListModel' => __DIR__ . '/../..' . '/app/Models/SideListModel.php',
         'App\\Models\\TrainingCourseDetailModel' => __DIR__ . '/../..' . '/app/Models/TrainingCourseDetailModel.php',
         'App\\Models\\TrainingCourseModel' => __DIR__ . '/../..' . '/app/Models/TrainingCourseModel.php',
+        'App\\Models\\TraningCourseDetailsModel' => __DIR__ . '/../..' . '/app/Models/TraningCourseDetailsModel.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\VisiMisiModel' => __DIR__ . '/../..' . '/app/Models/VisiMisiModel.php',
         'App\\Models\\dtc_File_TrainingCourseModel' => __DIR__ . '/../..' . '/app/Models/dtc_File_TrainingCourseModel.php',
@@ -2837,6 +2846,9 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Jorenvh\\Share\\Providers\\ShareServiceProvider' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/Providers/ShareServiceProvider.php',
+        'Jorenvh\\Share\\Share' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/Share.php',
+        'Jorenvh\\Share\\ShareFacade' => __DIR__ . '/..' . '/jorenvanhocht/laravel-share/src/ShareFacade.php',
         'Laravel\\Prompts\\Concerns\\Colors' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Colors.php',
         'Laravel\\Prompts\\Concerns\\Cursor' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Cursor.php',
         'Laravel\\Prompts\\Concerns\\Erase' => __DIR__ . '/..' . '/laravel/prompts/src/Concerns/Erase.php',

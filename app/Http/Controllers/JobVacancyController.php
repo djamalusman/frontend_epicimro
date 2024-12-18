@@ -46,7 +46,7 @@ class JobVacancyController extends Controller
 
     }
 
-    public function detailJob($id,$slug)
+    public function detailJob($id,$slug,Request $request)
     {
         $data['title'] = 'Details Jobs';
         $query = DB::table('djv_job_vacancy_detail')
@@ -69,7 +69,17 @@ class JobVacancyController extends Controller
                 'm_experience_level.nama as name_experience_level',
                 'm_provinsi.nama as provinsi'
             );
+
         $data['getdataDetail']=$query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
+        $datadetail = $query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
+        $url = $request->input('url', url()->current());
+        $title = $request->input('title', $datadetail->job_title);
+        $share_buttons = \Share::page($url)
+          ->facebook()
+          ->twitter()
+          ->linkedin()
+          ->whatsapp();
+          $data['share_buttons'] = $share_buttons;
         return view('jobvacancy.detailjob', $data);
     }
 
