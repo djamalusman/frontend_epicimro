@@ -7,7 +7,7 @@ use App\Models\Dtc_Persyaratan_TrainingCourseModel;
 use App\Models\dtc_File_TrainingCourseModel;
 use App\Models\Dtc_Materi_TrainingCourseModel;
 use App\Models\Dtc_Fasilitas_TrainingCourseModel;
-use App\Models\TrainingCourseDetailModel;
+// use App\Models\TrainingCourseDetailModel;
 use App\Models\TraningCourseDetailsModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class TranningCourseController extends Controller
     {
         $data['title'] = 'Training';
 
-        $dataCount = TrainingCourseDetailModel::where('status', 1)->get();
+        $dataCount = TraningCourseDetailsModel::where('status', 1)->get();
         $data['Counttraining'] = $dataCount->count();
         $data['filter'] = DB::table('m_employee_status')
             ->select(
@@ -32,7 +32,7 @@ class TranningCourseController extends Controller
     {
         $data['title'] = 'Training';
 
-        $dataCount = TrainingCourseDetailModel::where('status', 1)->get();
+        $dataCount = TraningCourseDetailsModel::where('status', 1)->get();
         $data['Counttraining'] = $dataCount->count();
         $data['filter'] = DB::table('m_employee_status')
             ->select(
@@ -41,7 +41,7 @@ class TranningCourseController extends Controller
        return view('course.coursegrid', $data);
     }
 
-    public function detailCourse($id,$slug)
+    public function detailCourse($id,$slug,Request $request)
     {
 
         $data['title'] = ' Details Training';;
@@ -65,8 +65,24 @@ class TranningCourseController extends Controller
             );
 
         $whereData=$query;
+        $datadetail = $whereData->where('dtc_training_course_detail.id',base64_decode($id))->first();
         $data['getdataDetail']=$whereData->where('dtc_training_course_detail.id',base64_decode($id))->first();
-        //dd($data);
+        $url = $request->input('url', url()->current());
+        $title = $request->input('title', $datadetail->traning_name);
+
+        $data['imagePath'] = public_path('images/share-image.jpg'); // Ganti dengan path gambar Anda
+        $data['imageUrl']  = asset('images/share-image.jpg'); // URL gambar untuk dibagikan
+
+        $share_buttons = \Share::page($url)
+        ->facebook()
+        ->twitter()
+        ->linkedin()
+        ->whatsapp();
+        // ->telegram()
+        // ->reddit();
+
+        $data['share_buttons'] = $share_buttons;
+        //dd($datadetail);
         return view('course.detailcourse', $data);
     }
 
@@ -94,10 +110,10 @@ class TranningCourseController extends Controller
 
         // Render HTML menggunakan Blade View
         if ($tabId == 1 ) {
-            $htmlContent = view('partials.course.tab_content_trainer', compact('datadetail'))->render();
+            $htmlContent = view('partials.course.tab_content_about_training', compact('datadetail'))->render();
         }
         if ($tabId == 2 ) {
-            $htmlContent = view('partials.course.tab_content_about_training', compact('datadetail'))->render();
+            $htmlContent = view('partials.course.tab_content_trainer', compact('datadetail'))->render();
         }
         if ($tabId == 3 ) {
             $htmlContent = view('partials.course.tab_content_career', compact('datadetail'))->render();

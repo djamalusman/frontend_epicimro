@@ -53,10 +53,10 @@
 
         <div class="card-grid-2 hover-up">
             <div class="text-center card-grid-2-image">
-                <a href="/detail-course/{{$value->id}}">
+                <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">
                     <div class="imgGrid-container">
                         <figure>
-                            <a href="/detail-course/{{base64_encode($value->id)}}">
+                            <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">
                                 <img class="imgGrid" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->image_path ?? '')) }}" />
                             </a>
                         </figure>
@@ -69,7 +69,8 @@
                     <i class="fa-solid fa-graduation-cap text-black"></i> &nbsp;&nbsp;&nbsp; <h6 style="font-size: 16px;color:black" >{{$value->cetificate_type}}</h6>
                 </div>
                 <div class="card-title mt-10">
-                    <a href="/detail-course/{{base64_encode($value->id)}}">{{$value->traning_name}}</a>
+                    {{-- <a href="/detail-course/{{base64_encode($value->id)}}">{{$value->traning_name}}</a> --}}
+                    <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">{{$value->traning_name}}</a>
                 </div>
 
                 <div class="mt-10">
@@ -86,7 +87,7 @@
                     <h6 style="color:#black;font-family: 'Montserrat';font-weight;font-size: 18px;">{{$value->registrationfee}}</h6>
                 </div>
                 <div class="mt-15">
-                    <a href="/detail-course/{{base64_encode($value->id)}}">
+                    <a href="/detail-course/{{ base64_encode($value->id)}}/{{Str::slug($value->traning_name)}}">
                         <h6 style="color:black;font-family: 'Montserrat';font-weight;font-size: 18px;">{{$value->namaonlineofline}}</h6>
                     </a>
                 </div>
