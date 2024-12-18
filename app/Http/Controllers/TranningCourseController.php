@@ -41,50 +41,62 @@ class TranningCourseController extends Controller
        return view('course.coursegrid', $data);
     }
 
-    public function detailCourse($id,$slug,Request $request)
+    public function detailCourse($id, $slug, Request $request)
     {
+        $data['title'] = 'Details Training';
 
-        $data['title'] = ' Details Training';;
+        $data['listpersyaratan'] = Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listmateri'] = Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listfasilitas'] = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listfiles'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['imagetraining'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
 
-        $data['listpersyaratan'] =  Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
-        $data['listmateri'] =  Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
-        $data['listfasilitas']=  Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
-        $data['listfiles']=  dtc_File_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->get();
-        $data['imagetraining']=  dtc_File_TrainingCourseModel::where('id_training_course_dtl',base64_decode($id))->first();
-
-        $query = DB::table('dtc_training_course_detail')
-            ->leftjoin('m_category_training_course', 'm_category_training_course.id', '=', 'dtc_training_course_detail.id_m_category_training_course') // Bergabung dengan tabel tipe_master
-            ->leftjoin('m_jenis_sertifikasi_training_course', 'm_jenis_sertifikasi_training_course.id', '=', 'dtc_training_course_detail.id_m_jenis_sertifikasi_training_course') // Bergabung dengan tabel ifg_master_tipe
-            ->leftjoin('m_type_training_course', 'm_type_training_course.id', '=', 'dtc_training_course_detail.typeonlineoffile')
-            ->leftjoin('m_provinsi', 'm_provinsi.id', '=', 'dtc_training_course_detail.id_provinsi')
-            ->select('dtc_training_course_detail.*',
+        $detail = DB::table('dtc_training_course_detail')
+            ->leftJoin('m_category_training_course', 'm_category_training_course.id', '=', 'dtc_training_course_detail.id_m_category_training_course')
+            ->leftJoin('m_jenis_sertifikasi_training_course', 'm_jenis_sertifikasi_training_course.id', '=', 'dtc_training_course_detail.id_m_jenis_sertifikasi_training_course')
+            ->leftJoin('m_type_training_course', 'm_type_training_course.id', '=', 'dtc_training_course_detail.typeonlineoffile')
+            ->leftJoin('m_provinsi', 'm_provinsi.id', '=', 'dtc_training_course_detail.id_provinsi')
+            ->select(
+                'dtc_training_course_detail.*',
                 'm_category_training_course.nama as category',
                 'm_jenis_sertifikasi_training_course.nama as cetificate_type',
                 'm_type_training_course.nama as typeonlineofline',
                 'm_provinsi.nama as provinsi'
-            );
+            )
+            ->where('dtc_training_course_detail.id', base64_decode($id))
+            ->first();
 
-        $whereData=$query;
-        $datadetail = $whereData->where('dtc_training_course_detail.id',base64_decode($id))->first();
-        $data['getdataDetail']=$whereData->where('dtc_training_course_detail.id',base64_decode($id))->first();
-        $url = $request->input('url', url()->current());
-        $title = $request->input('title', $datadetail->traning_name);
+        $imagemeta = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
 
-        $data['imagePath'] = public_path('images/share-image.jpg'); // Ganti dengan path gambar Anda
-        $data['imageUrl']  = asset('images/share-image.jpg'); // URL gambar untuk dibagikan
+        $description = '';
+        if ($detail->tab_active == 1 && $detail->abouttraining != "") {
+            $description = $detail->abouttraining;
+        } elseif ($detail->tab_active == 2 && $detail->abouttrainer != "") {
+            $description = $detail->abouttrainer;
+        } elseif ($detail->tab_active == 3 && $detail->aboutcareer != "") {
+            $description = $detail->aboutcareer;
+        }
+        $url = route('detail-course', ['id' => $id, 'slug' => $detail->traning_name]);
+        $meta = [
+            'title' => $detail->traning_name,
+            'description' => $description,
+            'image' => asset('https://admin.trainingkerja.com/public/storage/' . ($imagemeta->nama ?? '')),
+            'url' => url()->current(),
+        ];
 
-        $share_buttons = \Share::page($url)
-        ->facebook()
-        ->twitter()
-        ->linkedin()
-        ->whatsapp();
-        // ->telegram()
-        // ->reddit();
+        $share_buttons = \Share::page($meta['url'])
+            ->facebook()
+            ->twitter()
+            ->linkedin()
+            ->whatsapp();
 
+        $data['meta'] = $meta;
         $data['share_buttons'] = $share_buttons;
-        //dd($datadetail);
+        $data['getdataDetail'] = $detail;
+
         return view('course.detailcourse', $data);
     }
+
 
 
     public function getTabContent($id, $tabId)
