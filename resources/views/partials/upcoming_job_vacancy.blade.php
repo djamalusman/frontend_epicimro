@@ -53,10 +53,10 @@
         <div class="card-grid-2 hover-up">
 
             <div class="text-center card-grid-2-image">
-                <a href="/detail-course/{{ $value->id }}">
+                <a href="//detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
                     <div class="imgGrid-container">
                         <figure>
-                            <a href="/detail-course/{{ base64_encode($value->id) }}">
+                            <a href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
                                 <img class="imgGrid"
                                     src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
                             </a>
@@ -85,22 +85,18 @@
 
                 <div class="card-title-job-location mt-15">
                     <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
-                        <span class="fi-rr-marker" style="color:blueviolet">
+                        <span class="fi-rr-marker" style="color:rgb(0, 0, 0)">
                             &nbsp;&nbsp;{{ $value->work_location }}</span>
                     </h6>
                 </div>
 
                 <div class="mt-10">
-                    <a href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}"
-                        class="mt-10">
-                        <span style="font-size: 25px"><b
-                                style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{ $value->companyName }}</b></span>
-                    </a>
+                    <span style="font-size: 25px"><b
+                            style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 14px;">{{ $value->companyName }}</b></span>
                 </div>
-                <div class="mt-10"
-                    style="font-family: 'Open Sans'; font-weight; font-size: 16px;>
-                <span class="fi-rr-briefcase"
-                    style="color:blueviolet"> &nbsp;&nbsp;{{ $value->sector }}</span>
+                <div class="mt-10" style="font-family: 'Open Sans'; font-weight; font-size: 16px;">
+
+                    <span class="fi-rr-briefcase" style="color:rgb(0, 0, 0)"> &nbsp;&nbsp;{{ $value->sector }}</span>
                 </div>
                 <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
                     <span class="fa fa-graduation-cap"></span> &nbsp;&nbsp;{{ $value->education }}
@@ -117,12 +113,22 @@
                         IDR {{ $value->salary }}<span style="color:white">/{{ $value->fee }}</span> </span>
                 </div>
 
-                <div class="card-2-bottom mt-10">
+                <div class="card-2-bottom mt-10" hidden>
                     <div class="row">
                         <div class="col-lg-12 col-12 text-end" style="color:white">
                             <span class="fi-rr-clock"> Closed at :
                                 {{ \Carbon\Carbon::parse($value->close_date)->format('d M Y') }}</span>
                         </div>
+                    </div>
+                </div>
+                <div class="card-2-bottom mt-5">
+                    <div class="text-end">
+
+                        <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                            data-wow-delay=".1s"
+                            style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
+                            onclick="window.location.href='/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}'">View
+                            more</button>
                     </div>
                 </div>
             </div>

@@ -243,7 +243,7 @@
                                                         <div class="imgGrid-container">
                                                             <figure>
                                                                 <a
-                                                                    href="/detail-course/{{ base64_encode($item->id) }}/{{ Str::slug($item->traning_name) }}">
+                                                                    href="/detail-news/{{ base64_encode($item->id) }}/{{ Str::slug($item->title) }}">
                                                                     <img class="imgGrid"
                                                                         src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($item->file ?? '')) }}" />
                                                                 </a>
