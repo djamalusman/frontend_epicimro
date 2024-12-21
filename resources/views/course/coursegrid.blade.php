@@ -1,16 +1,16 @@
 @extends('layouts.app')
 @section('title')
-    {{$title}}
+    {{ $title }}
 @endsection
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
-                <h4>There Are {{$Counttraining}} Training<br />Here For you!</h4>
+                <h4>There Are {{ $Counttraining }} Training<br />Here For you!</h4>
                 <div class="row mt-15 mb-40">
                     <div class="col-lg-7 col-md-9">
-                            <span class="text-mutted" style="color: black">Improve your skill to boost your career</span>
+                        <span class="text-mutted" style="color: black">Improve your skill to boost your career</span>
                     </div>
                     <div class="col-lg-5 col-md-3 text-lg-end text-start" hidden>
                         <ul class="breadcrumbs mt-sm-15">
@@ -24,7 +24,8 @@
                         <div class="col-lg-4">
                             <div class="box-search-job">
                                 <form class="form-search-job">
-                                    <input type="text" id="filterTrainingname"  class="input-search-job" placeholder="Search Training Name" />
+                                    <input type="text" id="filterTrainingname" class="input-search-job"
+                                        placeholder="Search Training Name" />
                                 </form>
                             </div>
                         </div>
@@ -65,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="box-button-find">
-                                    <button class="btn btn-default" id="applyFilterBtnTop" >Find Now</button>
+                                    <button class="btn btn-default" id="applyFilterBtnTop">Find Now</button>
                                 </div>
                             </div>
                         </div>
@@ -83,24 +84,31 @@
                     <div class="content-page">
                         <div class="box-filters-job mt-15 mb-10">
                             <div class="row">
-                                <div class="col-lg-5" >
+                                <div class="col-lg-5">
                                     <div class="showing"></div>
                                 </div>
                                 <div class="col-lg-7 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
                                         <div class="dropdown dropdown-sort">
-                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                                                <span id="currentSort">Newest Post</span> <i class="fi-rr-angle-small-down"></i>
+                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort"
+                                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                                                <span id="currentSort">Newest Post</span> <i
+                                                    class="fi-rr-angle-small-down"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating
+                                                        Post</a></li>
                                             </ul>
                                         </div>
                                         <div class="box-view-type">
-                                            <a href="{{route('course-list')}}" class="view-type" hidden><img src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
-                                            <a href="{{route('course-grid')}}" class="view-type"><img src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('course-list') }}" class="view-type" hidden><img
+                                                    src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('course-grid') }}" class="view-type"><img
+                                                    src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +208,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         // Initialize Flatpickr for Date Range with Optional Single Date
-            const dateRangePicker = flatpickr("#datesearch", {
+        const dateRangePicker = flatpickr("#datesearch", {
             mode: "range", // Enable range mode for date range selection
             dateFormat: "Y-m-d", // Date format
             onClose: function(selectedDates) {
@@ -231,24 +239,61 @@
         });
 
         // Optional: Prevent form submission if date range is invalid
-        document.getElementById("dateForm").addEventListener("submit", function(event) {
-            const selectedDates = dateRangePicker.selectedDates;
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize Flatpickr for Date Range with Optional Single Date
+            const dateRangePicker = flatpickr("#datesearch", {
+                mode: "range", // Enable range mode for date range selection
+                dateFormat: "Y-m-d", // Date format
+                onClose: function(selectedDates) {
+                    const dateInput = document.getElementById("datesearch");
 
-            // If two dates are selected, validate start and end dates
-            if (selectedDates.length === 2) {
-                const startDate = selectedDates[0];
-                const endDate = selectedDates[1];
+                    // Set the value of the input based on the number of dates selected
+                    if (selectedDates.length === 1) {
+                        const startDate = selectedDates[0];
+                        dateInput.value = flatpickr.formatDate(startDate, "Y-m-d");
+                    } else if (selectedDates.length === 2) {
+                        const startDate = selectedDates[0];
+                        const endDate = selectedDates[1];
 
-                if (endDate < startDate) {
-                    alert("End date cannot be earlier than start date.");
-                    event.preventDefault(); // Prevent form submission if invalid
+                        // Validate if end date is before start date
+                        if (endDate < startDate) {
+                            alert("End date cannot be earlier than start date.");
+                            dateRangePicker.clear(); // Clear the date range picker if invalid
+                        } else {
+                            // Set the value of the input to the selected date range in "Y-m-d to Y-m-d" format
+                            dateInput.value =
+                                flatpickr.formatDate(startDate, "Y-m-d") + " to " +
+                                flatpickr.formatDate(endDate, "Y-m-d");
+                        }
+                    } else {
+                        dateInput.value = ""; // Clear input if no dates selected
+                    }
                 }
+            });
+
+            // Optional: Prevent form submission if date range is invalid
+            const dateForm = document.getElementById("dateForm");
+
+            if (dateForm) {
+                dateForm.addEventListener("submit", function(event) {
+                    const selectedDates = dateRangePicker.selectedDates;
+
+                    // If two dates are selected, validate start and end dates
+                    if (selectedDates.length === 2) {
+                        const startDate = selectedDates[0];
+                        const endDate = selectedDates[1];
+
+                        if (endDate < startDate) {
+                            alert("End date cannot be earlier than start date.");
+                            event.preventDefault(); // Prevent form submission if invalid
+                        }
+                    }
+                    // No action needed if no dates or only one date is selected
+                });
             }
-            // No action needed if no dates or only one date is selected
         });
     </script>
     <script>
-
         $(document).ready(function() {
             // Mengambil data upcoming trainings
             $.ajax({
@@ -321,14 +366,14 @@
                     datesearch: $('#datesearch').val(),
                     category: $('#category').val(),
                     cetificatetype: $('#filterCertificatetype').val(),
-                        provinsi: $('#provinsiSelect').val(),
-                        status: $('#statusSelect').val(),
-                        type: $('#typeSelect').val(),
-                        trainingname: $('#filterTrainingname').val(),
-                        categoryTop: $('#categoryTop').val(),
-                        provinsiTop: $('#provinsiTop').val(),
-                        statusTop: $('#statusTop').val(),
-                        typeTop: $('#typeTop').val(),
+                    provinsi: $('#provinsiSelect').val(),
+                    status: $('#statusSelect').val(),
+                    type: $('#typeSelect').val(),
+                    trainingname: $('#filterTrainingname').val(),
+                    categoryTop: $('#categoryTop').val(),
+                    provinsiTop: $('#provinsiTop').val(),
+                    statusTop: $('#statusTop').val(),
+                    typeTop: $('#typeTop').val(),
 
 
                 };
@@ -343,14 +388,14 @@
                     datesearch: $('#datesearch').val(),
                     category: $('#category').val(),
                     cetificatetype: $('#filterCertificatetype').val(),
-                        provinsi: $('#provinsiSelect').val(),
-                        status: $('#statusSelect').val(),
-                        type: $('#typeSelect').val(),
-                        trainingname: $('#filterTrainingname').val(),
-                        categoryTop: $('#categoryTop').val(),
-                        provinsiTop: $('#provinsiTop').val(),
-                        statusTop: $('#statusTop').val(),
-                        typeTop: $('#typeTop').val(),
+                    provinsi: $('#provinsiSelect').val(),
+                    status: $('#statusSelect').val(),
+                    type: $('#typeSelect').val(),
+                    trainingname: $('#filterTrainingname').val(),
+                    categoryTop: $('#categoryTop').val(),
+                    provinsiTop: $('#provinsiTop').val(),
+                    statusTop: $('#statusTop').val(),
+                    typeTop: $('#typeTop').val(),
 
 
                 };
@@ -439,17 +484,17 @@
 
             $('#resetFilterBtn').on('click', function() {
                 $('#datesearch').val(''),
-                $('#filterTrainingname').val('');
+                    $('#filterTrainingname').val('');
                 $('#provinsiSelect').val('');
                 $('#category').val('');
                 $('#statusSelect').val('');
                 $('#filterCertificatetype').val('');
                 $('#typeSelect').val('');
                 $('#categoryTop').val(),
-                $('#provinsiTop').val(),
-                $('#statusTop').val(),
-                $('#typeTop').val(),
-                loadContent(1, {}, currentSort); // Fetch content without filters and current sort
+                    $('#provinsiTop').val(),
+                    $('#statusTop').val(),
+                    $('#typeTop').val(),
+                    loadContent(1, {}, currentSort); // Fetch content without filters and current sort
                 loadCategoryLeft();
                 loadProvinsisLeft();
                 loadStatusLeft();
@@ -726,6 +771,5 @@
                 }
             });
         }
-
     </script>
 @endsection
