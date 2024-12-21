@@ -164,19 +164,13 @@
             /* Tabs container positioned at the bottom of the image */
             .tabs-container {
                 position: absolute;
-                bottom: 10px;
-                /* Position the tabs near the bottom of the image */
+                bottom: 15px;
                 left: 50%;
-                /* Center the tabs horizontally */
                 transform: translateX(-50%);
-                /* Adjust the center alignment */
                 display: flex;
-                gap: 10px;
-                /* Reduced gap between tabs */
+                gap: 18px;
                 padding: 10px;
-                /* background-color: rgba(255, 255, 255, 0.7); Semi-transparent white background */
                 border-radius: 20px;
-                /* Rounded corners */
             }
 
             /* Tab styling with black border */
@@ -187,7 +181,7 @@
                 /* Increase padding for larger tab buttons */
                 font-weight: bold;
                 /* border-radius: 20px;  Rounded corners for each tab */
-                border: 2px solid black;
+                /* border: 2px solid black; */
                 /* Black border around each tab */
                 transition: background-color 0.3s ease, border-color 0.3s ease;
                 /* Smooth transition for background and border color */
@@ -274,14 +268,16 @@
                 border: 0px solid #ccc;
                 margin: 1px;
                 font-size: 30px;
-                background-color: #ffffff;
+                color: #000000
+                    /* background-color: #ffffff; */
             }
         </style>
     @section('Meta')
         <meta property="og:url" content="{{ url()->current() }}" />
-        <title>{{ $meta['title'] }}</title>
-        <meta name="description" content="{{ $meta['description'] }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{{ $meta['title'] ?? 'Default Title' }}</title>
+        <meta name="description" content="{{ $meta['description'] ?? 'Default Description' }}">
+        <meta property="og:url" content="{{ $meta['url'] ?? url()->current() }}" />
+        <meta property="og:image" content="{{ $meta['image'] ?? asset('default-image.jpg') }}" />
 
         <!-- Open Graph Tags -->
         <meta property="og:title" content="{{ $meta['title'] }}" />
@@ -305,7 +301,7 @@
         </div>
     </section>
 
-    <section class="section-box mt-50">
+    <section class="section-box mt-20">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-sm-12 col-12">
@@ -316,14 +312,16 @@
                             <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}"
                                 alt="Course Image">
 
-                            <!-- Tabs inside the image, positioned at the bottom -->
+                        </div>
+                        <div class="course-image">
+                            <br>
+                            <br>
                             <div class="tabs-container">
-                                <div class="tab" data-id="1">About Training</div>
-                                <div class="tab active" data-id="2">Trainer</div>
+                                <div class="tab active" data-id="1">About Training</div>
+                                <div class="tab" data-id="2">Trainer</div>
                                 <div class="tab" data-id="3">Career</div>
                             </div>
                         </div>
-
                         <!-- Tab content -->
                         <div id="tabContentContainer" class="tab-content">
                             <p>Konten untuk tab Trainer akan muncul di sini.</p>
@@ -352,39 +350,14 @@
                                 value="https://trainingkerja.com/detail-course/{{ base64_encode($getdataDetail->id) }}"
                                 readonly>
                             <a href="{{ $getdataDetail->link_pendaftaran }}"
-                                class="btn btn-default mr-10"style="font-size:15px;">Apply now</a>
+                                class="btn btn-default mr-10"style="font-size:15px;color:white">Apply now</a>
                             <a href ="#" class="btn btn-default mr-10" data-bs-toggle="modal"
-                                data-bs-target="#shareModal" style="font-size:15px;">
+                                data-bs-target="#shareModal" style="font-size:15px;color:white">
                                 Share Link
                             </a>
 
                         </div>
-                        <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="shareModalLabel">Silahkan share ke akun media sosial
-                                            anda.</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="container-fluid p-2 py-0 pb-3">
-                                            <div class="row p-0 p-md-2 py-0 py-md-0">
-                                                <div class="col-12 text-center">
 
-                                                    <div class="text-center">
-                                                        <div>{!! $share_buttons !!}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="modal-footer"></div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="sidebar-list-job">
                             <ul>
@@ -405,8 +378,9 @@
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-clock"></i></div>
                                     <div class="sidebar-text-info">
-                                        <span class="text-description">Durasi Training</span>
-                                        <strong class="small-heading">{{ $getdataDetail->training_duration }}</strong>
+                                        <span class="text-description">Durasi Training <strong
+                                                class="small-heading">{{ $getdataDetail->training_duration }}</strong></span>
+
                                     </div>
                                 </li>
                                 <li>
@@ -462,51 +436,75 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shareModalLabel">Silahkan share ke akun media sosial
+                        anda.</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid p-2 py-0 pb-3">
+                        <div class="row p-0 p-md-2 py-0 py-md-0">
+                            <div class="col-12 text-center">
 
+                                <div class="text-center">
+                                    <div>{!! $share_buttons !!}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
-        // $(document).ready(function () {
-        //     // Ambil courseId dari elemen atau backend (contoh, pastikan courseId benar)
-        //     const courseId = '{{ base64_encode($getdataDetail->id) }}';
+        $(document).ready(function() {
+            // Ambil courseId dari elemen atau backend (contoh, pastikan courseId benar)
+            const courseId = '{{ base64_encode($getdataDetail->id) }}';
 
-        //     // Event listener untuk tab
-        //     $('.tab').on('click', function () {
-        //         // Hapus kelas active dari semua tab
-        //         $('.tab').removeClass('active');
+            // Event listener untuk tab
+            $('.tab').on('click', function() {
+                // Hapus kelas active dari semua tab
+                $('.tab').removeClass('active');
 
-        //         // Tambahkan kelas active pada tab yang diklik
-        //         $(this).addClass('active');
+                // Tambahkan kelas active pada tab yang diklik
+                $(this).addClass('active');
 
-        //         // Ambil ID tab
-        //         const tabId = $(this).data('id');
-        //         console.log(tabId);
+                // Ambil ID tab
+                const tabId = $(this).data('id');
+                console.log(tabId);
 
-        //         // AJAX request untuk mendapatkan konten berdasarkan tabId
-        //         $.ajax({
-        //             url: `/detail-course-content/${courseId}/${tabId}`,
-        //             method: 'GET',
-        //             success: function(response) {
-        //                 if (response.success) {
-        //                     // Update konten tab sesuai dengan respons
-        //                     $('#tabContentContainer').html(response.content);
-        //                 } else {
-        //                     alert(response.message);
-        //                 }
-        //             },
-        //             error: function (error) {
-        //                 // Tangani error jika AJAX gagal
-        //                 console.error('Error:', error);
-        //                 $('#tabContentContainer').html('<p>Data tidak ada</p>');
-        //             }
-        //         });
-        //     });
+                // AJAX request untuk mendapatkan konten berdasarkan tabId
+                $.ajax({
+                    url: `/detail-course-content/${courseId}/${tabId}`,
+                    method: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            // Update konten tab sesuai dengan respons
+                            $('#tabContentContainer').html(response.content);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        // Tangani error jika AJAX gagal
+                        console.error('Error:', error);
+                        $('#tabContentContainer').html('<p>Data tidak ada</p>');
+                    }
+                });
+            });
 
-        //     // Klik tab pertama secara otomatis saat halaman dimuat
-        //     $('.tab.active').click();
-        // });
+            // Klik tab pertama secara otomatis saat halaman dimuat
+            $('.tab.active').click();
+        });
 
         function copyToClipboard() {
             const shareUrl = "{{ url()->current() }}"; // URL halaman artikel

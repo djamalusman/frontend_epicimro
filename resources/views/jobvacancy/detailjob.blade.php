@@ -1,16 +1,16 @@
 @extends('layouts.app')
 @section('title')
-    {{$title}}
+    {{ $title }}
 @endsection
 @section('content')
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-
-    .copy-button:hover {
+    <style>
+        .copy-button:hover {
             background-color: #45a049;
-    }
-    .popup {
-            display: none; /* Initially hidden */
+        }
+
+        .popup {
+            display: none;
+            /* Initially hidden */
             position: absolute;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -18,60 +18,86 @@
             padding: 10px;
             border-radius: 5px;
             z-index: 1000;
-            top: 505px !important; /* Position it directly below the button */
-            left: 0; /* Align with the left edge of the button */
-            width: max-content; /* Adjust width to fit content */
-    }
-    .popup.show {
+            top: 505px !important;
+            /* Position it directly below the button */
+            left: 0;
+            /* Align with the left edge of the button */
+            width: max-content;
+            /* Adjust width to fit content */
+        }
+
+        .popup.show {
             display: block;
-    }
-    .single-image-feature {
-        max-width: 100%; /* Ensure container scales with screen size */
-    }
+        }
 
-    .w3-content {
-        position: relative;
-        max-width: 600px; /* Set a max-width for the container */
-        margin: auto;
-    }
+        .single-image-feature {
+            max-width: 100%;
+            /* Ensure container scales with screen size */
+        }
 
-    .w3-display-container {
-        position: relative;
-        width: 100%; /* Ensure container is responsive */
-        height: 400px; /* Set a fixed height for the images */
-        overflow: hidden;
-    }
+        .w3-content {
+            position: relative;
+            max-width: 600px;
+            /* Set a max-width for the container */
+            margin: auto;
+        }
 
-    .mySlides {
-        width: 100%;
-        height: 100%;
-    }
+        .w3-display-container {
+            position: relative;
+            width: 100%;
+            /* Ensure container is responsive */
+            height: 400px;
+            /* Set a fixed height for the images */
+            overflow: hidden;
+        }
 
-    .mySlides img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensures the image covers the container */
-    }
+        .btn-default {
+            background-color: #8e7dff;
+            /* Similar to your button color */
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
 
-    div#social-links {
+        .btn-default:hover {
+            background-color: #6a59cc;
+            /* Darker shade on hover */
+        }
+
+        .mySlides {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mySlides img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the image covers the container */
+        }
+
+        div#social-links {
             margin: 0 auto;
             max-width: 500px;
-    }
+        }
 
-    div#social-links ul li {
+        div#social-links ul li {
             display: inline-block;
-    }
+        }
 
-    div#social-links ul li a {
+        div#social-links ul li a {
             padding: 10px 20px;
             border: 0px solid #ccc;
             margin: 1px;
             font-size: 30px;
-            background-color: #ffffff;
-    }
-</style>
+            color: #000000
+                /* background-color: #ffffff; */
+        }
+    </style>
 @section('head')
-
     <meta charset="utf-8" />
     <title>{{ $getdataDetail->job_title }}</title>
 
@@ -83,7 +109,8 @@
     <meta property="og:title" content="{{ $getdataDetail->job_title }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" />
+    <meta property="og:image"
+        content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" />
     <meta property="og:description" content={{ $getdataDetail->job_description }} />
 
     <!-- Twitter Tags -->
@@ -91,17 +118,16 @@
     <meta name="twitter:title" content="{{ $getdataDetail->job_title }}">
     <meta name="twitter:description" content={{ $getdataDetail->job_description }} />
 
-    <meta name="twitter:image" content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}">
-
-    @endsection
-    <section class="section-box">
-        <div class="box-head-single">
-            <div class="container">
-                <h3>{{$getdataDetail->companyName}} </h3>
-            </div>
+    <meta name="twitter:image"
+        content="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}">
+@endsection
+<section class="section-box">
+    <div class="box-head-single">
+        <div class="container">
+            <h3>{{ $getdataDetail->companyName }} </h3>
         </div>
-    </section>
-    <section class="section-box mt-50">
+    </div>
+    <section class="section-box mt-20">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-12 col-sm-12 col-12">
@@ -113,9 +139,10 @@
                         </div>
                     </div> --}}
                     <figure class="mb-30">
-                        <img class="img-rd-15" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}" />
+                        <img class="img-rd-15"
+                            src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}" />
                     </figure>
-                    <h4>{{$getdataDetail->job_title}} </h4>
+                    <h4>{{ $getdataDetail->job_title }} </h4>
                     <div class="content-single">
                         <h5>Jobs description :</h5>
                         <p>
@@ -136,9 +163,13 @@
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                     <div class="sidebar-shadow">
                         <div class="text-start mt-20">
-                            <input type="text" hidden id="textToCopy" value="https://trainingkerja.com/detail-job/{{base64_encode($getdataDetail->id)}}" readonly>
-                            <a href="{{$getdataDetail->linkpendaftaran}}" class="btn btn-default mr-10" style="font-size:15px;">Apply now</a>
-                            <button class="btn btn-default mr-10" data-bs-toggle="modal" data-bs-target="#shareModal"style="font-size:15px;">
+                            <input type="text" hidden id="textToCopy"
+                                value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
+                                readonly>
+                            <a href="{{ $getdataDetail->linkpendaftaran }}" class="btn btn-default mr-10"
+                                style="font-size:15px;color:white">Apply now</a>
+                            <button class="btn btn-default mr-10" data-bs-toggle="modal"
+                                data-bs-target="#shareModal"style="font-size:15px; color:white">
                                 Share Link
                             </button>
                             <div id="popup" class="popup">
@@ -152,21 +183,21 @@
                                     <div class="sidebar-icon-item"> <i class="fi-rr-edit mr-5 text-grey-6"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Education</span>
-                                        <strong class="small-heading">{{$getdataDetail->education}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->education }}</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-briefcase"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Job Type</span>
-                                        <strong class="small-heading">{{$getdataDetail->job_type}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->job_type }}</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-marker"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Placement</span>
-                                        <strong class="small-heading">{{$getdataDetail->work_location}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->work_location }}</strong>
                                     </div>
                                 </li>
 
@@ -174,42 +205,49 @@
                                     <div class="sidebar-icon-item"><i class="fi-rr-briefcase"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Sector</span>
-                                        <strong class="small-heading">{{$getdataDetail->sector}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->sector }}</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-marker"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Location</span>
-                                        <strong class="small-heading">{{$getdataDetail->provinsi}} - {{$getdataDetail->lokasi}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->provinsi }} -
+                                            {{ $getdataDetail->lokasi }}</strong>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="sidebar-icon-item"><i class=""><img src="https://trainingkerja.com//assets/imgs/jobs/logos/coins.png" style="width: 25px; height :25px;"></i></div>
+                                    <div class="sidebar-icon-item"><i class=""><img
+                                                src="https://trainingkerja.com//assets/imgs/jobs/logos/coins.png"
+                                                style="width: 25px; height :25px;"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Salary</span>
-                                        <strong class="small-heading">{{$getdataDetail->salary}} -  {{$getdataDetail->fee}}</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->salary }} -
+                                            {{ $getdataDetail->fee }}</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-briefcase"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Experience Level</span>
-                                        <strong class="small-heading">{{$getdataDetail->name_experience_level}} Years</strong>
+                                        <strong class="small-heading">{{ $getdataDetail->name_experience_level }}
+                                            Years</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-clock"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Posted at</span>
-                                        <strong class="small-heading">{{ \Carbon\Carbon::parse($getdataDetail->posted_date)->format('d M Y') }}</strong>
+                                        <strong
+                                            class="small-heading">{{ \Carbon\Carbon::parse($getdataDetail->posted_date)->format('d M Y') }}</strong>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="sidebar-icon-item"><i class="fi-rr-clock"></i></div>
                                     <div class="sidebar-text-info">
                                         <span class="text-description">Closed at</span>
-                                        <strong class="small-heading">{{ \Carbon\Carbon::parse($getdataDetail->close_date)->format('d M Y') }}</strong>
+                                        <strong
+                                            class="small-heading">{{ \Carbon\Carbon::parse($getdataDetail->close_date)->format('d M Y') }}</strong>
                                     </div>
                                 </li>
 
@@ -232,14 +270,14 @@
                 <div class="modal-body">
                     <div class="container-fluid p-2 py-0 pb-3">
                         <div class="row p-0 p-md-2 py-0 py-md-0">
-                          <div class="col-12 text-center">
+                            <div class="col-12 text-center">
 
-                              <div class="text-center">
-                                  <div>{!! $share_buttons !!}</div>
-                              </div>
-                          </div>
+                                <div class="text-center">
+                                    <div>{!! $share_buttons !!}</div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
+                    </div>
 
 
                 </div>
@@ -248,8 +286,8 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var olElements = document.querySelectorAll('ol');
@@ -258,16 +296,18 @@
                 ol.style.setProperty('margin', '15px', 'important');
             });
         });
+
         function copyToClipboard() {
-                const shareUrl = "{{ url()->current() }}"; // URL halaman artikel
-                navigator.clipboard.writeText(shareUrl) // Salin URL ke clipboard
-                    .then(() => {
-                        alert('Link berhasil disalin ke clipboard!');
-                    })
-                    .catch(err => {
-                        console.error('Error copying text: ', err);
-                    });
-            }
+            const shareUrl = "{{ url()->current() }}"; // URL halaman artikel
+            navigator.clipboard.writeText(shareUrl) // Salin URL ke clipboard
+                .then(() => {
+                    alert('Link berhasil disalin ke clipboard!');
+                })
+                .catch(err => {
+                    console.error('Error copying text: ', err);
+                });
+        }
+
         function copyToClipboard(event) {
             event.preventDefault(); // Prevent default link behavior
 

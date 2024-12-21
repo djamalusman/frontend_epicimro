@@ -1,5 +1,4 @@
 <style>
-
     /* Container grid */
     .card-grid-container {
         display: grid;
@@ -23,12 +22,15 @@
         font-family: 'Open Sans';
         font-weight: bold;
         font-size: 22px;
-        line-height: 1.2; /* Line height to control spacing between lines */
-        max-height: 2.4em; /* Limiting to 2 lines */
+        line-height: 1.2;
+        /* Line height to control spacing between lines */
+        max-height: 2.4em;
+        /* Limiting to 2 lines */
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Limits text to 2 lines */
+        -webkit-line-clamp: 2;
+        /* Limits text to 2 lines */
         -webkit-box-orient: vertical;
     }
 
@@ -45,78 +47,85 @@
         justify-content: space-between;
         padding: 20px;
     }
-
-
-
-
-
-    </style>
+</style>
 <div class="card-grid-container">
-    @foreach($job_vacancy as $value)
-    <div class="card-grid-2 hover-up">
+    @foreach ($job_vacancy as $value)
+        <div class="card-grid-2 hover-up">
 
-        <div class="text-center card-grid-2-image">
-            <a href="/detail-course/{{$value->id}}">
-                <div class="imgGrid-container">
-                    <figure>
-                        <a href="/detail-course/{{base64_encode($value->id)}}">
-                            <img class="imgGrid" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
-                        </a>
-                    </figure>
-                </div>
-            </a>
-        </div>
-
-        <div class="card-block-info">
-
-            <div class="card-title-job-status">
-                <div class="col-md-1">
-                    <span class="fi-rr-briefcase" style="color:black"></span>
-                </div>
-                <div class="col-md-3">
-                    <h6 style="color:black;font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">  &nbsp;&nbsp;{{$value->nama_status}}</h6>
-                </div>
-            </div>
-            <div class="card-title-job-title mt-5" style="font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
-                <a href="/detail-job/{{ base64_encode($value->id)}}/{{Str::slug($value->job_title)}}">{{$value->job_title}}</a>
-            </div>
-
-
-            <div class="card-title-job-location mt-15">
-                <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
-                    <span class="fi-rr-marker" style="color:blueviolet">  &nbsp;&nbsp;{{$value->work_location}}</span>
-                </h6>
-            </div>
-
-            <div class="mt-10">
-                <a href="/detail-job/{{base64_encode($value->id)}}" class="mt-10">
-                    <span style="font-size: 25px"><b style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{$value->companyName}}</b></span>
+            <div class="text-center card-grid-2-image">
+                <a href="/detail-course/{{ $value->id }}">
+                    <div class="imgGrid-container">
+                        <figure>
+                            <a href="/detail-course/{{ base64_encode($value->id) }}">
+                                <img class="imgGrid"
+                                    src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
+                            </a>
+                        </figure>
+                    </div>
                 </a>
             </div>
-            <div class="mt-10" style="font-family: 'Open Sans'; font-weight; font-size: 16px;>
-                <span class="fi-rr-briefcase" style="color:blueviolet">  &nbsp;&nbsp;{{$value->sector}}</span>
-            </div>
-            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
-                <span class="fa fa-graduation-cap"></span>  &nbsp;&nbsp;{{$value->education}}
-            </div>
-            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
-                <span class="fi-rr-clock">  &nbsp;&nbsp;{{$value->name_experience_level}} Tahun</span>
-            </div>
-            <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
-                <span class="fi-rr-marker">  &nbsp;&nbsp;{{$value->namaprovinsi}}</span>
-            </div>
-            <div class="mt-10" >
-                <span class="card-text-price" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">Salary Range Est.  IDR {{$value->salary}}<span style="color:white">/{{$value->fee}}</span> </span>
-            </div>
 
-            <div class="card-2-bottom mt-10">
-                <div class="row">
-                    <div class="col-lg-12 col-12 text-end" style="color:white">
-                        <span class="fi-rr-clock"> Closed at : {{ \Carbon\Carbon::parse($value->close_date)->format('d M Y') }}</span>
+            <div class="card-block-info">
+
+                <div class="card-title-job-status">
+                    <div class="col-md-1">
+                        <span class="fi-rr-briefcase" style="color:black"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 style="color:black;font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
+                            &nbsp;&nbsp;{{ $value->nama_status }}</h6>
+                    </div>
+                </div>
+                <div class="card-title-job-title mt-5"
+                    style="font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
+                    <a
+                        href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">{{ $value->job_title }}</a>
+                </div>
+
+
+                <div class="card-title-job-location mt-15">
+                    <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
+                        <span class="fi-rr-marker" style="color:blueviolet">
+                            &nbsp;&nbsp;{{ $value->work_location }}</span>
+                    </h6>
+                </div>
+
+                <div class="mt-10">
+                    <a href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}"
+                        class="mt-10">
+                        <span style="font-size: 25px"><b
+                                style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">{{ $value->companyName }}</b></span>
+                    </a>
+                </div>
+                <div class="mt-10"
+                    style="font-family: 'Open Sans'; font-weight; font-size: 16px;>
+                <span class="fi-rr-briefcase"
+                    style="color:blueviolet"> &nbsp;&nbsp;{{ $value->sector }}</span>
+                </div>
+                <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                    <span class="fa fa-graduation-cap"></span> &nbsp;&nbsp;{{ $value->education }}
+                </div>
+                <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                    <span class="fi-rr-clock"> &nbsp;&nbsp;{{ $value->name_experience_level }} Tahun</span>
+                </div>
+                <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+                    <span class="fi-rr-marker"> &nbsp;&nbsp;{{ $value->namaprovinsi }}</span>
+                </div>
+                <div class="mt-10" hidden>
+                    <span class="card-text-price"
+                        style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">Salary Range Est.
+                        IDR {{ $value->salary }}<span style="color:white">/{{ $value->fee }}</span> </span>
+                </div>
+
+                <div class="card-2-bottom mt-10">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 text-end" style="color:white">
+                            <span class="fi-rr-clock"> Closed at :
+                                {{ \Carbon\Carbon::parse($value->close_date)->format('d M Y') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
 </div>
