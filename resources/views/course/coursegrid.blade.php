@@ -21,7 +21,7 @@
                 </div>
                 <div class="box-shadow-bdrd-15 box-filters">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="box-search-job">
                                 <form class="form-search-job">
                                     <input type="text" id="filterTrainingname" class="input-search-job"
@@ -29,7 +29,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-7">
+                        <div class="col-lg-9">
                             <div class="d-flex job-fillter">
                                 <div class="d-block d-lg-flex">
                                     <div class="dropdown job-type">
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="box-button-find">
-                                    <button class="btn btn-default" id="applyFilterBtnTop">Find Now</button>
+                                    <button class="btn btn-border float-right" id="applyFilterBtnTop">Find Now</button>
                                 </div>
                             </div>
                         </div>

@@ -296,7 +296,7 @@
     <section class="section-box">
         <div class="box-head-single">
             <div class="container">
-                <h1><b>{{ $getdataDetail->traning_name }}</b></h1>
+                <h3 style="font-size: 34px!important;"><b>{{ $getdataDetail->traning_name }}</b></h3>
             </div>
         </div>
     </section>
