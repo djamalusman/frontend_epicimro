@@ -583,17 +583,20 @@
         </div>
     </section>
 
-    <section class="section-box  mt-md-40">
+    <section class="section-box  md-50 mt-50">
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-lg-6">
-                    <h2 class="section-title mb-20 wow animate__animated animate__fadeInUp upcomingtraininghover">Upcoming
+                    <h2 class="section-title mb-1 wow animate__animated animate__fadeInUp upcomingtraininghover">Upcoming
                         Training</h2>
                 </div>
                 <div class="col-lg-6 col-md-5 text-lg-end text-start">
-                    <a href="{{ route('course-grid') }}"
-                        class="btn btn-border icon-chevron-right wow animate__animated animate__fadeInUp hover-up mt-15"
-                        data-wow-delay=".1s">View more</a>
+
+                    <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                        data-wow-delay=".1s"
+                        style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
+                        onclick="window.location.href='{{ route('course-grid') }}'">View
+                        more</button>
                 </div>
             </div>
             <div class="mt-20 mt-md-70">
@@ -613,13 +616,16 @@
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-lg-6">
-                    <h2 class="section-title mb-20 wow animate__animated animate__fadeInUp upcomingtraininghover">Upcoming
+                    <h2 class="section-title mb-1 wow animate__animated animate__fadeInUp upcomingtraininghover">Upcoming
                         Jobs</h2>
                 </div>
                 <div class="col-lg-6 col-md-5 text-lg-end text-start">
-                    <a href="{{ route('job-grid') }}"
-                        class="btn btn-border icon-chevron-right wow animate__animated animate__fadeInUp hover-up mt-15"
-                        data-wow-delay=".1s">View more</a>
+
+                    <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                        data-wow-delay=".1s"
+                        style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
+                        onclick="window.location.href='{{ route('job-grid') }}'">View
+                        more</button>
                 </div>
             </div>
             <div class="mt-20">
@@ -670,9 +676,12 @@
                     <h2 class="section-title mb-20 wow animate__animated animate__fadeInUp newshomehover">News</h2>
                 </div>
                 <div class="col-lg-5 col-md-5 text-lg-end text-start">
-                    <a href="{{ route('news-list') }}"
-                        class="btn btn-border icon-chevron-right wow animate__animated animate__fadeInUp hover-up mt-15"
-                        data-wow-delay=".1s">View more</a>
+
+                    <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                        data-wow-delay=".1s"
+                        style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
+                        onclick="window.location.href='{{ route('news-list') }}'">View
+                        more</button>
                 </div>
             </div>
             <div class="row mt-20">

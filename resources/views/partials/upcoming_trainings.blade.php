@@ -44,6 +44,14 @@
         padding: 20px;
     }
 
+    .btn-default {
+        background-color: #8e7dff;
+        /* Similar to your button color */
+        color: white;
+
+        line-height: 1px;
+    }
+
 
 
     .card-title-certificate {
@@ -119,15 +127,15 @@
                     <div class="text-end">
 
                         @if ($value->link_pendaftaran == null)
-                            <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                            <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
                                 data-wow-delay=".1s"
-                                style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
+                                style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                                 onclick="window.location.href='/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}'">View
                                 more</button>
                         @else
-                            <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                            <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
                                 data-wow-delay=".1s"
-                                style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
+                                style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                                 onclick="window.location.href='/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}'">View
                                 more</button>
                         @endif

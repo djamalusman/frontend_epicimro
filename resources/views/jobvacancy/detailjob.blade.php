@@ -3,6 +3,7 @@
     {{ $title }}
 @endsection
 @section('content')
+
     <style>
         .copy-button:hover {
             background-color: #45a049;
@@ -124,7 +125,7 @@
 <section class="section-box">
     <div class="box-head-single">
         <div class="container">
-            <h3>{{ $getdataDetail->companyName }} </h3>
+            <h3 style="font-size: 34px!important;">{{ $getdataDetail->companyName }} </h3>
         </div>
     </div>
     <section class="section-box mt-20">

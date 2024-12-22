@@ -47,6 +47,14 @@
         justify-content: space-between;
         padding: 20px;
     }
+
+    .btn-default {
+        background-color: #8e7dff;
+        /* Similar to your button color */
+        color: white;
+
+        line-height: 1px;
+    }
 </style>
 
 <div class="card-grid-container">
@@ -125,11 +133,12 @@
                 <div class="card-2-bottom mt-5">
                     <div class="text-end">
 
-                        <button class="btn btn-border wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                        <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
                             data-wow-delay=".1s"
-                            style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"
+                            style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                             onclick="window.location.href='/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}'">View
                             more</button>
+
                     </div>
                 </div>
             </div>
