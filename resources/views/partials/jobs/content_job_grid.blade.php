@@ -78,10 +78,10 @@
 
                 <div class="card-title-job-status">
                     <div class="col-md-1">
-                        <span class="fi-rr-briefcase" style="color:black"></span>
+                        <span class="fa-solid fa-book" style="color:black"></span>
                     </div>
                     <div class="col-md-3">
-                        <h6 style="color:black;font-family: 'Open Sans'; font-weight: 520; font-size: 16px;">
+                        <h6 style="color:black;font-family: 'Open Sans';  font-size: 16px;">
                             &nbsp;&nbsp;{{ $value->nama_status }}</h6>
                     </div>
                 </div>
@@ -91,24 +91,24 @@
                         href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">{{ $value->job_title }}</a>
                 </div>
 
+                <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 16px;">
+                    {{ $value->companyName }}
+                </div>
 
-                <div class="card-title-job-location mt-15">
+                <div class="card-title-job-location mt-10">
                     <h6 style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
                         <span class="fi-rr-marker" style="color:rgb(0, 0, 0)">
                             &nbsp;&nbsp;{{ $value->work_location }}</span>
                     </h6>
                 </div>
 
-                <div class="mt-10">
-                    <span style="font-size: 25px"><b
-                            style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 14px;">{{ $value->companyName }}</b></span>
-                </div>
+
                 <div class="mt-10" style="font-family: 'Open Sans'; font-weight; font-size: 16px;">
 
                     <span class="fi-rr-briefcase" style="color:rgb(0, 0, 0)"> &nbsp;&nbsp;{{ $value->sector }}</span>
                 </div>
                 <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
-                    <span class="fa fa-graduation-cap"></span> &nbsp;&nbsp;{{ $value->education }}
+                    <span class="fa fa-graduation-cap"></span> &nbsp;{{ $value->education }}
                 </div>
                 <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
                     <span class="fi-rr-clock"> &nbsp;&nbsp;{{ $value->name_experience_level }} Tahun</span>
@@ -133,12 +133,12 @@
                 <div class="card-2-bottom mt-5">
                     <div class="text-end">
 
+
                         <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
                             data-wow-delay=".1s"
                             style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                             onclick="window.location.href='/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}'">View
                             more</button>
-
                     </div>
                 </div>
             </div>
