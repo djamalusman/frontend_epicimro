@@ -89,19 +89,19 @@
                         href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">{{ $value->traning_name }}</a>
                 </div>
 
+                <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 16px;">
+                    {{ $value->company_name }}
+                </div>
 
                 <div class="mt-10">
                     <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
                         {{ $value->category }}</h6>
 
                 </div>
-                <div class="mt-10">
-                    <span style="font-size: 25px"><b
-                            style="color:black;color:black;font-family: 'Open Sans';font-weight;font-size: 15px;">{{ $value->company_name }}</b></span>
-                </div>
-                <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
+
+                {{-- <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
                     <span class="fi-rr-marker"> &nbsp;&nbsp;{{ $value->nama_provinsi }}</span>
-                </div>
+                </div> --}}
                 <div class="mt-10">
                     <span class="fi-rr-marker" style="color:rgb(0, 0, 0);">
                         &nbsp;&nbsp;{{ $value->nama_provinsi }},{{ $value->lokasi }}</span>
