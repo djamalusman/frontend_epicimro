@@ -346,11 +346,9 @@
                     <div class="sidebar-shadow">
 
                         <div class="text-start mt-20">
-                            <input type="text" hidden id="textToCopy"
-                                value="https://trainingkerja.com/detail-course/{{ base64_encode($getdataDetail->id) }}"
-                                readonly>
-                            <a href="{{ $getdataDetail->link_pendaftaran }}"
-                                class="btn btn-default mr-10"style="font-size:15px;color:white">Apply now</a>
+
+                            <a href="/register-course/{{ base64_encode($getdataDetail->id) }}/{{ Str::slug($getdataDetail->traning_name) }}"
+                                class="btn btn-default mr-10"style="font-size:15px;color:white">Register now</a>
                             <a href ="#" class="btn btn-default mr-10" data-bs-toggle="modal"
                                 data-bs-target="#shareModal" style="font-size:15px;color:white">
                                 Share Link

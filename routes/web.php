@@ -56,6 +56,10 @@ Route::get('/get-content-grid-course', [TranningCourseController::class, 'getCon
 Route::get('/load-dropdown-category', [TranningCourseController::class, 'loadDataCategory'])->name('load-dropdown-category');
 Route::get('/load-dropdown-certificatetype', [TranningCourseController::class, 'loadDataCertificate'])->name('load-dropdown-certificatetype');
 Route::get('/load-dropdown-type', [TranningCourseController::class, 'loadDataType'])->name('load-dropdown-type');
+Route::get('/register-course/{id}/{slug}', [TranningCourseController::class, 'registerCourse'])->name('register-course');
+
+Route::get('/get-backgroundeducation', [TranningCourseController::class, 'getDatabackgroundeducation'])->name('get-backgroundeducation');
+
 // End route training course
 
 //Latest News
