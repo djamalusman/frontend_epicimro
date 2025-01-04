@@ -481,4 +481,71 @@ class TranningCourseController extends Controller
         ]);
 
     }
+
+
+    public function registerCourse($id, $slug, Request $request)
+    {
+        $data['title'] = 'Details Training';
+
+        $data['listpersyaratan'] = Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listmateri'] = Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listfasilitas'] = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['listfiles'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $data['imagetraining'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
+
+        $detail = DB::table('dtc_training_course_detail')
+            ->leftJoin('m_category_training_course', 'm_category_training_course.id', '=', 'dtc_training_course_detail.id_m_category_training_course')
+            ->leftJoin('m_jenis_sertifikasi_training_course', 'm_jenis_sertifikasi_training_course.id', '=', 'dtc_training_course_detail.id_m_jenis_sertifikasi_training_course')
+            ->leftJoin('m_type_training_course', 'm_type_training_course.id', '=', 'dtc_training_course_detail.typeonlineoffile')
+            ->leftJoin('m_provinsi', 'm_provinsi.id', '=', 'dtc_training_course_detail.id_provinsi')
+            ->select(
+                'dtc_training_course_detail.*',
+                'm_category_training_course.nama as category',
+                'm_jenis_sertifikasi_training_course.nama as cetificate_type',
+                'm_type_training_course.nama as typeonlineofline',
+                'm_provinsi.nama as provinsi'
+            )
+            ->where('dtc_training_course_detail.id', base64_decode($id))
+            ->first();
+
+        $imagemeta = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
+
+        $description = '';
+        if ($detail->tab_active == 1 && $detail->abouttraining != "") {
+            $description = $detail->abouttraining;
+        } elseif ($detail->tab_active == 2 && $detail->abouttrainer != "") {
+            $description = $detail->abouttrainer;
+        } elseif ($detail->tab_active == 3 && $detail->aboutcareer != "") {
+            $description = $detail->aboutcareer;
+        }
+        $url = route('detail-course', ['id' => $id, 'slug' => $detail->traning_name]);
+        $meta = [
+            'title' => $detail->traning_name,
+            'description' => $description,
+            'image' => asset('https://admin.trainingkerja.com/public/storage/' . ($imagemeta->nama ?? '')),
+            'url' => url()->current(),
+        ];
+
+        $share_buttons = \Share::page($meta['url'])
+            ->facebook()
+            ->twitter()
+            ->linkedin()
+            ->whatsapp();
+
+        $data['meta'] = $meta;
+        $data['share_buttons'] = $share_buttons;
+        $data['getdataDetail'] = $detail;
+
+        return view('course.registerCourse', $data);
+    }
+    public function getDatabackgroundeducation()
+    {
+        // Query ke database
+        $options = \DB::table('m_background_education')
+            ->select('id_background_education', 'nama_bgrd_edu') // Ambil kolom yang dibutuhkan
+            ->get();
+
+        // Kembalikan dalam format JSON
+        return response()->json($options);
+    }
 }

@@ -90,6 +90,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
             'Spatie\\Ignition\\' => 16,
             'Spatie\\FlareClient\\' => 19,
             'Spatie\\Backtrace\\' => 17,
+            'Shipu\\Themevel\\' => 15,
         ),
         'R' => 
         array (
@@ -112,6 +113,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'N' => 
         array (
             'NunoMaduro\\Collision\\' => 21,
+            'Noodlehaus\\' => 11,
         ),
         'M' => 
         array (
@@ -338,6 +340,10 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         array (
             0 => __DIR__ . '/..' . '/spatie/backtrace/src',
         ),
+        'Shipu\\Themevel\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/shipu/themevel/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -390,6 +396,10 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'NunoMaduro\\Collision\\' => 
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
+        ),
+        'Noodlehaus\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hassankhan/config/src',
         ),
         'Monolog\\' => 
         array (
@@ -559,6 +569,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'App\\Http\\Controllers\\RegistrationController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegistrationController.php',
         'App\\Http\\Controllers\\SertifikatController' => __DIR__ . '/../..' . '/app/Http/Controllers/SertifikatController.php',
         'App\\Http\\Controllers\\TranningCourseController' => __DIR__ . '/../..' . '/app/Http/Controllers/TranningCourseController.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\WelcomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/WelcomeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -566,6 +577,7 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'App\\Http\\Middleware\\LoadGlobalData' => __DIR__ . '/../..' . '/app/Http/Middleware/LoadGlobalData.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\TemplateMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/TemplateMiddleware.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
@@ -3585,6 +3597,22 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'Nette\\Utils\\Type' => __DIR__ . '/..' . '/nette/utils/src/Utils/Type.php',
         'Nette\\Utils\\UnknownImageFileException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Validators' => __DIR__ . '/..' . '/nette/utils/src/Utils/Validators.php',
+        'Noodlehaus\\AbstractConfig' => __DIR__ . '/..' . '/hassankhan/config/src/AbstractConfig.php',
+        'Noodlehaus\\Config' => __DIR__ . '/..' . '/hassankhan/config/src/Config.php',
+        'Noodlehaus\\ConfigInterface' => __DIR__ . '/..' . '/hassankhan/config/src/ConfigInterface.php',
+        'Noodlehaus\\ErrorException' => __DIR__ . '/..' . '/hassankhan/config/src/ErrorException.php',
+        'Noodlehaus\\Exception' => __DIR__ . '/..' . '/hassankhan/config/src/Exception.php',
+        'Noodlehaus\\Exception\\EmptyDirectoryException' => __DIR__ . '/..' . '/hassankhan/config/src/Exception/EmptyDirectoryException.php',
+        'Noodlehaus\\Exception\\FileNotFoundException' => __DIR__ . '/..' . '/hassankhan/config/src/Exception/FileNotFoundException.php',
+        'Noodlehaus\\Exception\\ParseException' => __DIR__ . '/..' . '/hassankhan/config/src/Exception/ParseException.php',
+        'Noodlehaus\\Exception\\UnsupportedFormatException' => __DIR__ . '/..' . '/hassankhan/config/src/Exception/UnsupportedFormatException.php',
+        'Noodlehaus\\FileParser\\AbstractFileParser' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/AbstractFileParser.php',
+        'Noodlehaus\\FileParser\\FileParserInterface' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/FileParserInterface.php',
+        'Noodlehaus\\FileParser\\Ini' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/Ini.php',
+        'Noodlehaus\\FileParser\\Json' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/Json.php',
+        'Noodlehaus\\FileParser\\Php' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/Php.php',
+        'Noodlehaus\\FileParser\\Xml' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/Xml.php',
+        'Noodlehaus\\FileParser\\Yaml' => __DIR__ . '/..' . '/hassankhan/config/src/FileParser/Yaml.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Commands\\TestCommand' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Commands/TestCommand.php',
@@ -5410,6 +5438,15 @@ class ComposerStaticInitbfe12996eeecb6fdc8713a9fd9d431f8
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Shipu\\Themevel\\Console\\ThemeGeneratorCommand' => __DIR__ . '/..' . '/shipu/themevel/src/Console/ThemeGeneratorCommand.php',
+        'Shipu\\Themevel\\Console\\ThemeListCommand' => __DIR__ . '/..' . '/shipu/themevel/src/Console/ThemeListCommand.php',
+        'Shipu\\Themevel\\Contracts\\ThemeContract' => __DIR__ . '/..' . '/shipu/themevel/src/Contracts/ThemeContract.php',
+        'Shipu\\Themevel\\Exceptions\\ThemeNotFoundException' => __DIR__ . '/..' . '/shipu/themevel/src/Exceptions/ThemeNotFoundException.php',
+        'Shipu\\Themevel\\Facades\\Theme' => __DIR__ . '/..' . '/shipu/themevel/src/Facades/Theme.php',
+        'Shipu\\Themevel\\Managers\\Theme' => __DIR__ . '/..' . '/shipu/themevel/src/Managers/Theme.php',
+        'Shipu\\Themevel\\Middleware\\RouteMiddleware' => __DIR__ . '/..' . '/shipu/themevel/src/Middleware/RouteMiddleware.php',
+        'Shipu\\Themevel\\Middleware\\WebMiddleware' => __DIR__ . '/..' . '/shipu/themevel/src/Middleware/WebMiddleware.php',
+        'Shipu\\Themevel\\Providers\\ThemevelServiceProvider' => __DIR__ . '/..' . '/shipu/themevel/src/Providers/ThemevelServiceProvider.php',
         'Spatie\\Backtrace\\Arguments\\ArgumentReducers' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ArgumentReducers.php',
         'Spatie\\Backtrace\\Arguments\\ProvidedArgument' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ProvidedArgument.php',
         'Spatie\\Backtrace\\Arguments\\ReduceArgumentPayloadAction' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ReduceArgumentPayloadAction.php',
