@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
     {{ $title }}
 @endsection
@@ -120,7 +120,7 @@
                             currentPage = response.pagination.current_page;
                         }
                         console.log('Load Content Success: currentPage =',
-                        currentPage); // Debugging line
+                            currentPage); // Debugging line
                         $('.content-page .list-recent-jobs').html(response.content);
                         $('.content-page .paginations').html(response.pagination);
                         $('.content-page .showing').html(response.showing);
@@ -160,7 +160,7 @@
                 e.preventDefault();
                 currentPage = Math.max(currentPage - 1, 1); // Ensure the page does not go below 1
                 console.log("Pager prev clicked, currentPage after decrement:",
-                currentPage); // Debugging line
+                    currentPage); // Debugging line
                 const filters = {
                     categorynews: $('#categorynews').val(),
                 };

@@ -85,6 +85,17 @@
         background-color: #f05537;
         color: #fff;
     }
+
+    .btn-defaults {
+        background-color: #f05537;
+        font-size: 12px;
+        color: white;
+        border-radius: 25px;
+        padding: 10px 20px;
+        text-decoration: none;
+        /* font-weight: bold; */
+        margin-right: 10px;
+    }
 </style>
 
 @foreach ($data as $value)
@@ -105,9 +116,9 @@
                 </div>
                 <div class="card-2-bottom mt-30">
                     <div class="d-flex align-items-center justify-content-between">
-                        <div class="keep-reading">
+                        <div class="text-start mt-20">
                             <a href="/detail-news/{{ base64_encode($value->id) }}/{{ Str::slug($value->title) }}"
-                                class="btn btn-border btn-brand-hover">{{ $value->jenisBerita }}</a>
+                                class="btn btn-defaults" style="color: #fff">{{ $value->jenisBerita }}</a>
                         </div>
                     </div>
                 </div>

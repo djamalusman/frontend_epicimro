@@ -14,6 +14,6 @@ class ContactCotroller extends Controller
         // $data['dataTk']  = SideListModel::where('id_menu', 4)->where('id_pages_content_order', '1')->first();
         // $data['dataItem']  = ListItemModel::where('id_menu', 4)->where('id_pages_content_order', '1')->first();
         $data['locations']       = MapsModel::get();
-        return view('contact', $data);
+        return view('template1/contact', $data);
     }
 }

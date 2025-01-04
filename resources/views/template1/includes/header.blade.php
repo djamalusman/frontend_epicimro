@@ -42,6 +42,15 @@
                              <li class="has">
                                  <a href="{{ route('registration') }}">Join Us</a>
                              </li>
+                             <li class="has">
+                                 <a href="{{ route('login') }}" class="btn btn-default ml-150"
+                                     style="color: white;">Sign
+                                     in</a>
+                             </li>
+                             <li class="has">
+                                 <a href="#" class="btn btn-default  ml-10 hover-up" style="color: white;">Sign
+                                     up</a>
+                             </li>
 
                          </ul>
                      </nav>
@@ -51,16 +60,15 @@
                          <span class="burger-icon-bottom"></span>
                      </div>
                  </div>
-                 <div class="header-right">
-                     <div class="block-signin">
-                         <a href="{{ route('template2/login') }}"
-                             class="btn btn-default btn-shadow ml-190 hover-up">Sign
-                             in</a>
-                         <a href="#" class="btn btn-default btn-shadow ml-10 hover-up">Sign up</a>
-                     </div>
-                 </div>
-             </div>
 
+             </div>
+             {{-- <div class="header-right">
+                 <div class="block-signin">
+                     <a href="{{ route('login') }}" class="btn btn-default  ml-150 hover-up">Sign
+                         in</a>
+                     <a href="#" class="btn btn-default  ml-10 hover-up">Sign up</a>
+                 </div>
+             </div> --}}
          </div>
 
 

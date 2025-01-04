@@ -26,7 +26,7 @@ class JobVacancyController extends Controller
             )->get();
          // Get all courses
 
-       return view('jobvacancy.joblist', $data);
+       return view('template1/jobvacancy.joblist', $data);
 
     }
 
@@ -42,7 +42,7 @@ class JobVacancyController extends Controller
             )->get();
         // Get all courses
 
-        return view('jobvacancy.jobgrid', $data);
+        return view('template1/jobvacancy.jobgrid', $data);
 
     }
 
@@ -80,7 +80,7 @@ class JobVacancyController extends Controller
           ->linkedin()
           ->whatsapp();
           $data['share_buttons'] = $share_buttons;
-        return view('jobvacancy.detailjob', $data);
+        return view('template1/jobvacancy.detailjob', $data);
     }
 
     public function previewFilter(Request $request)
@@ -94,7 +94,7 @@ class JobVacancyController extends Controller
             ->groupBy('m_employee_status.nama')
             ->get();
 
-        return view('partials.filter_preview', ['filteredData' => $filteredData]);
+        return view('template1/partials.filter_preview', ['filteredData' => $filteredData]);
     }
 
     public function previewFilterPlacement(Request $request)
@@ -106,7 +106,7 @@ class JobVacancyController extends Controller
             ->selectRaw('count(*) as count')
             ->groupBy('m_work_location.nama')
             ->get();
-        return view('partials.filter_placement_preview', ['filter_data_work_location' => $filter_Data_work_location]);
+        return view('template1/partials.filter_placement_preview', ['filter_data_work_location' => $filter_Data_work_location]);
     }
 
     public function previewFilterExperienceLevel(Request $request)
@@ -116,7 +116,7 @@ class JobVacancyController extends Controller
 
         $filter_Data_experience_level = $filter_Data_experience_level->get();
 
-        return view('partials.filter_experience_level_preview', ['filter_data_experience_level' => $filter_Data_experience_level]);
+        return view('template1/partials.filter_experience_level_preview', ['filter_data_experience_level' => $filter_Data_experience_level]);
     }
 
 
@@ -127,7 +127,7 @@ class JobVacancyController extends Controller
 
         $filter_Data_education = $filter_Data_education->get();
 
-        return view('partials.filter_education_preview', ['filter_Data_education' => $filter_Data_education]);
+        return view('template1/partials.filter_education_preview', ['filter_Data_education' => $filter_Data_education]);
     }
 
     public function previewFilterSalarayRange(Request $request)
@@ -168,7 +168,7 @@ class JobVacancyController extends Controller
                 'm_type_training_course.nama as typeonlineofline');
         $trainings = $query->where('dtc_training_course_detail.status',1)->orderBy('dtc_training_course_detail.updated_at', 'desc')->limit(3)->get();
 
-        return view('partials.jobs.sidebar_jobs', compact('trainings'))->render();
+        return view('template1/partials.jobs.sidebar_jobs', compact('trainings'))->render();
     }
 
     public function getContentJobList(Request $request)
@@ -288,19 +288,19 @@ class JobVacancyController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
 
         return response()->json([
-            'content' => view('partials.jobs.content_job_list', ['data' => $data])->render(),
-            'pagination' => view('partials.pagination', ['data' => $data])->render(),
+            'content' => view('template1/partials.jobs.content_job_list', ['data' => $data])->render(),
+            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
             'showing' => $showing,
             'sort_and_view' => $sortAndView
         ]);
@@ -438,31 +438,31 @@ class JobVacancyController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
 
         //$listfiles = JobFileModel::orderBy('nama', 'asc')->get();
 
         return response()->json([
-            'content' => view('partials.jobs.content_job_grid', ['data' => $data])->render(),
-            'pagination' => view('partials.pagination', ['data' => $data])->render(),
+            'content' => view('template1/partials.jobs.content_job_grid', ['data' => $data])->render(),
+            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
             'showing' => $showing,
             'sort_and_view' => $sortAndView
         ]);
 
         // return response()->json([
-        //     'content' => view('partials.content_job_grid', [
+        //     'content' => view('template1/partials.content_job_grid', [
         //         'data' => $data,
         //         'listfiles' => $listfiles
         //     ])->render(),
-        //     'pagination' => view('partials.pagination', [
+        //     'pagination' => view('template1/partials.pagination', [
         //         'data' => $data
         //     ])->render(),
         //     'showing' => $showing,

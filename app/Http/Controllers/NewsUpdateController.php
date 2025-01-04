@@ -18,7 +18,7 @@ class NewsUpdateController extends Controller
         $data['Count'] = $dataCount->count();
         $data['category']= NewsMasterModel::all();
 
-       return view('newslatest.newslist', $data);
+       return view('template1/newslatest.newslist', $data);
     }
 
     public function NewsGrid()
@@ -31,7 +31,7 @@ class NewsUpdateController extends Controller
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-       return view('newslatest.newsgrid', $data);
+       return view('template1/newslatest.newsgrid', $data);
     }
 
     public function getContentNewsList (Request $request)
@@ -101,19 +101,19 @@ class NewsUpdateController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
 
         return response()->json([
-            'content' => view('partials.newslatest.content_news_list', ['data' => $data])->render(),
-            'pagination' => view('partials.pagination', ['data' => $data])->render(),
+            'content' => view('template1/partials.newslatest.content_news_list', ['data' => $data])->render(),
+            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
             'showing' => $showing,
             'sort_and_view' => $sortAndView
         ]);
@@ -162,19 +162,19 @@ class NewsUpdateController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
 
         return response()->json([
-            'content' => view('partials.newslatest.content_news_grid', ['data' => $data])->render(),
-            'pagination' => view('partials.pagination', ['data' => $data])->render(),
+            'content' => view('template1/partials.newslatest.content_news_grid', ['data' => $data])->render(),
+            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
             'showing' => $showing,
             'sort_and_view' => $sortAndView
         ]);
@@ -214,6 +214,6 @@ class NewsUpdateController extends Controller
 
         $data['anotherarticle'] = $anotherArticle->where('news_detail.id', '!=', base64_decode($id))->get();
 
-        return view('newslatest.detailnews', $data);
+        return view('template1/newslatest.detailnews', $data);
     }
 }

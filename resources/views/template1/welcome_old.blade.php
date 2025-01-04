@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
     HOME
 @endsection
@@ -74,9 +74,9 @@
         }
 
         /* .testimonial-videos {
-            
-            height: 100%;
-        } */
+
+                height: 100%;
+            } */
 
         .testimonial-texts {
             font-size: 14px;
@@ -124,73 +124,73 @@
             white-space: normal;
             /* Mengizinkan teks untuk wrap */
         }
+
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         * {
-        margin: 0;
-        padding: 0;
-        font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
         .hero {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        
+
 
         .social-links {
-        display: flex;
+            display: flex;
         }
 
         .social-links a {
-        width: 80px;
-        height: 80px;
-        text-align: center;
-        text-decoration: none;
-        color: #4723e6;
-        box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.05);
-        margin: 0 5px;
-        border-radius: 50%;
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.5s;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            text-decoration: none;
+            color: #4723e6;
+            box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.05);
+            margin: 0 5px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s;
         }
 
         .social-links a .fab {
-        font-size: 30px;
-        line-height: 80px;
-        position: relative;
-        z-index: 10;
-        transition: color 0.5s;
+            font-size: 30px;
+            line-height: 80px;
+            position: relative;
+            z-index: 10;
+            transition: color 0.5s;
         }
 
         .social-links a::after {
-        content: '';
-        width: 100%;
-        height: 100%;
-        top: -90px;
-        left: 0;
-        background: #000;
-        background: linear-gradient(-45deg, #ed1c94, #ffec17);
-        position: absolute;
-        transition: 0.5s;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: -90px;
+            left: 0;
+            background: #000;
+            background: linear-gradient(-45deg, #ed1c94, #ffec17);
+            position: absolute;
+            transition: 0.5s;
         }
 
         .social-links a:hover::after {
-        top: 0;
+            top: 0;
         }
 
         .social-links a:hover .fab {
-        color: #fff;
+            color: #fff;
         }
 
         .social-links a:hover {
-        transform: translateY(-10px);
+            transform: translateY(-10px);
         }
-
     </style>
     <section class="section-box">
         <div class="banner-hero hero-1">
@@ -537,7 +537,7 @@
     </section>
 
 
-    
+
 
     <section class="section-box mt-40">
         <div class="container">
@@ -558,8 +558,8 @@
                                             <a href="video-page.html">
                                                 <div class="embed-responsive embed-responsive-16by9">
                                                     <iframe class="embed-responsive-item" height="240px;" width="420px;"
-                                                        src="{{ $valyotube->url }}" 
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                        src="{{ $valyotube->url }}"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                         allowfullscreen>
                                                     </iframe>
                                                 </div>
@@ -572,8 +572,8 @@
                     </div>
                 </div>
             </div>
-            
-            
+
+
         </div>
     </section>
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
     {{ $title }}
 @endsection
@@ -52,14 +52,14 @@
             overflow: hidden;
         }
 
-        .btn-default {
-            background-color: #8e7dff;
-            /* Similar to your button color */
+        .btn-defaults {
+            background-color: #f05537;
+
             color: white;
             border-radius: 25px;
             padding: 10px 20px;
             text-decoration: none;
-            font-weight: bold;
+            /* font-weight: bold; */
             margin-right: 10px;
         }
 
@@ -167,9 +167,9 @@
                             <input type="text" hidden id="textToCopy"
                                 value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
                                 readonly>
-                            <a href="{{ $getdataDetail->linkpendaftaran }}" class="btn btn-default mr-10"
+                            <a href="{{ $getdataDetail->linkpendaftaran }}" class="btn btn-defaults mr-10"
                                 style="font-size:15px;color:white">Apply now</a>
-                            <button class="btn btn-default mr-10" data-bs-toggle="modal"
+                            <button class="btn btn-defaults mr-10" data-bs-toggle="modal"
                                 data-bs-target="#shareModal"style="font-size:15px; color:white">
                                 Share Link
                             </button>

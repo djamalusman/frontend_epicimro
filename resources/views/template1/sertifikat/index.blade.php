@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
-    {{$title}}
+    {{ $title }}
 @endsection
 @section('content')
-
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
                 <h4>Please check your certificate here</h4>
                 <br>
-                <span class="text-mutted" style="color: black">Enter your certificate number in the search field and click the find now button</span>
+                <span class="text-mutted" style="color: black">Enter your certificate number in the search field and click the
+                    find now button</span>
             </div>
         </div>
     </section>
@@ -24,11 +24,14 @@
                             <div class="row">
                                 <div class="col-sm-0 text-center d-flex align-items-center"></div>
                                 <div class="col-sm-4 text-center d-flex align-items-center">
-                                    <input type="text" id="filterJobtitle"  class="form-control form-icons" placeholder="search">
+                                    <input type="text" id="filterJobtitle" class="form-control form-icons"
+                                        placeholder="search">
                                 </div>
                                 <div class="col-sm-4 text-center d-flex align-items-center">
-                                    <button  id="applyFilterBtn"  class="btn btn-default float-right">Find Now</button> &nbsp;&nbsp;&nbsp;
-                                    <button id="resetFilterBtn" onclick="reloadPage()" class="btn btn-default float-right">Reset filter</button>
+                                    <button id="applyFilterBtn" class="btn btn-default float-right">Find Now</button>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button id="resetFilterBtn" onclick="reloadPage()"
+                                        class="btn btn-default float-right">Reset filter</button>
                                 </div>
 
                             </div>
@@ -62,7 +65,8 @@
                 <h6 class="text-lg-newsletter">the latest jobs</h6>
                 <div class="box-form-newsletter mt-30">
                     <form class="form-newsletter">
-                        <input type="text" class="input-newsletter" value="" placeholder="contact.alithemes@gmail.com" />
+                        <input type="text" class="input-newsletter" value=""
+                            placeholder="contact.alithemes@gmail.com" />
                         <button class="btn btn-default font-heading icon-send-letter">Subscribe</button>
                     </form>
                 </div>
@@ -76,11 +80,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-
-
-
-
-
         $(document).ready(function() {
 
             console.log('Document ready'); // Debugging line
@@ -267,8 +266,5 @@
         function reloadPage() {
             location.reload();
         }
-
-
-
     </script>
 @endsection

@@ -37,7 +37,7 @@ class GeneralController extends Controller
 
         $trainings = $query->orderBy('dtc_training_course_detail.updated_at', 'desc')->limit(3)->get();
 
-        return view('partials.upcoming_trainings', compact('trainings'))->render();
+        return view('template1/partials.upcoming_trainings', compact('trainings'))->render();
     }
 
     public function fetchUpcomingJobvacancy()
@@ -64,7 +64,7 @@ class GeneralController extends Controller
             );
         $job_vacancy = $query->orderBy('djv_job_vacancy_detail.updated_at', 'desc')->limit(4)->get();
 
-        return view('partials.upcoming_job_vacancy', compact('job_vacancy'))->render();
+        return view('template1/partials.upcoming_job_vacancy', compact('job_vacancy'))->render();
     }
 
     public function fetcUpcominghNews()
@@ -74,7 +74,7 @@ class GeneralController extends Controller
             ->join('m_news', 'm_news.id', '=', 'news_detail.id_m_news')
             ->select('news_detail.*', 'm_news.nama as category') ;
         $news = $query->where('news_detail.status',1)->orderBy('news_detail.updated_at', 'desc')->limit(6)->get();
-        return view('partials.upcoming_news', compact('news'))->render();
+        return view('template1/partials.upcoming_news', compact('news'))->render();
     }
 
     public function privieProvinsiTop(Request $request)

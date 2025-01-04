@@ -1,17 +1,16 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
-    {{$title}}
+    {{ $title }}
 @endsection
 @section('content')
-
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
-                <h4>There Are {{$Count}} Jobs<br />Here For you!</h4>
+                <h4>There Are {{ $Count }} Jobs<br />Here For you!</h4>
                 <div class="row mt-15 mb-40">
                     <div class="col-lg-7 col-md-9">
-                            <span class="text-mutted">Discover your next career move, freelance gig, or
-                                internship</span>
+                        <span class="text-mutted">Discover your next career move, freelance gig, or
+                            internship</span>
                     </div>
                     <div class="col-lg-5 col-md-3 text-lg-end text-start">
                         <ul class="breadcrumbs mt-sm-15">
@@ -25,7 +24,8 @@
                         <div class="col-lg-5">
                             <div class="box-search-job">
                                 <form class="form-search-job">
-                                    <input type="text" id="filterJobtitle"  class="input-search-job" placeholder="Search  Job title" />
+                                    <input type="text" id="filterJobtitle" class="input-search-job"
+                                        placeholder="Search  Job title" />
                                 </form>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
 
                                 </div>
                                 <div class="box-button-find">
-                                    <button  id="applyFilterBtn"  class="btn btn-default float-right">Find Now</button>
+                                    <button id="applyFilterBtn" class="btn btn-default float-right">Find Now</button>
                                 </div>
                             </div>
                         </div>
@@ -59,24 +59,31 @@
                     <div class="content-page">
                         <div class="box-filters-job mt-15 mb-10">
                             <div class="row">
-                                <div class="col-lg-5" >
+                                <div class="col-lg-5">
                                     <div class="showing"></div>
                                 </div>
                                 <div class="col-lg-7 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
                                         <div class="dropdown dropdown-sort">
-                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                                                <span id="currentSort">Newest Post</span> <i class="fi-rr-angle-small-down"></i>
+                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort"
+                                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                                                <span id="currentSort">Newest Post</span> <i
+                                                    class="fi-rr-angle-small-down"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating
+                                                        Post</a></li>
                                             </ul>
                                         </div>
                                         <div class="box-view-type">
-                                            <a href="{{route('news-list')}}" class="view-type"><img src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
-                                            <a href="{{route('news-grid')}}" class="view-type"><img src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('news-list') }}" class="view-type"><img
+                                                    src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('news-grid') }}" class="view-type"><img
+                                                    src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +141,8 @@
                 <h6 class="text-lg-newsletter">the latest jobs</h6>
                 <div class="box-form-newsletter mt-30">
                     <form class="form-newsletter">
-                        <input type="text" class="input-newsletter" value="" placeholder="contact.alithemes@gmail.com" />
+                        <input type="text" class="input-newsletter" value=""
+                            placeholder="contact.alithemes@gmail.com" />
                         <button class="btn btn-default font-heading icon-send-letter">Subscribe</button>
                     </form>
                 </div>
@@ -148,7 +156,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-
         $(document).ready(function() {
 
             console.log('Document ready'); // Debugging line
@@ -216,7 +223,7 @@
                 e.preventDefault();
                 currentPage = Math.max(currentPage - 1, 1); // Ensure the page does not go below 1
                 console.log("Pager prev clicked, currentPage after decrement:",
-                currentPage); // Debugging line
+                    currentPage); // Debugging line
                 const filters = {
                     categorynews: $('#categorynews').val(),
                 };
@@ -240,8 +247,8 @@
             $('#applyFilterBtn').on('click', function() {
                 const filters = {
                     jobtitle: $('#filterJobtitle').val(),
-                        jenisberita: $('#jenisBeritaSelect').val(),
-                        jenisberitatop: $('#jenisBeritaTop').val(),
+                    jenisberita: $('#jenisBeritaSelect').val(),
+                    jenisberitatop: $('#jenisBeritaTop').val(),
                 };
                 console.log('Apply filter button clicked'); // Debugging line
                 loadContent(1, filters, currentSort); // Fetch content with filters and current sort
@@ -249,8 +256,8 @@
             $('#applyFilterBtnBottom').on('click', function() {
                 const filters = {
                     jobtitle: $('#filterJobtitle').val(),
-                        jenisberita: $('#jenisBeritaSelect').val(),
-                        jenisberitatop: $('#jenisBeritaTop').val(),
+                    jenisberita: $('#jenisBeritaSelect').val(),
+                    jenisberitatop: $('#jenisBeritaTop').val(),
                 };
                 console.log('Apply filter button clicked'); // Debugging line
                 loadContent(1, filters, currentSort); // Fetch content with filters and current sort
@@ -322,7 +329,5 @@
                 }
             });
         }
-
-
     </script>
 @endsection

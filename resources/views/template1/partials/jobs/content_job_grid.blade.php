@@ -48,13 +48,13 @@
         padding: 20px;
     }
 
-    .btn-default {
+    /* .btn-default {
         background-color: #8e7dff;
-        /* Similar to your button color */
+
         color: white;
 
         line-height: 1px;
-    }
+    } */
 </style>
 
 <div class="card-grid-container">
