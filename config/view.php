@@ -33,4 +33,9 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    'templates' => [
+        'template1' => 'layouts.template1.app',
+        'template2' => 'layouts.template2.app',
+    ],
+
 ];
