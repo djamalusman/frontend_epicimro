@@ -2,139 +2,138 @@
 <html lang="en">
 
 <head>
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css') }}">
-
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap-social/bootstrap-social.css') }}">
-
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets2/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets2/css/components.css') }}">
-    <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3') }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
-    </script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page animation | VTcoding</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" type="jpg" href="icon.jpg">
 </head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'jost', sans-serif;
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        display: flex;
+    }
 
-<body style="background-color:#ffffff!important;">
-    <div id="app">
-        <section class="section">
-            <div class="container mt-5">
-                <div class="row">
-                    <div
-                        class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                        <div class="login-brand">
-                            <img src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" alt="logo">
-                        </div>
+    .main {
+        width: 350px;
+        height: 500px;
+        background: red;
+        overflow: hidden;
+        background: url("https://img.freepik.com/premium-vector/abstract-realistic-technology-particle-background_23-2148414765.jpg?w=740") no-repeat center/ cover;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+    }
 
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>Login</h4>
-                            </div>
+    #chk {
+        display: none;
+    }
 
-                            <div class="card-body">
-                                <form method="POST" action="#" class="needs-validation" novalidate="">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email"
-                                            tabindex="1" required autofocus>
-                                        <div class="invalid-feedback">
-                                            Please fill in your email
-                                        </div>
-                                    </div>
+    .signup {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
 
-                                    <div class="form-group">
-                                        <div class="d-block">
-                                            <label for="password" class="control-label">Password</label>
-                                            <div class="float-right">
-                                                <a href="auth-forgot-password.html" class="text-small">
-                                                    Forgot Password?
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <input id="password" type="password" class="form-control" name="password"
-                                            tabindex="2" required>
-                                        <div class="invalid-feedback">
-                                            please fill in your password
-                                        </div>
-                                    </div>
+    label {
+        color: #fff;
+        font-size: 2.3em;
+        justify-content: center;
+        display: flex;
+        margin: 60px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .5s ease-in-out;
+    }
 
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="remember" class="custom-control-input"
-                                                tabindex="3" id="remember-me">
-                                            <label class="custom-control-label" for="remember-me">Remember Me</label>
-                                        </div>
-                                    </div>
+    input {
+        width: 60%;
+        height: 20px;
+        background: #e0dede;
+        justify-content: center;
+        display: flex;
+        margin: 0px auto;
+        padding: 9px;
+        border: none;
+        outline: none;
+        border-radius: 12px;
+    }
 
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            Login
-                                        </button>
-                                    </div>
-                                </form>
-                                <div class="text-center mt-4 mb-3">
-                                    <div class="text-job text-muted">Login With Social</div>
-                                </div>
-                                <div class="row sm-gutters">
-                                    <div class="col-6">
-                                        <a class="btn btn-block btn-social btn-facebook">
-                                            <span class="fab fa-facebook"></span> Facebook
-                                        </a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="btn btn-block btn-social btn-twitter">
-                                            <span class="fab fa-twitter"></span> Twitter
-                                        </a>
-                                    </div>
-                                </div>
+    button {
+        width: 60%;
+        height: 40px;
+        margin: 10px auto;
+        justify-content: center;
+        display: block;
+        color: #fff;
+        background-color: #573b8a;
+        font-size: 1em;
+        font-weight: bold;
+        margin-top: 0px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        transition: .2s ease-in;
+        cursor: pointer;
+    }
 
-                            </div>
-                        </div>
-                        <div class="mt-5 text-muted text-center">
-                            Don't have an account? <a href="auth-register.html">Create One</a>
-                        </div>
-                        <div class="simple-footer">
-                            Copyright &copy; Stisla 2018
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    button:hover {
+        background: #6d44b8;
+    }
+
+    .login {
+        height: 460px;
+        background: #eee;
+        border-radius: 60% / 10%;
+        transform: translateY(-180px);
+        transition: .8s ease-in-out;
+    }
+
+    .login label {
+        color: #573b8a;
+        transform: scale(.6);
+    }
+
+    #chk:checked~.login {
+        transform: translateY(-500px);
+    }
+
+    #chk:checked~.login label {
+        transform: scale(1);
+    }
+
+    #chk:checked~.signup label {
+        transform: scale(.6);
+    }
+</style>
+
+<body>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+            <form>
+                <label for="chk"aria-hidden="true">Sign up</label><br>
+                <input type="text" name="text" placeholder="user name" required=""><br>
+                <input type="email" name="email" placeholder="Email" required=""><br>
+                <input type="password" name="password" placeholder="Password" required=""><br>
+                <button>Sign up</button>
+            </form>
+        </div>
+        <div class="login">
+            <form>
+                <label for="chk"aria-hidden="true">Login</label><br>
+                <input type="email" name="email" placeholder="Email" required=""><br>
+                <input type="password" name="password" placeholder="Password" required=""><br>
+                <button>Login</button>
+            </form>
+        </div>
     </div>
-
-    <!-- General JS Scripts -->
-
-    <script src="{{ asset('assets2/modules/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets2/modules/popper.js') }}"></script>
-    <script src="{{ asset('assets2/modules/tooltip.js') }}"></script>
-    <script src="{{ asset('assets2/modules/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets2/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ asset('assets2/modules/moment.min.js') }}"></script>
-    <script src="{{ asset('assets2/js/stisla.js') }}"></script>
-
-    <!-- JS Libraies -->
-    <script src="{{ asset('assets2/modules/jquery-pwstrength/jquery.pwstrength.min.js') }}"></script>
-    <script src="{{ asset('assets2/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
-
-    <!-- Page Specific JS File -->
-    <script src="{{ asset('assets2/js/page/auth-register.js') }}"></script>
-
-    <!-- Template JS File -->
-    <script src="{{ asset('assets2/js/scripts.js') }}"></script>
-    <script src="{{ asset('assets2/js/custom.js') }}"></script>
-
 </body>
 
 </html>

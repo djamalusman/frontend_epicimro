@@ -436,6 +436,17 @@
             /* Orange color for active dot */
             opacity: 1;
         }
+
+        .btn-defaults {
+            background-color: #f05537;
+
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            text-decoration: none;
+            /* font-weight: bold; */
+            margin-right: 10px;
+        }
     </style>
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -592,7 +603,7 @@
                 </div>
                 <div class="col-lg-6 col-md-5 text-lg-end text-start">
 
-                    <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                    <button class="btn btn-defaults wow animate__ animate__fadeInUp hover-up mt-15 animated"
                         data-wow-delay=".1s"
                         style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                         onclick="window.location.href='{{ route('course-grid') }}'">View
@@ -621,7 +632,7 @@
                 </div>
                 <div class="col-lg-6 col-md-5 text-lg-end text-start">
 
-                    <button class="btn btn-default wow animate__ animate__fadeInUp hover-up mt-15 animated"
+                    <button class="btn btn-defaults wow animate__ animate__fadeInUp hover-up mt-15 animated"
                         data-wow-delay=".1s"
                         style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;font-size:14px;"
                         onclick="window.location.href='{{ route('job-grid') }}'">View

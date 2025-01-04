@@ -1,17 +1,16 @@
-@extends('layouts.app')
+@extends('template1.layouts.app')
 @section('title')
-    {{$title}}
+    {{ $title }}
 @endsection
 @section('content')
-
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
-                <h4>There Are {{$CountJob}} Jobs<br />Here For you!</h4>
+                <h4>There Are {{ $CountJob }} Jobs<br />Here For you!</h4>
                 <div class="row mt-15 mb-40">
                     <div class="col-lg-7 col-md-9">
-                            <span class="text-mutted" style="color: black">Discover your next career move, freelance gig, or
-                                internship</span>
+                        <span class="text-mutted" style="color: black">Discover your next career move, freelance gig, or
+                            internship</span>
                     </div>
                     <div class="col-lg-5 col-md-3 text-lg-end text-start">
                         <ul class="breadcrumbs mt-sm-15">
@@ -25,7 +24,8 @@
                         <div class="col-lg-5">
                             <div class="box-search-job">
                                 <form class="form-search-job">
-                                    <input type="text" id="filterJobtitle"  class="input-search-job" placeholder="Search  Job title" />
+                                    <input type="text" id="filterJobtitle" class="input-search-job"
+                                        placeholder="Search  Job title" />
                                 </form>
                             </div>
                         </div>
@@ -33,33 +33,34 @@
                             <div class="d-flex job-fillter">
                                 <div class="d-block d-lg-flex">
                                     <div class="dropdown">
-                                    <div class="form-group select-style select-style-icon">
-                                        <select id="employeeStatusSelect" class="form-control form-icons select-active">
-                                            <!-- Options will be loaded here via AJAX -->
-                                        </select>
-                                        <i class="fi-rr-briefcase"></i>
-                                    </div>
-                                    </div>
-                                    <div class="dropdown">
-                                    <div class="form-group select-style select-style-icon">
-                                        <select id="provinsiSelect" class="form-control form-icons select-active">
-                                            <!-- Options will be loaded here via AJAX -->
-                                        </select>
-                                        <i class="fi-rr-marker"></i>
-                                    </div>
+                                        <div class="form-group select-style select-style-icon">
+                                            <select id="employeeStatusSelect" class="form-control form-icons select-active">
+                                                <!-- Options will be loaded here via AJAX -->
+                                            </select>
+                                            <i class="fi-rr-briefcase"></i>
+                                        </div>
                                     </div>
                                     <div class="dropdown">
-                                    <div class="form-group select-style select-style-icon">
-                                        <select id="salaryRangeSelectTop" class="form-control form-icons select-active">
-                                             <!-- Options will be loaded here via AJAX -->
-                                        </select>
+                                        <div class="form-group select-style select-style-icon">
+                                            <select id="provinsiSelect" class="form-control form-icons select-active">
+                                                <!-- Options will be loaded here via AJAX -->
+                                            </select>
+                                            <i class="fi-rr-marker"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown">
+                                        <div class="form-group select-style select-style-icon">
+                                            <select id="salaryRangeSelectTop" class="form-control form-icons select-active">
+                                                <!-- Options will be loaded here via AJAX -->
+                                            </select>
 
-                                        <i class=""><img src="assets/imgs/jobs/logos/coins.png" style="width: 25px; height :25px;" /></i>
-                                    </div>
+                                            <i class=""><img src="assets/imgs/jobs/logos/coins.png"
+                                                    style="width: 25px; height :25px;" /></i>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="box-button-find">
-                                    <button  id="applyFilterBtn"  class="btn btn-default float-right">Find Now</button>
+                                    <button id="applyFilterBtn" class="btn btn-default float-right">Find Now</button>
                                 </div>
                             </div>
                         </div>
@@ -87,25 +88,32 @@
                     <div class="content-page">
                         <div class="box-filters-job mt-15 mb-10">
                             <div class="row">
-                                <div class="col-lg-5" >
+                                <div class="col-lg-5">
                                     <div class="showing"></div>
 
                                 </div>
                                 <div class="col-lg-7 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
                                         <div class="dropdown dropdown-sort">
-                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
-                                                <span id="currentSort">Newest Post</span> <i class="fi-rr-angle-small-down"></i>
+                                            <button class="btn dropdown-toggle" type="button" id="dropdownSort"
+                                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                                                <span id="currentSort">Newest Post</span> <i
+                                                    class="fi-rr-angle-small-down"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest Post</a></li>
-                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="newest">Newest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="oldest">Oldest
+                                                        Post</a></li>
+                                                <li><a class="dropdown-item" href="#" data-sort="rating">Rating
+                                                        Post</a></li>
                                             </ul>
                                         </div>
                                         <div class="box-view-type">
-                                            <a href="{{route('job-list')}}" class="view-type"><img src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
-                                            <a href="{{route('job-grid')}}" class="view-type"><img src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('job-list') }}" class="view-type"><img
+                                                    src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
+                                            <a href="{{ route('job-grid') }}" class="view-type"><img
+                                                    src="assets/imgs/theme/icons/icon-list.svg" alt="jobhub" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +144,8 @@
                             <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-15">Location</h5>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-icons"  id="filterLocation"  placeholder="Location" />
+                                    <input type="text" class="form-control form-icons" id="filterLocation"
+                                        placeholder="Location" />
                                     <i class="fi-rr-marker"></i>
                                 </div>
                             </div>
@@ -179,7 +188,8 @@
                                     <select id="salaryRangeSelect" class="form-control form-icons select-active">
                                         <!-- Options will be loaded here via AJAX  -->
                                     </select>
-                                    <i class=""><img src="assets/imgs/jobs/logos/coins.png" style="width: 25px; height :25px;" /></i>
+                                    <i class=""><img src="assets/imgs/jobs/logos/coins.png"
+                                            style="width: 25px; height :25px;" /></i>
                                 </div>
                             </div>
                             <div class="buttons-filter">
@@ -202,7 +212,8 @@
                 <h6 class="text-lg-newsletter">the latest jobs</h6>
                 <div class="box-form-newsletter mt-30">
                     <form class="form-newsletter">
-                        <input type="text" class="input-newsletter" value="" placeholder="contact.alithemes@gmail.com" />
+                        <input type="text" class="input-newsletter" value=""
+                            placeholder="contact.alithemes@gmail.com" />
                         <button class="btn btn-default font-heading icon-send-letter">Subscribe</button>
                     </form>
                 </div>
@@ -216,7 +227,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.getElementById('filterLocation');
 
@@ -287,27 +297,30 @@
             //filterEducation();
             let currentSort = 'newest'; // Default sorting
 
-            function loadContent(page = 1, filters = {jobtitle,lokasi}, sortBy = currentSort) {
+            function loadContent(page = 1, filters = {
+                jobtitle,
+                lokasi
+            }, sortBy = currentSort) {
                 console.log('Success filter:', filters),
-                $.ajax({
-                    url: '/get-content-job-list',
-                    method: 'GET',
-                    data: {
-                        page: page,
-                        ...filters,
-                        sortBy: sortBy
-                    },
-                    success: function(response) {
-                         // Debugging line
-                        $('.content-page .list-recent-jobs').html(response.content);
-                        $('.content-page .paginations').html(response.pagination);
-                        $('.content-page .showing').html(response.showing);
-                        $('.content-page .sort-and-view').html(response.sort_and_view);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching data:', error);
-                    }
-                });
+                    $.ajax({
+                        url: '/get-content-job-list',
+                        method: 'GET',
+                        data: {
+                            page: page,
+                            ...filters,
+                            sortBy: sortBy
+                        },
+                        success: function(response) {
+                            // Debugging line
+                            $('.content-page .list-recent-jobs').html(response.content);
+                            $('.content-page .paginations').html(response.pagination);
+                            $('.content-page .showing').html(response.showing);
+                            $('.content-page .sort-and-view').html(response.sort_and_view);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    });
             }
 
             // Test function call directly
@@ -320,12 +333,12 @@
                 $('#currentSort').text($(this).text()); // Update button text with selected sort
                 console.log('Sort by selected:', currentSort); // Debugging line
                 const filters = {
-                   // jobtype: $('#filterJobtype').val(),
+                    // jobtype: $('#filterJobtype').val(),
                     // location: $('#filterLocation').val(),
                     // jobtitle: $('#filterJobtitle').val(),
                     jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
                     location: (lokasival == '' ? $('#filterLocation').val() : lokasival),
-                     placement: $('.filterPlacement:checked').map(function() {
+                    placement: $('.filterPlacement:checked').map(function() {
                         return $(this).val();
                     }).get(),
                     // employestatus: $('.filterEmployeeStatus:checked').map(function() {
@@ -377,7 +390,7 @@
                 console.log('Pager prev clicked, page:', page); // Debugging line
                 if (page) {
                     const filters = {
-                       // jobtype: $('#filterJobtype').val(),
+                        // jobtype: $('#filterJobtype').val(),
                         // location: $('#filterLocation').val(),
                         // jobtitle: $('#filterJobtitle').val(),
                         jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
@@ -478,7 +491,7 @@
                 loadContent(1, filters, currentSort); // Fetch content with filters and current sort
             });
             $('#resetFilterBtn').on('click', function() {
-               // $('#filterJobtype').val('');
+                // $('#filterJobtype').val('');
                 $('#filterLocation').val('');
                 $('#filterJobtitle').val('');
                 $('#salaryRangeSelect').val('');
@@ -653,6 +666,7 @@
                 }
             });
         }
+
         function loadEmployeeStatusTop() {
             const url = 'load-filter-employeeStatusTop'; // Ganti dengan URL endpoint Anda
 

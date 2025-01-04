@@ -25,7 +25,7 @@ class TranningCourseController extends Controller
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-       return view('course.courselist', $data);
+       return view('template1/course.courselist', $data);
     }
 
     public function CourseGrid()
@@ -38,7 +38,7 @@ class TranningCourseController extends Controller
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-       return view('course.coursegrid', $data);
+       return view('template1/course.coursegrid', $data);
     }
 
     public function detailCourse($id, $slug, Request $request)
@@ -94,7 +94,7 @@ class TranningCourseController extends Controller
         $data['share_buttons'] = $share_buttons;
         $data['getdataDetail'] = $detail;
 
-        return view('course.detailcourse', $data);
+        return view('template1/course.detailcourse', $data);
     }
 
 
@@ -122,13 +122,13 @@ class TranningCourseController extends Controller
 
         // Render HTML menggunakan Blade View
         if ($tabId == 1 ) {
-            $htmlContent = view('partials.course.tab_content_about_training', compact('datadetail'))->render();
+            $htmlContent = view('template1/partials.course.tab_content_about_training', compact('datadetail'))->render();
         }
         if ($tabId == 2 ) {
-            $htmlContent = view('partials.course.tab_content_trainer', compact('datadetail'))->render();
+            $htmlContent = view('template1/partials.course.tab_content_trainer', compact('datadetail'))->render();
         }
         if ($tabId == 3 ) {
-            $htmlContent = view('partials.course.tab_content_career', compact('datadetail'))->render();
+            $htmlContent = view('template1/partials.course.tab_content_career', compact('datadetail'))->render();
         }
 
         // Kembalikan hasil HTML dalam JSON
@@ -285,19 +285,19 @@ class TranningCourseController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
 
         return response()->json([
-            'content' => view('partials.course.content_course_list', ['data' => $data])->render(),
-            'pagination' => view('partials.pagination', ['data' => $data])->render(),
+            'content' => view('template1/partials.course.content_course_list', ['data' => $data])->render(),
+            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
             'showing' => $showing,
             'sort_and_view' => $sortAndView
         ]);
@@ -458,22 +458,22 @@ class TranningCourseController extends Controller
         $to = min($data->currentPage() * $data->perPage(), $data->total());
 
         // Render the 'showing' view with the calculated range
-        $showing = view('partials.showing', [
+        $showing = view('template1/partials.showing', [
             'from' => $from,
             'to' => $to,
             'total' => $data->total()
         ])->render();
 
-        $sortAndView = view('partials.sort_and_view', [
+        $sortAndView = view('template1/partials.sort_and_view', [
             'sortBy' => $filters['sortBy'] ?? 'Newest Post'
         ])->render();
         $listfiles = dtc_File_TrainingCourseModel::orderBy('nama', 'asc')->get();
         return response()->json([
-            'content' => view('partials..course.content_course_grid', [
+            'content' => view('template1/partials..course.content_course_grid', [
                 'data' => $data,
                 'listfiles' => $listfiles
             ])->render(),
-            'pagination' => view('partials.pagination', [
+            'pagination' => view('template1/partials.pagination', [
                 'data' => $data
             ])->render(),
             'showing' => $showing,
@@ -536,7 +536,7 @@ class TranningCourseController extends Controller
         $data['share_buttons'] = $share_buttons;
         $data['getdataDetail'] = $detail;
 
-        return view('course.registerCourse', $data);
+        return view('template1/course.registerCourse', $data);
     }
     public function getDatabackgroundeducation()
     {

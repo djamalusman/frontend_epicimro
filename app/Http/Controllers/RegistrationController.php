@@ -21,7 +21,7 @@ class RegistrationController extends Controller
         // $data['Count'] = $dataCount->count();
         // $data['listRegistration'] = $dataCount;
 
-       return view('registration.index', $data);
+       return view('template1/registration.index', $data);
 
     }
 }
