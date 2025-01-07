@@ -5,7 +5,7 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap-social/bootstrap-social.css') }}">
 

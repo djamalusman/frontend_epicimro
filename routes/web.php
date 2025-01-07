@@ -71,4 +71,20 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 
 // registratis user
 
+// Menampilkan halaman login
 Route::get('login', [UserController::class, 'login'])->name('login');
+
+// Halaman dashboard yang hanya bisa diakses setelah login
+Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
+// Menangani signup (POST request)
+// Route::post('/signup', [UserController::class, 'signUp'])->name('signup');
+Route::post('/signup', [UserController::class, 'signUp'])->name('signup')->middleware('web');
+
+// Menangani signin (POST request)
+Route::post('/signin', [UserController::class, 'signIn'])->name('signin');
+
+// Menangani logout (menghapus session)
+
+
+

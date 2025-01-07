@@ -1,11 +1,19 @@
-const sign_in_btn = document.querySelector("#sign-in-btn");
-const sign_up_btn = document.querySelector("#sign-up-btn");
-const container = document.querySelector(".container");
+const toggleButtons = document.querySelectorAll(".toggle-form");
+const formContent = document.querySelector(".form-content");
+const loginForm = document.querySelector(".login-form");
+const signupForm = document.querySelector(".signup-form");
 
-sign_up_btn.addEventListener("click", () => {
-  container.classList.add("sign-up-mode");
-});
+toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        // Toggle the active class on both forms
+        loginForm.classList.toggle("active");
+        signupForm.classList.toggle("active");
 
-sign_in_btn.addEventListener("click", () => {
-  container.classList.remove("sign-up-mode");
+        // Adjust the sliding position of the form content
+        if (signupForm.classList.contains("active")) {
+            formContent.style.transform = "translateX(-50%)"; // Slide to show signup form
+        } else {
+            formContent.style.transform = "translateX(0%)"; // Slide back to login form
+        }
+    });
 });
