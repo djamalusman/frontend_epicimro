@@ -11,6 +11,7 @@ use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\SertifikatController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', [WelcomeController::class, 'welcome']);
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
@@ -71,20 +72,13 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 
 // registratis user
 
-// Menampilkan halaman login
-Route::get('login', [UserController::class, 'login'])->name('login');
 
-// Halaman dashboard yang hanya bisa diakses setelah login
-Route::get('dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UserController::class, 'login'])->name('signIn');
+Route::post('/signup', [UserController::class, 'signup'])->name('signup');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-// Menangani signup (POST request)
-// Route::post('/signup', [UserController::class, 'signUp'])->name('signup');
-Route::post('/signup', [UserController::class, 'signUp'])->name('signup')->middleware('web');
-
-// Menangani signin (POST request)
-Route::post('/signin', [UserController::class, 'signIn'])->name('signin');
-
-// Menangani logout (menghapus session)
 
 
 
