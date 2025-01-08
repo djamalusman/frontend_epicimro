@@ -2,29 +2,37 @@
 <html class="no-js" lang="en">
 
 <head>
+    <title>Dashboard</title>
+
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css')}}" />
+
+
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap-social/bootstrap-social.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets2/modules/jqvmap/dist/jqvmap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets2/modules/summernote/summernote-bs4.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('assets2/modules/owlcarousel2/dist/assets/owl.carousel.min.css')}}"/>
+    <linkrel="stylesheet"  href="{{ asset('assets2/modules/owlcarousel2/dist/assets/owl.theme.default.min.css')}}"/>
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets2/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets2/css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets2/css/style.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets2/css/components.css')}}" />
     <!-- Start GA -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3') }}"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"
+    ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
+      gtag("config", "UA-94034622-3");
+      
     </script>
-
 </head>
 
 <body style="background-color: white;">
@@ -47,7 +55,7 @@
         </div>
     </div>
     <!-- End Content -->
-
+    @stack('js')
     @include('template2.includes.script')
 </body>
 

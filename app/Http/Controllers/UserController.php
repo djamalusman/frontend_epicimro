@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\UserModel;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -12,26 +11,41 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
      // Menampilkan halaman login
-     public function login()
+     public function showLoginForm()
      {
-         return view('template2.login');  // Menampilkan halaman login
+        if (Auth::check()) {
+            // Pengguna sudah login
+            $user = Auth::user(); // Mengambil data pengguna yang sedang login
+            return redirect()->route('dashboard');
+        } else {
+            return view('template2.login');
+        }
+         
      }
-
-     // Menampilkan halaman dashboard (setelah login)
-     public function dashboard()
+ 
+     // Handle Login
+     public function login(Request $request)
      {
-         // Memeriksa apakah user sudah login melalui session
-         if (!session('user')) {
-             return redirect()->route('login');  // Redirect ke halaman login jika belum login
+         $request->validate([
+             'email' => 'required|email',
+             'password' => 'required|min:6',
+         ]);
+ 
+         $credentials = $request->only('email', 'password');
+ 
+         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+             // Login sukses
+             session(['email' => $request->email]);
+             return response()->json(['message' => 'Login successful']);
+         } else {
+             // Login gagal
+             return response()->json(['error' => 'Invalid credentials']);
          }
-
-         return view('dashboard');  // Menampilkan halaman dashboard
      }
-
-   
-
-     // Menangani sign-in (login)
-     public function signUp(Request $request)
+ 
+     // Handle Signup
+    public function signUp(Request $request)
      {
          // Validasi data form registrasi
          $validator = Validator::make($request->all(), [
@@ -70,14 +84,12 @@ class UserController extends Controller
              'message' => 'Registration successful!',
          ]);
      }
-     
-
-     // Menangani logout
+     // Logout
      public function logout()
      {
-         Auth::logout();  // Logout pengguna
-         session()->flush();  // Menghapus data session
-
-         return redirect()->route('login');  // Redirect ke halaman login
+         Auth::logout();
+         return redirect()->route('login');
      }
+ 
+     
 }

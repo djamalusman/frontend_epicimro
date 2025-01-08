@@ -28,8 +28,8 @@ class WelcomeController extends Controller
         ->select('news_detail.*', 'm_news.nama as category') ;
         $data ['news'] = $query->where('news_detail.status',1)->orderBy('news_detail.updated_at', 'desc')->limit(6)->get();
 
-
-
+        // $email = session('email');
+        //  dd($email);   
 
         return view('template1.welcome',$data);
     }
