@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Menu_client;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,27 +15,20 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil informasi pengguna dari sesi
-        $email = session('email');
-        
-        // $user = User::where('email', $email)->first();
-        // dd($user->name);
-        // Contoh data tambahan untuk dashboard
         $data = [
-            'user_name' => $email,
-            'recent_activities' => [
-                'Login terakhir pada ' . now()->format('d-m-Y H:i:s'),
-                'Mengubah profil',
-                'Mengakses laporan keuangan',
-            ],
-            'statistics' => [
-                'total_users' => 100, // Ganti dengan data dari database
-                'total_posts' => 50,  // Ganti dengan data dari database
-                'active_sessions' => 10, // Ganti dengan data dari database
-            ]
+            'user_name' => session('email'),
+            // Tambahkan data lainnya
         ];
 
-        // Tampilkan view dashboard dengan data
-        return view('template2.dashboard.index', compact('data'));
+        $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
+        $currentUrl = url()->current();
+        $response = response()->view('template2.dashboard.index', compact('data', 'menus','currentUrl'));
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+        return $response;
+        // php artisan migrate --path=/database/migrations/2025_01_09_174154_create_menus_client_table.php
+
     }
 }

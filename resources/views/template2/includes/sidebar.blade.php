@@ -6,16 +6,32 @@
         <a href="index.html">St</a>
     </div>
     <ul class="sidebar-menu">
-        <li class="menu-header">Dashboard</li>
-        <li class="dropdown active">
-            <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-            <ul class="dropdown-menu">
-                <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-                <li class=active><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-            </ul>
-        </li>
-        <li class="menu-header">Starter</li>
-        <li class="dropdown">
+        @foreach ($menus as $menu)
+            @if ($menu->is_header)
+                <li class="menu-header">{{ $menu->name }}</li>
+            @else
+                @php
+                    // Cek apakah parent atau salah satu anaknya aktif
+                    $isActiveParent = $menu->url && $currentUrl === url($menu->url);
+                    $isActiveChild = $menu->children->contains(fn($child) => $currentUrl === url($child->url));
+                @endphp
+                <li class="dropdown {{ $isActiveParent || $isActiveChild ? 'active' : '' }}">
+                    <a href="{{ $menu->url ?? '#' }}" class="nav-link has-dropdown">
+                        <i class="{{ $menu->icon }}"></i><span>{{ $menu->name }}</span>
+                    </a>
+                    @if ($menu->children->isNotEmpty())
+                        <ul class="dropdown-menu">
+                            @foreach ($menu->children as $child)
+                                <li class="{{ $currentUrl === url($child->url) ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ url($child->url) }}">{{ $child->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </li>
+            @endif
+        @endforeach
+        {{-- <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                 <span>Layout</span></a>
             <ul class="dropdown-menu">
@@ -149,7 +165,7 @@
                 <li><a href="utilities-subscribe.html">Subscribe</a></li>
             </ul>
         </li>
-        <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li>
+        <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li> --}}
     </ul>
 
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

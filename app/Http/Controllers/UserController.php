@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
      // Menampilkan halaman login
@@ -16,7 +17,7 @@ class UserController extends Controller
         if (Auth::check()) {
             // Pengguna sudah login
             $user = Auth::user(); // Mengambil data pengguna yang sedang login
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboardindex');
         } else {
             return view('template2.login');
         }
@@ -32,11 +33,13 @@ class UserController extends Controller
          ]);
 
          $credentials = $request->only('email', 'password');
-
+         $user = User::where('email', $request->email)->first();
          if (Auth::attempt($credentials)) {
             $user = Auth::user();
+
              // Login sukses
-             session(['email' => $request->email]);
+             session(['email' => $user->email, 'name' => $user->name]);
+
              return response()->json(['message' => 'Login successful']);
          } else {
              // Login gagal
@@ -85,11 +88,15 @@ class UserController extends Controller
          ]);
      }
      // Logout
-     public function logout()
-     {
-         Auth::logout();
-         return redirect()->route('login');
-     }
+    public function logout()
+    {
+        // Menghapus session email jika ada
+        Session::flush();
+
+        // Redirect ke halaman login setelah logout
+        return redirect()->route('login');
+    }
+
 
 
 }

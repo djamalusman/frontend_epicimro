@@ -44,9 +44,9 @@
                              </li>
                              <li class="has">
                                  <a href="{{ route('login') }}" class="btn btn-default ml-150"
-                                     style="color: white;">Sign 
+                                     style="color: white;">Sign
                                      in</a>
-                                     {{-- @if(session('email'))
+                                 {{-- @if (session('email'))
                                         <p>Welcome, {{ session('email') }}</p>
                                     @else
                                         <p>You are not logged in.</p>

@@ -88,7 +88,7 @@
     <div id="errorModalSignIn"
         style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
         <div style="background: white; padding: 20px; border-radius: 5px; text-align: center;">
-            <p id="errorMessage"></p>
+            <p id="errorMessageSigIn"></p>
             <button id="modalCloseBtnSignIn">Close</button>
         </div>
     </div>
@@ -96,7 +96,7 @@
 
     <script src="{{ asset('assetsformlogin/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script type="text/javascript">
         document.getElementById('signUpForm').addEventListener('submit', async (e) => {
             e.preventDefault(); // Mencegah submit form standar
 
@@ -176,14 +176,15 @@
                         successModal.style.display = 'none';
                         // Redirect ke dashboard
                         setTimeout(() => {
-                            window.location.href = '{{ route('dashboard') }}';
+                            window.location.href = '{{ route('dashboardindex') }}';
                         }, 1000); // Dengan delay 1 detik
                     });
                 }
                 // Jika ada error
                 else if (data.error) {
                     const errorModal = document.getElementById('errorModalSignIn');
-                    document.getElementById('errorMessage').innerText = data.error || 'Something went wrong!';
+                    document.getElementById('errorMessageSigIn').innerText = data.error ||
+                        'Something went wrong!';
                     errorModal.style.display = 'flex';
                     document.getElementById('modalCloseBtnSignIn').addEventListener('click', () => {
                         errorModal.style.display = 'none';
