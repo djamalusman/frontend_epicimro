@@ -20,9 +20,9 @@ class UserController extends Controller
         } else {
             return view('template2.login');
         }
-         
+
      }
- 
+
      // Handle Login
      public function login(Request $request)
      {
@@ -30,9 +30,9 @@ class UserController extends Controller
              'email' => 'required|email',
              'password' => 'required|min:6',
          ]);
- 
+
          $credentials = $request->only('email', 'password');
- 
+
          if (Auth::attempt($credentials)) {
             $user = Auth::user();
              // Login sukses
@@ -43,7 +43,7 @@ class UserController extends Controller
              return response()->json(['error' => 'Invalid credentials']);
          }
      }
- 
+
      // Handle Signup
     public function signUp(Request $request)
      {
@@ -53,24 +53,24 @@ class UserController extends Controller
              'email' => 'required|email',
              'password' => 'required|min:6', // Validasi password minimal 6 karakter
          ]);
-     
+
          // Jika validasi gagal
          if ($validator->fails()) {
              return response()->json([
                  'error' => $validator->errors()->first(),
              ]);
          }
-     
+
          // Periksa apakah email sudah terdaftar
          if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
              return response()->json([
                  'error' => 'Email sudah terdaftar!',
              ]);
          }
-     
+
          // Generate ID user
          $no = User::count() + 1;
-     
+
          // Buat user baru
          User::create([
              'id' => $no,
@@ -78,7 +78,7 @@ class UserController extends Controller
              'email' => $request->email,
              'password' => Hash::make($request->password),
          ]);
-     
+
          // Berikan respons sukses
          return response()->json([
              'message' => 'Registration successful!',
@@ -90,6 +90,6 @@ class UserController extends Controller
          Auth::logout();
          return redirect()->route('login');
      }
- 
-     
+
+
 }

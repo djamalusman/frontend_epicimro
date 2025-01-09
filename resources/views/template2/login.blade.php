@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('assetsformlogin/style.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    
+
     <title>Sign in & Sign up Form</title>
 </head>
 
@@ -16,7 +16,7 @@
         <div class="form-wrapper">
             <div class="form-content">
                 <!-- Login Form -->
-                <form  id="signInForm" class="form login-form active" method="POST" action="{{ route('signIn') }}">
+                <form id="signInForm" class="form login-form active" method="POST" action="{{ route('signIn') }}">
                     @csrf
                     <h2>Welcome Back!</h2>
                     <p>Login to your account to continue</p>
@@ -29,14 +29,14 @@
                         <span class="input-icon">🔒</span>
                     </div>
                     <button type="submit" class="btn">Login</button>
-                    
+
                     <p class="switch-text">
                         <br>
-                            Don’t have an account? <span class="toggle-form">Sign Up</span>
+                        Don’t have an account? <span class="toggle-form">Sign Up</span>
                         </br>
                     </p>
                 </form>
-        
+
                 <!-- Signup Form -->
                 <form id="signUpForm" class="form signup-form" method="POST" action="{{ route('signup') }}">
                     @csrf
@@ -55,10 +55,10 @@
                         <span class="input-icon">🔒</span>
                     </div>
                     <button type="submit" class="btn">Sign Up</button>
-                    
+
                     <p class="switch-text">
                         <br>
-                            Already have an account? <span class="toggle-form">Login</span>
+                        Already have an account? <span class="toggle-form">Login</span>
                         </br>
                     </p>
                 </form>
@@ -72,7 +72,8 @@
             <button id="modalCloseSucessBtn">OK</button>
         </div>
     </div>
-    <div id="errorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+    <div id="errorModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
         <div style="background: white; padding: 20px; border-radius: 5px; text-align: center;">
             <p id="errorMessage"></p>
             <button id="modalCloseBtn">Close</button>
@@ -84,20 +85,20 @@
             <button id="modalCloseSucessBtnSignIn">OK</button>
         </div>
     </div>
-    <div id="errorModalSignIn" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+    <div id="errorModalSignIn"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
         <div style="background: white; padding: 20px; border-radius: 5px; text-align: center;">
             <p id="errorMessage"></p>
             <button id="modalCloseBtnSignIn">Close</button>
         </div>
     </div>
 
-    
+
     <script src="{{ asset('assetsformlogin/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-           
-           document.getElementById('signUpForm').addEventListener('submit', async (e) => {
-            e.preventDefault();  // Mencegah submit form standar
+        document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Mencegah submit form standar
 
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
@@ -108,9 +109,14 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
                     },
-                    body: JSON.stringify({ username, email, password })
+                    body: JSON.stringify({
+                        username,
+                        email,
+                        password
+                    })
                 });
 
                 const data = await response.json();
@@ -131,7 +137,7 @@
                     errorModal.style.display = 'flex';
                     document.getElementById('modalCloseBtn').addEventListener('click', () => {
                         errorModal.style.display = 'none';
-                       
+
                     });
                 }
 
@@ -142,7 +148,7 @@
 
 
         document.getElementById('signInForm').addEventListener('submit', async (e) => {
-            e.preventDefault();  // Mencegah submit form standar
+            e.preventDefault(); // Mencegah submit form standar
 
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
@@ -151,9 +157,13 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
                     },
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({
+                        email,
+                        password
+                    }),
                 });
 
                 const data = await response.json();
@@ -166,7 +176,7 @@
                         successModal.style.display = 'none';
                         // Redirect ke dashboard
                         setTimeout(() => {
-                            window.location.href = '{{ route('dashboard') }}'; 
+                            window.location.href = '{{ route('dashboard') }}';
                         }, 1000); // Dengan delay 1 detik
                     });
                 }
@@ -177,7 +187,7 @@
                     errorModal.style.display = 'flex';
                     document.getElementById('modalCloseBtnSignIn').addEventListener('click', () => {
                         errorModal.style.display = 'none';
-                       
+
                     });
                 }
 
@@ -185,9 +195,6 @@
                 console.error('Error:', error);
             }
         });
-
-     
-
     </script>
 </body>
 

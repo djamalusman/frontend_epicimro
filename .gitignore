@@ -1,2 +1,8 @@
 
 .env
+docker-compose.yml
+Dockerfile
+docker/nginx/conf.d/default.conf
+vendor/composer/autoload_static.php
+vendor/composer/autoload_classmap.php
+vendor/composer/autoload_classmap.php
