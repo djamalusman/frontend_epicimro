@@ -42,20 +42,16 @@
                              <li class="has">
                                  <a href="{{ route('registration') }}">Join Us</a>
                              </li>
-                             <li class="has">
-                                 <a href="{{ route('login') }}" class="btn btn-default ml-150"
-                                     style="color: white;">Sign
-                                     in</a>
-                                 {{-- @if (session('email'))
-                                        <p>Welcome, {{ session('email') }}</p>
-                                    @else
-                                        <p>You are not logged in.</p>
-                                    @endif --}}
-                             </li>
-                             <li class="has">
-                                 <a href="#" class="btn btn-default  ml-10 hover-up" style="color: white;">Sign
-                                     up</a>
-                             </li>
+                             @if (session('email'))
+                             @else
+                                 <li class="has">
+                                     <a href="{{ route('login') }}" class="btn btn-default ml-150"
+                                         style="color: white;">Sign
+                                         in</a>
+
+                                 </li>
+                             @endif
+
 
                          </ul>
                      </nav>
@@ -82,18 +78,35 @@
 
  <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
      <div class="mobile-header-wrapper-inner">
-         <div class="mobile-header-top">
-             <div class="user-account">
-                 <div class="content">
-                     <h4><b>Menu</b></h4>
+         @if (session('email'))
+             <div class="mobile-header-top">
+                 <div class="user-account">
+                     <img src="assets/imgs/avatar/ava_1.png" alt="jobhub" />
+                     <div class="content">
+                         <h6 class="user-name">{{ session('name') }}</h6>
+                         <p class="font-xs text-muted">Welcome Back</p>
+                     </div>
+                 </div>
+                 <div class="burger-icon burger-icon-white">
+                     <span class="burger-icon-top"></span>
+                     <span class="burger-icon-mid"></span>
+                     <span class="burger-icon-bottom"></span>
                  </div>
              </div>
-             <div class="burger-icon burger-icon-white">
-                 <span class="burger-icon-top"></span>
-                 <span class="burger-icon-mid"></span>
-                 <span class="burger-icon-bottom"></span>
+         @else
+             <div class="mobile-header-top">
+                 <div class="user-account">
+                     <div class="content">
+                         <h4><b>Menu</b></h4>
+                     </div>
+                 </div>
+                 <div class="burger-icon burger-icon-white">
+                     <span class="burger-icon-top"></span>
+                     <span class="burger-icon-mid"></span>
+                     <span class="burger-icon-bottom"></span>
+                 </div>
              </div>
-         </div>
+         @endif
          <div class="mobile-header-content-area">
              <div class="perfect-scroll">
 
@@ -120,14 +133,20 @@
 
                          </ul>
                      </nav>
-                     <div class="mobile-account">
-                         <h6 class="mb-10">Your Account</h6>
-                         <ul class="mobile-menu font-heading">
+                     @if (session('email'))
+                         <li class="has">
+                             <a href="{{ route('dashboardindex') }}">Account</a>
+                         </li>
+                     @else
+                         <div class="mobile-account">
+                             <h6 class="mb-10">Your Account</h6>
+                             <ul class="mobile-menu font-heading">
 
-                             <li><a href="#">Sign In</a></li>
-                             <li><a href="#">Sign Up</a></li>
-                         </ul>
-                     </div>
+                                 <li><a href="#">Sign In</a></li>
+                                 <li><a href="#">Sign Up</a></li>
+                             </ul>
+                         </div>
+                     @endif
                      <!-- mobile menu end -->
                  </div>
 

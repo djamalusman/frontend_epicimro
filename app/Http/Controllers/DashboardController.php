@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $data = [
             'user_name' => session('email'),
-            // Tambahkan data lainnya
+            'title' => 'Dashboard',
         ];
 
         $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();

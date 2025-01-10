@@ -12,6 +12,9 @@ use App\Http\Controllers\SertifikatController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JobClientController;
+use App\Http\Controllers\TrainingClientController;
+use App\Http\Controllers\ProfessionalTrainingClientController;
 
 Route::get('/', [WelcomeController::class, 'welcome']);
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
@@ -76,9 +79,17 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('signIn');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
-Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
 
+
+Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
+Route::get('/trainingclientindex', [TrainingClientController::class, 'indextrainingclient'])->name('trainingclientindex');
+Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
+
+//php artisan make:controller JobClientController
+//php artisan make:controller TrainingClientController
+//php artisan make:controller ProfessionalTrainingClientController
 
 
 
