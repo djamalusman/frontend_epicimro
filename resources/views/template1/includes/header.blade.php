@@ -133,7 +133,7 @@
 
                          </ul>
                      </nav>
-                     @if (session('email'))
+                     @if (session('name'))
                          <li class="has">
                              <a href="{{ route('dashboardindex') }}">Account</a>
                          </li>
