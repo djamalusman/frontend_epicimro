@@ -84,8 +84,13 @@ Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware
 
 
 Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
+Route::get('/viewapplyjob//{id}', [JobClientController::class, 'ViewApplyJob'])->name('viewapplyjob');
+Route::post('/savedatajobclient', [JobClientController::class, 'StoreJobClient'])->name('savedatajobclient');
+
 Route::get('/trainingclientindex', [TrainingClientController::class, 'indextrainingclient'])->name('trainingclientindex');
+
 Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
+
 
 //php artisan make:controller JobClientController
 //php artisan make:controller TrainingClientController
