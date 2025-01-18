@@ -1303,15 +1303,15 @@ h6 .badge {
   color: #fff !important; }
 
 .btn-primary, .btn-primary.disabled {
-  box-shadow: 0 2px 6px #acb5f6;
-  background-color: #6777ef;
-  border-color: #6777ef; }
+  box-shadow: 0 2px 6px #f05537;
+  background-color: #f05537;
+  border-color: #f05537; }
   .btn-primary:focus, .btn-primary.disabled:focus {
-    background-color: #394eea !important; }
+    background-color: #f05537 !important; }
     .btn-primary:focus:active, .btn-primary.disabled:focus:active {
-      background-color: #394eea !important; }
+      background-color: #f05537 !important; }
   .btn-primary:active, .btn-primary:hover, .btn-primary.disabled:active, .btn-primary.disabled:hover {
-    background-color: #394eea !important; }
+    background-color: #f05537 !important; }
 
 .btn-outline-primary, .btn-outline-primary.disabled {
   border-color: #6777ef;
@@ -1508,7 +1508,7 @@ h6 .badge {
   z-index: 890;
   background-color: transparent; }
   .navbar.active {
-    background-color: #6777ef;
+    background-color: #f05537;
     box-shadow: rgba(103, 119, 239, 0.2) rgba(0, 0, 0, 0.03); }
 
 .navbar-bg {
@@ -1518,7 +1518,7 @@ h6 .badge {
   left: 0;
   width: 100%;
   height: 115px;
-  background-color: #6777ef;
+  background-color: #f05537;
   z-index: -1; }
 
 .navbar {
@@ -2606,7 +2606,7 @@ body.layout-3 .main-footer {
     display: block; }
     .main-sidebar .sidebar-menu li.menu-header {
       padding: 3px 15px;
-      color: #bcc1c6;
+      color: #000000;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 1.3px;
@@ -2621,7 +2621,7 @@ body.layout-3 .main-footer {
       padding: 0 20px;
       width: 100%;
       letter-spacing: .3px;
-      color: #868e96;
+      color: #000000;
       text-decoration: none; }
       .main-sidebar .sidebar-menu li a .badge {
         float: right;
@@ -2666,15 +2666,15 @@ body.layout-3 .main-footer {
       box-shadow: none;
       background-color: transparent; }
       .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
-        color: #868e96;
+        color: #000000;
         height: 35px;
         padding-left: 65px;
         font-weight: 400; }
         .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
-          color: #6777ef;
+          color: #f05537;
           background-color: inherit; }
       .main-sidebar .sidebar-menu li ul.dropdown-menu li.active > a {
-        color: #6777ef;
+        color: #f05537;
         font-weight: 600; }
       .main-sidebar .sidebar-menu li ul.dropdown-menu li a i {
         margin-top: 1px;

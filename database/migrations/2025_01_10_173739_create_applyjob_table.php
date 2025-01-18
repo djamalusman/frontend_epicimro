@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('applyjob', function (Blueprint $table) {
             $table->id(); // ID auto increment
             $table->unsignedBigInteger('idusers');
+            $table->unsignedBigInteger('idriwayatkarir');
             $table->unsignedBigInteger('idjob');
             $table->text('cover_letter');
             $table->string('cv_path');

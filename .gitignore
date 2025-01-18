@@ -6,3 +6,10 @@ docker/nginx/conf.d/default.conf
 vendor/composer/autoload_static.php
 vendor/composer/autoload_classmap.php
 vendor/composer/autoload_classmap.php
+.idea/vcs.xml
+.idea/phpunit.xml
+.idea/php.xml
+.idea/modules.xml
+.idea/frontend_epicimro.iml
+.idea/commandlinetools/Laravel_11_01_25_14_22.xml
+.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd

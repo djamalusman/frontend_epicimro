@@ -23,7 +23,9 @@
 <script src="{{ asset('assets2/js/page/modules-datatables.js') }}"></script>
 {{-- <script src="{{ asset('assets2/js/page/index.js') }}"></script>
 <script src="{{ asset('assets2/js/page/modules-datatables.js') }}"></script> --}}
-
+<script src="{{ asset('assets2/js/page/bootstrap-modal.js')}}"></script>
+<script src="{{ asset('assets2//modules/prism/prism.js')}}"></script>
+<script src="{{ asset('assets2/modules/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- Template JS File -->
 <script src="{{ asset('assets2/js/scripts.js') }}"></script>
 <script src="{{ asset('assets2/js/custom.js') }}"></script>

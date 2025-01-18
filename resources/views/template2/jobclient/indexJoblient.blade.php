@@ -1,4 +1,5 @@
-@extends('template2.layouts.app') @section('title')
+@extends('template2.layouts.app')
+@section('title')
     Job
 @endsection
 @section('content')
