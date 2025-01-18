@@ -34,7 +34,7 @@ class JobClientController extends Controller
 
     }
 
-    public function ViewApplyJob($idjob)
+    public function ViewApplyJob(Request $request,$idjob)
     {
         $data = [
             'user_name' => session('email'),

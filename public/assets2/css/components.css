@@ -2019,12 +2019,12 @@ tr:first-child > td > .fc-day-grid-event {
   background-color: #e3eaef;
 }
 .wizard-steps .wizard-step.wizard-step-active {
-  box-shadow: 0 2px 6px #acb5f6;
-  background-color: #6777ef;
+  box-shadow: 0 2px 6px #f05537;
+  background-color: #f05537;
   color: #fff;
 }
 .wizard-steps .wizard-step.wizard-step-active:before {
-  background-color: #6777ef;
+  background-color: #f05537;
   color: #fff;
 }
 .wizard-steps .wizard-step.wizard-step-success {
