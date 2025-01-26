@@ -97,6 +97,10 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
-
+    public function redirectToLogin()
+    {
+        session()->flash('session_expired', 'Your session has expired. Please log in again.');
+        return redirect()->route('login');
+    }
 
 }

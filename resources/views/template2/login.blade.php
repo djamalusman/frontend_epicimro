@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
     <div class="main-container">
         <div class="form-wrapper">
             <div class="form-content">
@@ -65,6 +66,8 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+   
     <div id="successModal" class="modal" style="display: none;">
         <div class="modal-content">
             <h2>Pendaftaran Berhasil</h2>
@@ -96,106 +99,145 @@
 
     <script src="{{ asset('assetsformlogin/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <script type="text/javascript">
-        document.getElementById('signUpForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); // Mencegah submit form standar
+    @if(session('session_expired'))
+        
+        Swal.fire({
+            icon: 'warning',
+            title: 'Session Expired',
+            text: "{{ session('session_expired') }}",
+            confirmButtonText: 'OK'
+        });
+    @endif
+    document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+        e.preventDefault(); // Mencegah submit form standar
 
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        // Ambil nilai dari input form
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-            try {
-                const response = await fetch('{{ route('signup') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                            'content')
-                    },
-                    body: JSON.stringify({
-                        username,
-                        email,
-                        password
-                    })
-                });
+        try {
+            // Kirim permintaan ke server
+            const response = await fetch('{{ route("signup") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content')
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password
+                }) // Kirim data sebagai JSON
+            });
 
-                const data = await response.json();
-
-                // Jika sukses
-                if (data.message) {
-                    const successModal = document.getElementById('successModal');
-                    successModal.style.display = 'flex';
-                    document.getElementById('modalCloseSucessBtn').addEventListener('click', () => {
-                        successModal.style.display = 'none';
-                        window.location.reload(); // Reload halaman
-                    });
-                }
-                // Jika ada error
-                else if (data.error) {
-                    const errorModal = document.getElementById('errorModal');
-                    document.getElementById('errorMessage').innerText = data.error || 'Something went wrong!';
-                    errorModal.style.display = 'flex';
-                    document.getElementById('modalCloseBtn').addEventListener('click', () => {
-                        errorModal.style.display = 'none';
-
-                    });
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
+            // Periksa apakah respons berhasil
+            if (!response.ok) {
+                const errorMessage = `Error ${response.status}: ${response.statusText}`;
+                throw new Error(errorMessage);
             }
+
+            // Parsing respons JSON
+            const data = await response.json();
+
+            // Jika pendaftaran sukses
+            if (data.message) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pendaftaran Berhasil',
+                    text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
+                    confirmButtonText: 'OK'
+                });
+            }
+            // Jika terdapat error dari server
+            else if (data.error) {
+                showErrorModal(data.error || 'Something went wrong!');
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+            showErrorModal(error.message || 'An unexpected error occurred.');
+        }
+    });
+
+    // Fungsi untuk menampilkan modal error
+    function showErrorModal(errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: errorMessage,
+            confirmButtonText: 'Close'
+        });
+    }
+
+
+
+    document.getElementById('signInForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Mencegah submit form standar
+
+    // Ambil data dari input form
+    const email = document.getElementById('signInEmail').value;
+    const password = document.getElementById('signInPassword').value;
+
+    try {
+        // Kirim permintaan ke server
+        const response = await fetch('{{ route("signIn") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                email,
+                password
+            }) // Kirim data sebagai JSON
         });
 
+        // Periksa jika respons tidak berhasil
+        if (!response.ok) {
+            const errorMessage = `Error ${response.status}: ${response.statusText}`;
+            throw new Error(errorMessage); // Lempar error untuk ditangani oleh catch
+        }
 
-        document.getElementById('signInForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); // Mencegah submit form standar
+        // Parsing respons JSON
+        const data = await response.json();
 
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            try {
-                const response = await fetch('{{ route('signIn') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                            'content')
-                    },
-                    body: JSON.stringify({
-                        email,
-                        password
-                    }),
-                });
-
-                const data = await response.json();
-
-                // Jika sukses
-                if (data.message) {
-                    const successModal = document.getElementById('successModalSignIn');
-                    successModal.style.display = 'flex';
-                    document.getElementById('modalCloseSucessBtnSignIn').addEventListener('click', () => {
-                        successModal.style.display = 'none';
-                        // Redirect ke dashboard
-                        setTimeout(() => {
-                            window.location.href = '{{ route('dashboardindex') }}';
-                        }, 1000); // Dengan delay 1 detik
-                    });
-                }
-                // Jika ada error
-                else if (data.error) {
-                    const errorModal = document.getElementById('errorModalSignIn');
-                    document.getElementById('errorMessageSigIn').innerText = data.error ||
-                        'Something went wrong!';
-                    errorModal.style.display = 'flex';
-                    document.getElementById('modalCloseBtnSignIn').addEventListener('click', () => {
-                        errorModal.style.display = 'none';
-
-                    });
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-            }
+        // Jika login sukses
+        if (data.message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Berhasil',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Setelah pengguna menekan tombol OK, arahkan ke halaman dashboard
+                setTimeout(() => {
+                    window.location.href = 'http://127.0.0.1:8000/dashboardindex';
+                }, 1000);
+            });
+        }
+        // Jika login gagal
+        else if (data.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Gagal',
+                text: 'Email atau password salah. Silakan coba lagi.',
+                confirmButtonText: 'Close'
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Gagal',
+            text: 'Email atau password salah. Silakan coba lagi.',
+            confirmButtonText: 'Close'
         });
+    }
+});
+
     </script>
 </body>
 

@@ -78,14 +78,15 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('signIn');
+Route::get('/redirectToLogin', [UserController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
 
 
 Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
-Route::get('/viewapplyjob//{id}', [JobClientController::class, 'ViewApplyJob'])->name('viewapplyjob');
-Route::post('/savedatajobclient', [JobClientController::class, 'StoreJobClient'])->name('savedatajobclient');
+Route::get('/viewapplyjob/{id}', [JobClientController::class, 'ViewApplyJob'])->name('viewapplyjob');
+Route::post('/storeJobClient', [JobClientController::class, 'StoreJobClient'])->name('storeJobClient');
 
 Route::get('/trainingclientindex', [TrainingClientController::class, 'indextrainingclient'])->name('trainingclientindex');
 

@@ -34,18 +34,23 @@ class JobClientController extends Controller
 
     }
 
-    public function ViewApplyJob(Request $request,$idjob)
+    public function ViewApplyJob($idjob)
     {
+        
         $data = [
             'user_name' => session('email'),
             'title' => 'Job',
         ];
+        $expectedsalary = DB::table('m_salary')->get();
+        $education = DB::table('m_education')->get();
+        $experiencelevel = DB::table('m_experience_level')->get();
+        
         $jobid=$idjob;
         $getdataDetail = JobVacancyDetailModel::where('id', base64_decode($idjob))->first();
         //dd($getdataDetail);
         $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
         $currentUrl = url()->current();
-        $response = response()->view('template2.apply.jobapply', compact('data', 'menus','currentUrl','getdataDetail','jobid'));
+        $response = response()->view('template2.apply.jobapply', compact('data', 'menus','currentUrl','getdataDetail','jobid','expectedsalary','education','experiencelevel'));
         $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
@@ -57,6 +62,7 @@ class JobClientController extends Controller
 
     public function StoreJobClient(Request $request)
     {
+        dd($request);
         // Validasi input
         $request->validate([
 
@@ -64,6 +70,10 @@ class JobClientController extends Controller
             'emailsession' => 'required',
             'coverletter' => 'required',
             'cv' => 'required|mimes:pdf,doc,docx|max:2048',
+            'expectedsalary' => 'required',
+            'education' => 'required',
+            'workexperience' => 'required',
+            'writeskill' => 'required',
         ]);
 
         try {
