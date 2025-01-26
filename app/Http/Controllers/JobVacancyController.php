@@ -80,6 +80,7 @@ class JobVacancyController extends Controller
           ->linkedin()
           ->whatsapp();
           $data['share_buttons'] = $share_buttons;
+          $data['dataIdJob'] =base64_decode($id);
         return view('template1/jobvacancy.detailjob', $data);
     }
 

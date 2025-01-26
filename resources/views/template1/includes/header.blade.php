@@ -81,7 +81,7 @@
          @if (session('email'))
              <div class="mobile-header-top">
                  <div class="user-account">
-                     <img src="assets/imgs/avatar/ava_1.png" alt="jobhub" />
+                     <img src="{{ asset('assets/imgs/avatar/ava_1.png')}}" alt="jobhub" />
                      <div class="content">
                          <h6 class="user-name">{{ session('name') }}</h6>
                          <p class="font-xs text-muted">Welcome Back</p>
