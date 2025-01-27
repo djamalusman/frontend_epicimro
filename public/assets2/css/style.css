@@ -559,7 +559,7 @@ select.form-control:not([size]):not([multiple]) {
 
 /* 3.4 Alert */
 .alert {
-  color: #fff;
+  color: #000000;
   border: none;
   padding: 15px 20px; }
   .alert .alert-title {
@@ -582,7 +582,7 @@ select.form-control:not([size]):not([multiple]) {
     .alert.alert-has-icon .alert-body {
       flex: 1; }
   .alert:not(.alert-light) a {
-    color: #fff; }
+    color: #000000; }
   .alert.alert-primary {
     background-color: #6777ef; }
   .alert.alert-secondary {
@@ -590,7 +590,7 @@ select.form-control:not([size]):not([multiple]) {
   .alert.alert-success {
     background-color: #63ed7a; }
   .alert.alert-info {
-    background-color: #3abaf4; }
+    background-color: #f05537; }
   .alert.alert-warning {
     background-color: #ffa426; }
   .alert.alert-danger {
@@ -1079,7 +1079,7 @@ table tr:hover .table-links {
   .badge.badge-warning {
     color: #fff; }
   .badge.badge-primary {
-    background-color: #6777ef; }
+    background-color: #f05537; }
   .badge.badge-secondary {
     background-color: #34395e; }
   .badge.badge-success {

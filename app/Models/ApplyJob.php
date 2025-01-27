@@ -9,15 +9,29 @@ class ApplyJob extends Model
 {
     use HasFactory;
 
-    protected $table = 'applyjob'; // Nama tabel jika tidak mengikuti konvensi Laravel
+    protected $table = 'tr_applyjob'; // Nama tabel jika tidak mengikuti konvensi Laravel
 
+    // Menghilangkan 'id' dari $fillable karena auto-increment
     protected $fillable = [
-        'name',
+        'idusers',
+        'idexpectedsalary',
+        'ideducation',
+        'idworkexperience',
         'idjob',
-        'email',
-        'address',
+        'cover_letter',
         'cv_path',
+        'positionWork',
+        'companyName',
+        'startDateWork',
+        'endDateWork',
+        'stillWork',
+        'writeskill',
+        'status',
         'app_name',
         'server_type'
     ];
+
+    // Jika kamu ingin memastikan Laravel mengenali kolom id sebagai auto-increment,
+    // kamu bisa menggunakan $incrementing
+    public $incrementing = true;
 }

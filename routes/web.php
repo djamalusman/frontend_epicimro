@@ -85,6 +85,7 @@ Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware
 
 
 Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
+Route::get('/jobclinetdetail/{id}', [JobClientController::class, 'detailJoblient'])->name('jobclinetdetail');
 Route::get('/viewapplyjob/{id}', [JobClientController::class, 'ViewApplyJob'])->name('viewapplyjob');
 Route::post('/storeJobClient', [JobClientController::class, 'StoreJobClient'])->name('storeJobClient');
 

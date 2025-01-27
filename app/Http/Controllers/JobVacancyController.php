@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\JobVacancyDetailModel;
 use App\Models\JobFileModel;
+use App\Models\User;
+use App\Models\ApplyJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -49,6 +51,18 @@ class JobVacancyController extends Controller
     public function detailJob($id,$slug,Request $request)
     {
         $data['title'] = 'Details Jobs';
+        $userEmail = session('email');
+        
+        $getdtApplyJob= ApplyJob::where('idjob', base64_decode($id))->first();
+        if ($getdtApplyJob !=null || $getdtApplyJob !="") {
+            $data['getdtApplyJob'] = User::where('id', $getdtApplyJob->idusers)->first();
+        }
+        else
+        {
+            $data['getdtApplyJob']=null;
+        }
+        
+        //dd($data['getdtApplyJob']);
         $query = DB::table('djv_job_vacancy_detail')
             ->leftJoin('m_employee_status', 'djv_job_vacancy_detail.id_m_employee_status', '=', 'm_employee_status.id')
             ->leftJoin('m_work_location', 'm_work_location.id', '=', 'djv_job_vacancy_detail.id_m_work_location')
@@ -69,7 +83,7 @@ class JobVacancyController extends Controller
                 'm_experience_level.nama as name_experience_level',
                 'm_provinsi.nama as provinsi'
             );
-
+            
         $data['getdataDetail']=$query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $datadetail = $query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $url = $request->input('url', url()->current());

@@ -12,27 +12,63 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\JobVacancyDetailModel;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 class JobClientController extends Controller
 {
+
     public function indexJoblient(Request $request)
     {
+        $userEmail = session('email');
+        $getdtApplyJobs = User::where('email', $userEmail)->first();
+
+        // Pastikan user ditemukan
+        if (!$getdtApplyJobs) {
+            abort(404, 'User not found');
+        }
+
+        // Query untuk mengambil data pekerjaan yang dilamar
+        $getdtApplyJob = DB::table('tr_applyjob')
+            ->leftJoin('djv_job_vacancy_detail', 'tr_applyjob.idjob', '=', 'djv_job_vacancy_detail.id')
+            ->leftJoin('m_salary', 'm_salary.id', '=', 'tr_applyjob.idexpectedsalary')
+            ->leftJoin('m_education', 'm_education.id', '=', 'tr_applyjob.ideducation')
+            ->leftJoin('m_experience_level', 'm_experience_level.id', '=', 'tr_applyjob.idworkexperience')
+            ->select(
+                'tr_applyjob.*',
+                'djv_job_vacancy_detail.job_title',
+                'djv_job_vacancy_detail.companyName',
+                'm_salary.nama as salary',
+                'm_education.nama as education',
+                'm_experience_level.nama as name_experience_level',
+            )
+            ->where('tr_applyjob.idusers', $getdtApplyJobs->id)
+            ->get();
+
+        // Siapkan data yang akan dikirim ke view
         $data = [
-            'user_name' => session('email'),
+            'user_name' => $userEmail,
             'title' => 'Job',
+            'getdtApplyJob' => $getdtApplyJob,
         ];
 
-        $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
+        // Ambil menu client
+        $menus = Menu_client::whereNull('parent_id')
+            ->with('children')
+            ->orderBy('order')
+            ->get();
+
+        // URL saat ini
         $currentUrl = url()->current();
-        $response = response()->view('template2.jobclient.indexJoblient', compact('data', 'menus','currentUrl'));
-        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
+
+        // Kirim ke view
+        $response = response()->view('template2.jobclient.indexJoblient', compact('data', 'menus', 'currentUrl'));
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
 
         return $response;
-        // php artisan migrate --path=/database/migrations/2025_01_09_174154_create_menus_client_table.php
-
     }
+
 
     public function ViewApplyJob($idjob)
     {
@@ -62,38 +98,64 @@ class JobClientController extends Controller
 
     public function StoreJobClient(Request $request)
     {
-        dd($request);
+        
         // Validasi input
         $request->validate([
 
-            'idjob' => 'required',
+            'jobid' => 'required',
             'emailsession' => 'required',
             'coverletter' => 'required',
             'cv' => 'required|mimes:pdf,doc,docx|max:2048',
             'expectedsalary' => 'required',
             'education' => 'required',
             'workexperience' => 'required',
+            'positionWork' => 'required',
+            'companyName' => 'required',
+            'startDateWork' => 'required',
             'writeskill' => 'required',
         ]);
+        
+        $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
+        if ($request->stillWork === "" || $request->stillWork === null) {
+            $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
+            $endDateWork = $endDateTime;
+            $stillWork = null;
+        } else {
+            $endDateWork = null;
+            $stillWork = $request->stillWork;
+        }
 
+       
+         //$appUrl = config('app.url');
+         $appUrl = request()->url();
         try {
             // Proses upload file CV
             $cvFileName = time() . '_' . $request->file('cv')->getClientOriginalName();
-            $destinationPath = public_path('../storage');
+            $destinationPath = public_path('../public/storage');
             $request->file('cv')->move($destinationPath, $cvFileName);
-
+            
             // URL file CV
-            $cvUrl = 'https://admin.trainingkerja.com/storage/' . $cvFileName;
+            $cvUrl = 'https://admin.trainingkerja.com/public/storage/' . $cvFileName;
 
-            // Simpan data ke database
+            $getdataUserCleint = User::where('email', $request->emailsession)->first();
+            $idjob=base64_decode($request->jobid);
             ApplyJob::create([
-                'name' => $request->name,
-                'idjob' => $request->idjob,
-                'email' => $request->email,
-                'address' => $request->address,
+                'idusers' => $getdataUserCleint->id,
+                'idexpectedsalary' => $request->expectedsalary,
+                'ideducation' => $request->education,
+                'idworkexperience' => $request->workexperience,
+                'idjob' => $idjob,
+                'cover_letter' => $request->coverletter,
                 'cv_path' => $cvFileName,
-                'app_name' => $request->app_name,
-                'server_type' => $request->server_type,
+                'positionWork' => $request->positionWork,
+                'companyName' => $request->companyName,
+                'startDateWork' => $startDateTime,
+                'endDateWork' => $endDateWork,
+                'stillWork' => $stillWork,
+                'writeskill' => $request->writeskill,
+                'status' => 1,
+                'app_name' => "ApplyJob",
+                'server_type' => $appUrl,
             ]);
 
             // Kirim respons sukses
@@ -111,5 +173,57 @@ class JobClientController extends Controller
         }
     }
 
+
+    public function detailJoblient($id)
+    {
+        $userEmail = session('email');
+        $getdtApplyJobs = User::where('email', $userEmail)->first();
+
+        // Pastikan user ditemukan
+        if (!$getdtApplyJobs) {
+            abort(404, 'User not found');
+        }
+
+        // Query untuk mengambil data pekerjaan yang dilamar
+        $getdtApplyJob = DB::table('tr_applyjob')
+            ->leftJoin('djv_job_vacancy_detail', 'tr_applyjob.idjob', '=', 'djv_job_vacancy_detail.id')
+            ->leftJoin('m_salary', 'm_salary.id', '=', 'tr_applyjob.idexpectedsalary')
+            ->leftJoin('m_education', 'm_education.id', '=', 'tr_applyjob.ideducation')
+            ->leftJoin('m_experience_level', 'm_experience_level.id', '=', 'tr_applyjob.idworkexperience')
+            ->select(
+                'tr_applyjob.*',
+                'djv_job_vacancy_detail.job_title',
+                'djv_job_vacancy_detail.companyName',
+                'm_salary.nama as salary',
+                'm_education.nama as education',
+                'm_experience_level.nama as name_experience_level',
+            )
+            ->where('tr_applyjob.id', base64_decode($id))
+            ->first();
+
+        // Siapkan data yang akan dikirim ke view
+        $data = [
+            'user_name' => $userEmail,
+            'title' => 'Job',
+            'getdtApplyJob' => $getdtApplyJob,
+        ];
+
+        // Ambil menu client
+        $menus = Menu_client::whereNull('parent_id')
+            ->with('children')
+            ->orderBy('order')
+            ->get();
+
+        // URL saat ini
+        $currentUrl = url()->current();
+
+        // Kirim ke view
+        $response = response()->view('template2.jobclient.detailJoblient', compact('data', 'menus', 'currentUrl'));
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+        return $response;
+    }
 
 }

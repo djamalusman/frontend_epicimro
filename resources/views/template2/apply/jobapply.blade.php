@@ -4,12 +4,14 @@ jobapply
 Apply Job
 @endsection
 @section('content')
+
 <!-- CSS Libraries -->
 
 <link rel="stylesheet" href="{{ asset('assets2/modules/select2/dist/css/select2.min.css')}}">
  <!-- General CSS Files -->
  <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.min.css">
 
   <!-- CSS Libraries -->
 
@@ -109,7 +111,7 @@ Apply Job
                                 </div>
                             </div>
 
-                            <form id="wizardForm" class="wizard-content mt-2" method="POST" enctype="multipart/form-data">
+                            <form id="wizardForm" class="wizard-content mt-2" method="POST" action="{{ route('storeJobClient') }}" enctype="multipart/form-data">
                                 <!-- CSRF Token -->
                                 @csrf
                                 <input hidden type="text" name="jobid" value="{{ $jobid }}" class="form-control" required>
@@ -195,6 +197,36 @@ Apply Job
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-md-4 text-md-right text-left">Posisi pekerjaan</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="positionWork" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 text-md-right text-left">Nama Perusahaan</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <input type="text" name="companyName" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 text-md-right text-left">Mulai Bekerja</label>
+                                        <div class="col-lg-2 col-md-6">
+                                            <input type="date" name="startDateWork" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 text-md-right text-left">Berakhir Bekerja</label>
+                                        <div class="col-lg-2 col-md-6">
+                                            <input type="date" name="endDateWork" class="form-control" id="endDateWork">
+                                        </div>
+                                        <div class="col-lg-2 col-md-6">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="stillWork" value="1" class="custom-control-input" id="agree">
+                                                <label class="custom-control-label" for="agree">Masi Bekerja</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-md-4 text-md-right text-left">Tulis Keahlian Anda</label>
                                         <div class="col-lg-4 col-md-6">
                                             <textarea name="writeskill" class="form-control" required></textarea>
@@ -203,7 +235,7 @@ Apply Job
                                     <div class="form-group row">
                                         <div class="col-lg-4 col-md-6 offset-md-4 text-right">
                                             <button type="button" class="btn btn-primary" data-prev="2">Previous</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -279,6 +311,8 @@ Apply Job
 <script src="{{ asset('assets2/modules/moment.min.js')}}"></script>
 <script src="{{ asset('assets2/js/stisla.js')}}"></script>
 <script src="{{ asset('assets2/modules/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.all.min.js"></script>
+
   <!-- JS Libraies -->
 
   <!-- Page Specific JS File -->
@@ -301,13 +335,21 @@ Apply Job
         }
     }, 1000); // Setiap 1000 ms (1 detik)
 
+    document.getElementById('agree').addEventListener('change', function() {
+        var endDateWork = document.getElementById('endDateWork');
+        if (this.checked) {
+            endDateWork.disabled = true;
+        } else {
+            endDateWork.disabled = false;
+        }
+    });
     document.addEventListener("DOMContentLoaded", function() {
         let currentStep = 1; // Langkah yang sedang aktif
         const totalSteps = 3; // Total langkah dalam wizard
         const wizardForm = document.getElementById('wizardForm'); // Form utama
         const wizardPanes = document.querySelectorAll('.wizard-pane'); // Semua langkah form
         const wizardSteps = document.querySelectorAll('.wizard-step'); // Semua elemen indikator langkah
-
+        
         // Fungsi untuk mengubah langkah aktif
         function showStep(step) {
             // Tampilkan atau sembunyikan wizard pane
@@ -375,43 +417,82 @@ Apply Job
         wizardForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah pengiriman form default
             if (validateStep(currentStep)) {
-                alert("Form submitted successfully!");
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Form submitted successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             } else {
-                alert("Please complete all fields.");
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please complete all fields.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
 
         // Kirim form jika di langkah terakhir
         wizardForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah pengiriman form default
-            var emailSession = @json(session('email'));
 
-            if (!emailSession) {
-                // Jika session email null atau tidak ada, arahkan ke halaman welcome
-                window.location.href = "{{ route('redirectToLogin') }}";
-                return; // Hentikan pengiriman form jika session tidak ada
-            }
+            // Validasi input pada langkah aktif
             if (validateStep(currentStep)) {
-                // Form valid, lanjutkan ke pengiriman data
-                const formData = new FormData(wizardForm); // Ambil data form
+                var emailSession = @json(session('email'));
+                if (!emailSession) {
+                    // Redirect jika session email tidak ada
+                    window.location.href = "{{ route('redirectToLogin') }}";
+                    return;
+                }
 
-                fetch('/storeJobClient', {
-                        method: 'POST',
-                        body: formData,
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data); // Tangani respons dari server
-                        alert("Form submitted successfully!");
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        alert("Error submitting form.");
+                // Jika valid, kirim form
+                const formData = new FormData(wizardForm);
+
+                fetch('{{ route('storeJobClient') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    },
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tampilkan SweetAlert2 jika berhasil
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Lamaran pekerjaan berhasil dikirim.',
+                        }).then(() => {
+                            window.location.href = "{{ route('jobclinetindex') }}"; // Redirect setelah sukses
+                        });
+                    } else {
+                        // Tampilkan SweetAlert2 jika gagal
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Ada kesalahan saat mengirim lamaran. Silakan coba lagi.',
+                        });
+                    }
+                })
+                .catch(error => {
+                    // Tampilkan SweetAlert2 jika terjadi error
+                    console.error("Error:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan saat mengirim form.',
                     });
+                });
             } else {
-                alert("Please complete all fields.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian!',
+                    text: 'Harap lengkapi semua kolom.',
+                });
             }
-        });
+        }); 
 
         // Inisialisasi untuk menunjukkan langkah pertama
         showStep(currentStep);
