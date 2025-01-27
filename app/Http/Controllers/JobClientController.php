@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\JobVacancyDetailModel;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 class JobClientController extends Controller
 {
@@ -62,38 +63,66 @@ class JobClientController extends Controller
 
     public function StoreJobClient(Request $request)
     {
-        dd($request);
+        
         // Validasi input
         $request->validate([
 
             'idjob' => 'required',
             'emailsession' => 'required',
             'coverletter' => 'required',
-            'cv' => 'required|mimes:pdf,doc,docx|max:2048',
+            // 'cv' => 'required|mimes:pdf,doc,docx|max:2048',
             'expectedsalary' => 'required',
             'education' => 'required',
             'workexperience' => 'required',
+            'positionWork' => 'required',
+            'companyName' => 'required',
+            'startDateWork' => 'required',
             'writeskill' => 'required',
         ]);
+        
+        // $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
+        // if ($request->writeskill === "" || $request->writeskill === null) {
+        //     $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
+        //     $endDateWork = $endDateTime;
+        //     $stillWork = null;
+        // } else {
+        //     $endDateWork = null;
+        //     $stillWork = $request->stillWork;
+        // }
 
+       
+        //$appUrl = config('app.url');
+        
+        $no = User::count() + 1;
         try {
             // Proses upload file CV
-            $cvFileName = time() . '_' . $request->file('cv')->getClientOriginalName();
-            $destinationPath = public_path('../storage');
-            $request->file('cv')->move($destinationPath, $cvFileName);
+            // $cvFileName = time() . '_' . $request->file('cv')->getClientOriginalName();
+            // $destinationPath = public_path('../storage');
+            // $request->file('cv')->move($destinationPath, $cvFileName);
+            
+            
+            // $cvUrl = 'https://admin.trainingkerja.com/storage/' . $cvFileName;
 
-            // URL file CV
-            $cvUrl = 'https://admin.trainingkerja.com/storage/' . $cvFileName;
-
+            // $getdataUserCleint = UserClientModel::where('email', $request->emailsession)->first();
+            
             // Simpan data ke database
             ApplyJob::create([
-                'name' => $request->name,
-                'idjob' => $request->idjob,
-                'email' => $request->email,
-                'address' => $request->address,
-                'cv_path' => $cvFileName,
-                'app_name' => $request->app_name,
-                'server_type' => $request->server_type,
+                'id'=>$no,
+                // 'idusers' => $getdataUserCleint->id,
+                // 'idexpectedsalary' => $request->expectedsalary,
+                // 'ideducation' => $request->education,
+                // 'idworkexperience' => $request->workexperience,
+                // 'idjob' => $request->idjob,
+                // 'cv_path' => $cvFileName,
+                // 'positionWork' => $request->positionWork,
+                // 'companyName' => $request->companyName,
+                // 'startDateWork' => $startDateTime,
+                // 'endDateWork' => $endDateWork,
+                // 'stillWork' => $stillWork,
+                // 'writeskill' => $request->writeskill,
+                // 'status' => 1,
+                // 'app_name' => "ApplyJob",
+                // 'server_type' => $appUrl,
             ]);
 
             // Kirim respons sukses

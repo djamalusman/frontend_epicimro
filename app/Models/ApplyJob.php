@@ -12,11 +12,21 @@ class ApplyJob extends Model
     protected $table = 'applyjob'; // Nama tabel jika tidak mengikuti konvensi Laravel
 
     protected $fillable = [
-        'name',
+        'id',
+        'idusers',
+        'idexpectedsalary',
+        'ideducation',
+        'idworkexperience',
         'idjob',
-        'email',
-        'address',
+        'cover_letter',
         'cv_path',
+        'positionWork',
+        'companyName',
+        'startDateWork',
+        'endDateWork',
+        'stillWork',
+        'writeskill',
+        'status',
         'app_name',
         'server_type'
     ];
