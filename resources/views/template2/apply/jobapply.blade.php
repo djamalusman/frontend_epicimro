@@ -11,6 +11,7 @@ Apply Job
  <!-- General CSS Files -->
  <link rel="stylesheet" href="{{ asset('assets2/modules/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{ asset('assets2/modules/fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.min.css">
 
   <!-- CSS Libraries -->
 
@@ -310,6 +311,8 @@ Apply Job
 <script src="{{ asset('assets2/modules/moment.min.js')}}"></script>
 <script src="{{ asset('assets2/js/stisla.js')}}"></script>
 <script src="{{ asset('assets2/modules/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.all.min.js"></script>
+
   <!-- JS Libraies -->
 
   <!-- Page Specific JS File -->
@@ -414,9 +417,19 @@ Apply Job
         wizardForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah pengiriman form default
             if (validateStep(currentStep)) {
-                alert("Form submitted successfully!");
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Form submitted successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             } else {
-                alert("Please complete all fields.");
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please complete all fields.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
 
@@ -424,17 +437,18 @@ Apply Job
         wizardForm.addEventListener('submit', function(e) {
             e.preventDefault(); // Mencegah pengiriman form default
 
-            var emailSession = @json(session('email'));
-            if (!emailSession) {
-                // Redirect jika session email tidak ada
-                window.location.href = "{{ route('redirectToLogin') }}";
-                return;
-            }
-
+            // Validasi input pada langkah aktif
             if (validateStep(currentStep)) {
+                var emailSession = @json(session('email'));
+                if (!emailSession) {
+                    // Redirect jika session email tidak ada
+                    window.location.href = "{{ route('redirectToLogin') }}";
+                    return;
+                }
+
                 // Jika valid, kirim form
                 const formData = new FormData(wizardForm);
-                
+
                 fetch('{{ route('storeJobClient') }}', {
                     method: 'POST',
                     headers: {
@@ -444,17 +458,41 @@ Apply Job
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Tampilkan respons dari server
-                    alert("Form submitted successfully!");
+                    if (data.success) {
+                        // Tampilkan SweetAlert2 jika berhasil
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Lamaran pekerjaan berhasil dikirim.',
+                        }).then(() => {
+                            window.location.href = "{{ route('jobclinetindex') }}"; // Redirect setelah sukses
+                        });
+                    } else {
+                        // Tampilkan SweetAlert2 jika gagal
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Ada kesalahan saat mengirim lamaran. Silakan coba lagi.',
+                        });
+                    }
                 })
                 .catch(error => {
+                    // Tampilkan SweetAlert2 jika terjadi error
                     console.error("Error:", error);
-                    alert("Error submitting form.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Terjadi kesalahan saat mengirim form.',
+                    });
                 });
             } else {
-                alert("Please complete all fields.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian!',
+                    text: 'Harap lengkapi semua kolom.',
+                });
             }
-        });
+        }); 
 
         // Inisialisasi untuk menunjukkan langkah pertama
         showStep(currentStep);

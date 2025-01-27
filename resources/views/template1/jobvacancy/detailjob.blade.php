@@ -168,15 +168,23 @@
                                 <input type="text" hidden id="textToCopy"
                                     value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
                                     readonly>
-                                <a href="{{ route('viewapplyjob', ['id' => base64_encode($getdataDetail->id)]) }}"
-                                    target="_blank" class="btn btn-defaults mr-10"
-                                    style="font-size:15px;color:white">Apply now</a>
+                                    @if ($getdtApplyJob !=null || $getdtApplyJob !="")
+                                        <a href="#"class="btn btn-defaults mr-10"
+                                            style="font-size:15px;color:white">Success Apply</a>
+                                    @else
+                                        <a href="{{ route('viewapplyjob', ['id' => base64_encode($getdataDetail->id)]) }}"
+                                            target="_blank" class="btn btn-defaults mr-10"
+                                            style="font-size:15px;color:white">Apply now</a>
+                                    @endif
+                                
                             @else
                                 <input type="text" hidden id="textToCopy"
                                     value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
                                     readonly>
                                 <a href="{{ '/login' }}" class="btn btn-defaults mr-10"
-                                    style="font-size:15px;color:white">Apply now</a>
+                                    style="font-size:15px;color:white">
+                                    Apply now
+                                </a>
                             @endif
                             <button class="btn btn-defaults mr-10" data-bs-toggle="modal"
                                 data-bs-target="#shareModal"style="font-size:15px; color:white">
