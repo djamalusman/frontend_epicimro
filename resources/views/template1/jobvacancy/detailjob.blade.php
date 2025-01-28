@@ -164,7 +164,7 @@
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                     <div class="sidebar-shadow">
                         <div class="text-start mt-20">
-                            @if (session('name'))
+                            @if (session('email'))
                                 <input type="text" hidden id="textToCopy"
                                     value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
                                     readonly>

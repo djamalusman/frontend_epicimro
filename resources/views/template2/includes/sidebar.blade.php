@@ -35,7 +35,7 @@
     </ul>
 
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-        <a href="{{ 'welcome' }}" target="_blank" class="btn btn-primary btn-lg btn-block btn-icon-split">
+        <a href="{{ '/welcome' }}" target="_blank" class="btn btn-primary btn-lg btn-block btn-icon-split">
             <i class="fas fa-rocket"></i> Go to Apply
         </a>
     </div>

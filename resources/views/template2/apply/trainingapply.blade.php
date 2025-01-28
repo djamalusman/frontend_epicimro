@@ -1,7 +1,7 @@
 jobapply
 @extends('template1.layouts.app')
 @section('title')
-Apply Job
+Register Training
 @endsection
 @section('content')
 
@@ -52,30 +52,21 @@ Apply Job
   .button-link:hover {
     background-color: #0056b3;
   }
-  .modal-autoheight .modal-body {
-  position: relative;
-  overflow-y: auto;
-  min-height: 100px !important;
-  max-height: 600px !important;
-}
+
 </style>
 <section class="section-box">
     <div class="box-head-single">
         <div class="container">
         <div class="d-flex align-items-center">
-            <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($getdataDetail->file ?? '')) }}"
+            <img src="{{ asset('http://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}"
                 alt="Logo" style="width: 255px; height: 105px; margin-right: 10px;">
             <div>
-                <h2 class="mb-0">{{ $getdataDetail->job_title }}</h2>
-                <small>{{ $getdataDetail->companyName }}</small>
+                <h2 class="mb-0">{{ $getdataDetail->traning_name }}</h2>
+                <small>{{ $getdataDetail->company_name }}</small>
                 <br>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Lihat deskripsi pekerjaa
                 </button>
-                {{-- <div class="container">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      Launch demo modal
-                </button> --}}
             </div>
         </div>
     </div>
@@ -90,12 +81,13 @@ Apply Job
                                 <div class="col-12 col-lg-8 offset-lg-2">
                                     <div class="wizard-steps">
                                         <!-- Step 1: User Account -->
+                                        
                                         <div class="wizard-step wizard-step-active" id="step1">
                                             <div class="wizard-step-icon">
                                                 <i class="far fa-user"></i>
                                             </div>
                                             <div class="wizard-step-label">
-                                                Pilih Dokuemn
+                                                Data Kandidat
                                             </div>
                                         </div>
                                         <!-- Step 2: Create an App -->
@@ -104,65 +96,40 @@ Apply Job
                                                 <i class="fas fa-box-open"></i>
                                             </div>
                                             <div class="wizard-step-label">
-                                                Pertanyaan Perusahaan
+                                                Riwayat Kandidat
                                             </div>
                                         </div>
-                                        <!-- Step 3: Server Information -->
-                                        <div class="wizard-step" id="step3">
-                                            <div class="wizard-step-icon">
-                                                <i class="fas fa-server"></i>
-                                            </div>
-                                            <div class="wizard-step-label">
-                                                Riwayat karir
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
 
-                            <form id="wizardForm" class="wizard-content mt-2" method="POST" action="{{ route('storeJobClient') }}" enctype="multipart/form-data">
+                            <form id="wizardForm" class="wizard-content mt-2" method="POST" action="{{ route('storeTrainingClient') }}" enctype="multipart/form-data">
                                 <!-- CSRF Token -->
                                 @csrf
-                                <input hidden type="text" name="jobid" value="{{ $jobid }}" class="form-control" required>
+                                <input hidden type="text" name="idtraining" value="{{ $idtraining }}" class="form-control" required>
                                 <input hidden type="text" name="emailsession" value="{{ session('email') }}"
                                     class="form-control" required>
 
                                 <!-- Step 1: User Account -->
                                 <div class="wizard-pane d-none" data-step="1">
+                                   
                                     <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Surat Lamaran</label>
+                                        <label class="col-md-4 text-md-right text-left">Nama</label>
                                         <div class="col-lg-4 col-md-6">
-                                            <textarea name="coverletter" class="form-control" required></textarea>
+                                            <input type="text" value="{{session('name')}}" readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Upload CV</label>
+                                        <label class="col-md-4 text-md-right text-left">Email</label>
                                         <div class="col-lg-4 col-md-6">
-                                            <input type="file" name="cv" class="form-control" required>
+                                            <input type="text" value="{{session('email')}}" readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        
-                                        <div class="col-lg-4 col-md-6 offset-md-4 text-right">
-                                        
-                                            <a href="{{'/job-grid'}}" class="btn btn-primary">Back to Job</a>
-                                            <button type="button" class="btn btn-primary" data-next="2">Next</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <!-- Step 2: Create an App -->
-                                <div class="wizard-pane d-none" data-step="2">
-                                    <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Gaji yang diharapkan?</label>
+                                        <label class="col-md-4 text-md-right text-left">No.Tlp</label>
                                         <div class="col-lg-4 col-md-6">
-                                            <select class="form-control select2" name="expectedsalary" required>
-                                                <option value="">Pilih</option>
-                                                @foreach ($expectedsalary as $val)
-                                                    <option value="{{$val->id}}">{{$val->nama}}</option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text"  readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -176,40 +143,20 @@ Apply Job
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Pengalaman Kerja</label>
-                                        <div class="col-lg-4 col-md-6">
-                                            <select class="form-control select2" name="workexperience" required>
-                                                <option value="">Pilih</option>
-                                                @foreach ($experiencelevel as $val)
-                                                    <option value="{{$val->id}}">{{$val->nama}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
+                                    
                                     <div class="form-group row">
                                         <div class="col-lg-4 col-md-6 offset-md-4 text-right">
-                                            <button type="button" class="btn btn-primary" data-prev="1">Previous</button>
-                                            <button type="button" class="btn btn-primary" data-next="3">Next</button>
+                                            <a href="{{'/course-grid'}}" class="btn btn-primary">Back to Job</a>
+                                            <button type="button" class="btn btn-primary" data-next="2">Next</button>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Step 3: Server Information -->
-                                <div class="wizard-pane d-none" data-step="3">
-                                    <div class="form-group row">
-
-                                        <div class="col-lg-8 col-md-6">
-                                            <label class="col-md-10 text-md-right text-left"><b>Beri tahu perusahaan tentang
-                                                    pengalaman kerja anda yang terakhir</b></label>
-                                        </div>
-                                    </div>
+                                <div class="wizard-pane d-none" data-step="2">
                                     <div class="form-group row">
                                         <label class="col-md-4 text-md-right text-left">Belum Bekerja</label>
                                         <div class="col-lg-4 col-md-6">
                                             <label class="custom-switch mt-2">
-                                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" id="jobStatusCheckbox">
+                                                <input type="checkbox" name="custom-switch-checkbox"  class="custom-switch-input" id="jobStatusCheckbox">
                                                 <span class="custom-switch-indicator"></span>
                                             </label>
                                         </div>
@@ -226,33 +173,22 @@ Apply Job
                                             <input type="text" name="companyName" class="form-control" id="companyName">
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Mulai Bekerja</label>
-                                        <div class="col-lg-2 col-md-6">
-                                            <input type="date" name="startDateWork" id="startDateWork" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Berakhir Bekerja</label>
-                                        <div class="col-lg-2 col-md-6">
-                                            <input type="date" name="endDateWork" class="form-control" id="endDateWork">
-                                        </div>
-                                        <div class="col-lg-2 col-md-6">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="stillWork" value="1" class="custom-control-input" id="agree">
-                                                <label class="custom-control-label" for="agree">Masi Bekerja</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-4 text-md-right text-left">Tulis Keahlian Anda</label>
+                                        <label class="col-md-4 text-md-right text-left">Keahlian Anda</label>
                                         <div class="col-lg-4 col-md-6">
                                             <textarea name="writeskill" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <label class="col-md-4 text-md-right text-left">Pelatihan yang pernah di ikuti</label>
+                                        <div class="col-lg-4 col-md-6">
+                                            <textarea name="trainingcourse" class="form-control" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <div class="col-lg-4 col-md-6 offset-md-4 text-right">
-                                            <button type="button" class="btn btn-primary" data-prev="2">Previous</button>
+                                            <button type="button" class="btn btn-primary" data-prev="1">Previous</button>
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
@@ -270,53 +206,27 @@ Apply Job
 
 <!-- Button trigger modal -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered modal-autoheight" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-                <br>
+            <br>
             <div class="modal-body">
-                <h5>Jobs description :</h5>
-                <?php echo $getdataDetail->job_description; ?>
+                <h5>About training</h5>
+                <?php echo $getdataDetail->abouttraining; ?>
                 <br>
-                <h5>Skill requirement :</h5>
-                <?php echo $getdataDetail->skill_requirment; ?>
+                <h5>Trainer</h5>
+                <?php echo $getdataDetail->abouttrainer; ?>
+                <br>
+                <h5>cCreer</h5>
+                <?php echo $getdataDetail->aboutcareer; ?>
             </div>
 
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -367,22 +277,6 @@ Apply Job
 <script src="{{ asset('assets2/js/scripts.js')}}"></script>
 <script src="{{ asset('assets2/js/custom.js')}}"></script>
 <script type="text/javascript">
-$(function() {
-  if ($(".modal-autoheight").length > 0) {
-    $(".modal").on("show.bs.modal", resize);
-    $(window).on("resize", resize);
-  }
-});
-
-
-function resize() {
-  var winHeight = $(window).height();
-  $(".modal-autoheight .modal-body").css({
-    width: "auto",
-    height: (winHeight - 200) + "px"
-  });
-}
-
     function relocate_home() {
         const url = "https://trainingkerja.com/job-grid";
         window.open(url, '_blank'); // Membuka di tab baru
@@ -396,30 +290,19 @@ function resize() {
             window.location.href = "{{ route('redirectToLogin') }}";
         }
     }, 1000); // Setiap 1000 ms (1 detik)
+    
     // Get the checkbox and input fields
     const jobStatusCheckbox = document.getElementById('jobStatusCheckbox');
     const positionWorkInput = document.getElementById('positionWork');
-    const startDateWork = document.getElementById('startDateWork');
-    const endDateWork = document.getElementById('endDateWork');
-    const agree = document.getElementById('agree');
-      
+    const companyNameInput = document.getElementById('companyName');
+
     // Add event listener to the checkbox
     jobStatusCheckbox.addEventListener('change', function() {
         const isDisabled = jobStatusCheckbox.checked;
         positionWorkInput.disabled = isDisabled;
         companyNameInput.disabled = isDisabled;
-        startDateWork.disabled = isDisabled;
-        endDateWork.disabled = isDisabled;
-        agree.disabled = isDisabled;
     });
-    document.getElementById('agree').addEventListener('change', function() {
-        var endDateWork = document.getElementById('endDateWork');
-        if (this.checked) {
-            endDateWork.disabled = true;
-        } else {
-            endDateWork.disabled = false;
-        }
-    });
+    
     document.addEventListener("DOMContentLoaded", function() {
         let currentStep = 1; // Langkah yang sedang aktif
         const totalSteps = 3; // Total langkah dalam wizard
@@ -480,7 +363,7 @@ function resize() {
                 } else {
                     alert("Please complete all fields in Step " + currentStep);
                 }
-            }Job
+            }
 
             if (target.matches('[data-prev]')) {
                 const prevStep = parseInt(target.getAttribute('data-prev'));
@@ -526,7 +409,7 @@ function resize() {
                 // Jika valid, kirim form
                 const formData = new FormData(wizardForm);
 
-                fetch('{{ route('storeJobClient') }}', {
+                fetch('{{ route('storeTrainingClient') }}', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -540,9 +423,9 @@ function resize() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Berhasil!',
-                            text: 'Lamaran pekerjaan berhasil dikirim.',
+                            text: 'Pendaftaran berhasil,silahkan melakukan pembayaran',
                         }).then(() => {
-                            window.location.href = "{{ route('jobclinetindex') }}"; // Redirect setelah sukses
+                            window.location.href = "{{ route('trainingclientindex') }}"; // Redirect setelah sukses
                         });
                     } else {
                         // Tampilkan SweetAlert2 jika gagal

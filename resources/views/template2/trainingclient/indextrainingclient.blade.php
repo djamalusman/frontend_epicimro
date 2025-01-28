@@ -1,5 +1,5 @@
 @extends('template2.layouts.app') @section('title')
-    Job
+    Training
 @endsection
 @section('content')
     @push('page-specific-css')
@@ -11,144 +11,57 @@
     @endpush
     <section class="section">
         <div class="section-header">
-            <h1>DataTables</h1>
+            <h1>Data Registrasi Training</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Modules</a></div>
-                <div class="breadcrumb-item">DataTables</div>
+                <div class="breadcrumb-item active"><a href="#">Apply</a></div>
+                <div class="breadcrumb-item"><a href="#">Training Course</a></div>
+                <div class="breadcrumb-item">Data Registrasi Training</div>
             </div>
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">DataTables</h2>
-            <p class="section-lead">
-                We use 'DataTables' made by @SpryMedia. You can check the full documentation <a
-                    href="https://datatables.net/">here</a>.
-            </p>
 
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Basic DataTables</h4>
-                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
-                                            <th>Task Name</th>
-                                            <th>Progress</th>
-                                            <th>Members</th>
-                                            <th>Due Date</th>
+                                            <th>No</th>
+                                            <th>Nama Perusahaan</th>
+                                            <th>Nama Training</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Tanggal di buat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($data['getdtTraining'] as $training)
                                         <tr>
                                             <td>
-                                                1
+                                                {{ $loop->iteration }}
                                             </td>
-                                            <td>Create a mobile app</td>
-                                            <td class="align-middle">
-                                                <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                                    <div class="progress-bar bg-success" data-width="100%"></div>
-                                                </div>
-                                            </td>
+                                            <td>{{ $training->company_name }}</td>
+                                            <td>{{ $training->traning_name }}</td>
                                             <td>
-                                                <img alt="image" src="assets/img/avatar/avatar-5.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Wildan Ahdian">
+                                                @if ($training->statuspayment == 0)
+                                                    <div class="badge badge-primary">Menunggu Pembayaran</div>
+                                                @else
+                                                    <div class="badge badge-primary">Pembayaran Berhasil</div>
+                                                @endif
+                                                
                                             </td>
-                                            <td>2018-01-20</td>
-                                            <td>
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                            <td>{{ \Carbon\Carbon::parse($training->updated_at)->format('y-m-d') }}</td>
+                                                <td>
+                                                     <a href="{{ route('trainingpayment', base64_encode($training->id)) }}" class="btn btn-primary">Pembayaran</a>&nbsp;&nbsp; 
+                                                     <a href="{{ route('trainingclinetdetail', base64_encode($training->id)) }}" class="btn btn-primary">Detail</a>
+                                                 </td>
+                                           
+                                            
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                2
-                                            </td>
-                                            <td>Redesign homepage</td>
-                                            <td class="align-middle">
-                                                <div class="progress" data-height="4" data-toggle="tooltip" title="0%">
-                                                    <div class="progress-bar" data-width="0"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <img alt="image" src="assets/img/avatar/avatar-1.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Nur Alpiana">
-                                                <img alt="image" src="assets/img/avatar/avatar-3.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Hariono Yusup">
-                                                <img alt="image" src="assets/img/avatar/avatar-4.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Bagus Dwi Cahya">
-                                            </td>
-                                            <td>2018-04-10</td>
-                                            <td>
-                                                <div class="badge badge-info">Todo</div>
-                                            </td>
-                                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                3
-                                            </td>
-                                            <td>Backup database</td>
-                                            <td class="align-middle">
-                                                <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
-                                                    <div class="progress-bar bg-warning" data-width="70%"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <img alt="image" src="assets/img/avatar/avatar-1.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Rizal Fakhri">
-                                                <img alt="image" src="assets/img/avatar/avatar-2.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Hasan Basri">
-                                            </td>
-                                            <td>2018-01-29</td>
-                                            <td>
-                                                <div class="badge badge-warning">In Progress</div>
-                                            </td>
-                                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                4
-                                            </td>
-                                            <td>Input data</td>
-                                            <td class="align-middle">
-                                                <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                                    <div class="progress-bar bg-success" data-width="100%"></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <img alt="image" src="assets/img/avatar/avatar-2.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Rizal Fakhri">
-                                                <img alt="image" src="assets/img/avatar/avatar-5.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Isnap Kiswandi">
-                                                <img alt="image" src="assets/img/avatar/avatar-4.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Yudi Nawawi">
-                                                <img alt="image" src="assets/img/avatar/avatar-1.png"
-                                                    class="rounded-circle" width="35" data-toggle="tooltip"
-                                                    title="Khaerul Anwar">
-                                            </td>
-                                            <td>2018-01-16</td>
-                                            <td>
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

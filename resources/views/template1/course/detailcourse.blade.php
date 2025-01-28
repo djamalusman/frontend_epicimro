@@ -346,9 +346,14 @@
                 <div class="sidebar-shadow">
 
                     <div class="text-start mt-20">
-
-                        <a href="/register-course/{{ base64_encode($getdataDetail->id) }}/{{ Str::slug($getdataDetail->traning_name) }}"
-                            class="btn btn-defaults mr-10"style="font-size:15px;color:white">Register now</a>
+                        @if (session('email'))
+                                <a href="{{ route('registertraining', ['id' => base64_encode($getdataDetail->id)]) }}"
+                                    target="_blank" class="btn btn-defaults mr-10"
+                                    style="font-size:15px;color:white">Register now</a>
+                        @else
+                            <a href="{{'/login'}}"
+                                class="btn btn-defaults mr-10"style="font-size:15px;color:white">Register now</a>
+                        @endif
                         <a href ="#" class="btn btn-defaults mr-10" data-bs-toggle="modal"
                             data-bs-target="#shareModal" style="font-size:15px;color:white">
                             Share Link

@@ -109,21 +109,20 @@ class JobClientController extends Controller
             'expectedsalary' => 'required',
             'education' => 'required',
             'workexperience' => 'required',
-            'positionWork' => 'required',
-            'companyName' => 'required',
-            'startDateWork' => 'required',
             'writeskill' => 'required',
         ]);
-        
-        $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
-        if ($request->stillWork === "" || $request->stillWork === null) {
-            $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
-            $endDateWork = $endDateTime;
-            $stillWork = null;
-        } else {
-            $endDateWork = null;
-            $stillWork = $request->stillWork;
+        if ($startDateTime != null || $startDateTime !="") {
+            $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
+            if ($request->stillWork === "" || $request->stillWork === null) {
+                $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
+                $endDateWork = $endDateTime;
+                $stillWork = null;
+            } else {
+                $endDateWork = null;
+                $stillWork = $request->stillWork;
+            }
         }
+     
 
        
          //$appUrl = config('app.url');
@@ -174,7 +173,7 @@ class JobClientController extends Controller
     }
 
 
-    public function detailJoblient($id)
+    public function detailJobClient($id)
     {
         $userEmail = session('email');
         $getdtApplyJobs = User::where('email', $userEmail)->first();
@@ -193,6 +192,9 @@ class JobClientController extends Controller
             ->select(
                 'tr_applyjob.*',
                 'djv_job_vacancy_detail.job_title',
+                'djv_job_vacancy_detail.file',
+                'djv_job_vacancy_detail.job_description',
+                'djv_job_vacancy_detail.skill_requirment',
                 'djv_job_vacancy_detail.companyName',
                 'm_salary.nama as salary',
                 'm_education.nama as education',
@@ -218,7 +220,7 @@ class JobClientController extends Controller
         $currentUrl = url()->current();
 
         // Kirim ke view
-        $response = response()->view('template2.jobclient.detailJoblient', compact('data', 'menus', 'currentUrl'));
+        $response = response()->view('template2.jobclient.detailJobClient', compact('data', 'menus', 'currentUrl'));
         $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
