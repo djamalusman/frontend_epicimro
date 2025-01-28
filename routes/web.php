@@ -90,6 +90,8 @@ Route::get('/viewapplyjob/{id}', [JobClientController::class, 'ViewApplyJob'])->
 Route::post('/storeJobClient', [JobClientController::class, 'StoreJobClient'])->name('storeJobClient');
 
 Route::get('/trainingclientindex', [TrainingClientController::class, 'indextrainingclient'])->name('trainingclientindex');
+Route::get('/registertraining/{id}', [TrainingClientController::class, 'registerTraining'])->name('registertraining');
+Route::post('/storeTrainingClient', [TrainingClientController::class, 'StoreTrainingClient'])->name('storeTrainingClient');
 
 Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
 

@@ -109,21 +109,20 @@ class JobClientController extends Controller
             'expectedsalary' => 'required',
             'education' => 'required',
             'workexperience' => 'required',
-            'positionWork' => 'required',
-            'companyName' => 'required',
-            'startDateWork' => 'required',
             'writeskill' => 'required',
         ]);
-        
-        $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
-        if ($request->stillWork === "" || $request->stillWork === null) {
-            $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
-            $endDateWork = $endDateTime;
-            $stillWork = null;
-        } else {
-            $endDateWork = null;
-            $stillWork = $request->stillWork;
+        if ($startDateTime != null || $startDateTime !="") {
+            $startDateTime = Carbon::createFromFormat('Y-m-d', $request->startDateWork)->startOfDay();
+            if ($request->stillWork === "" || $request->stillWork === null) {
+                $endDateTime = Carbon::createFromFormat('Y-m-d', $request->endDateWork)->startOfDay();
+                $endDateWork = $endDateTime;
+                $stillWork = null;
+            } else {
+                $endDateWork = null;
+                $stillWork = $request->stillWork;
+            }
         }
+     
 
        
          //$appUrl = config('app.url');
