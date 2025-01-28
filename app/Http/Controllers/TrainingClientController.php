@@ -186,6 +186,7 @@ class TrainingClientController extends Controller
         )
         ->where('tr_applytraining.idusers', $getdtUserClient->id)
         ->where('tr_applytraining.id', base64_decode($id))
+        ->orderBy('payments.updated_at', 'desc') 
         ->first();
             
         // Siapkan data yang akan dikirim ke view
