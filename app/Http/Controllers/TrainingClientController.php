@@ -182,7 +182,7 @@ class TrainingClientController extends Controller
             'accounts_transfer.nomor_rekening',
             'accounts_transfer.id as idaccount_transfer',
             'bank_accounts.bank_name',
-            'bank_accounts.id as selectedBankId', // Ambil ID bank yang terpilih
+            'bank_accounts.id as selectedBankId', 
         )
         ->where('tr_applytraining.idusers', $getdtUserClient->id)
         ->where('tr_applytraining.id', base64_decode($id))
