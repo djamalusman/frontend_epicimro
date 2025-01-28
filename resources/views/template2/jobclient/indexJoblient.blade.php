@@ -16,7 +16,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Apply</a></div>
                 <div class="breadcrumb-item"><a href="#">Job Vacancy</a></div>
-                <div class="breadcrumb-item">Data Job</div>
+                <div class="breadcrumb-item">Data Apply Job Vacancy</div>
             </div>
         </div>
 
@@ -31,12 +31,12 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Company Name</th>
-                                            <th>Title Job</th>
+                                            <th>Nama Perusahaan</th>
+                                            <th>Title</th>
                                             <th>Cv</th>
                                             <th>Status</th>
-                                            <th>Created date</th>
-                                            <th>Action</th>
+                                            <th>Tanggal di buat</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -51,7 +51,7 @@
                                                 <a href="{{ asset('storage/' . $job->cv_path) }}" target="_blank" rel="noopener noreferrer"> <div class="badge badge-primary">View</div></a>
                                             </td>
                                             <td>
-                                                <div class="badge badge-primary">Completed</div>
+                                                <div class="badge badge-primary">Berhasil di kirim</div>
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($job->updated_at)->format('y-m-d') }}</td>
                                             <td> <a href="{{ route('jobclinetdetail', base64_encode($job->id)) }}" class="btn btn-primary">Detail</a></td>

@@ -21,6 +21,21 @@
           </div>
 
           <div class="section-body">
+            <div class="card-header" style="background:rgb(255, 255, 255) ">
+              <div class="d-flex align-items-center">
+                  <img src="{{ asset('http://admin.trainingkerja.com/public/storage/' . ($data['getdtApplyJob']->file  ?? '')) }}"
+                      alt="Logo" style="width: 255px; height: 105px; margin-right: 10px;">
+                  <div>
+                      <h2 class="mb-0">{{ $data['getdtApplyJob']->job_title }}</h2>
+                      <small>{{ $data['getdtApplyJob']->companyName }}</small>
+                      <br>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                          Lihat deskripsi Training
+                      </button>
+                  </div>
+              </div>
+            </div>
+          </div>
             <div class="row">
               <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
@@ -99,6 +114,22 @@
             </div>
           </div>
         </section>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <<br>
+                  <div class="modal-body">
+                      <h5>Jobs description :</h5>
+                      <?php echo $data['getdtApplyJob']->job_description; ?>
+                      <br>
+                      <h5>Skill requirement :</h5>
+                      <?php echo $data['getdtApplyJob']->skill_requirment; ?>
+                  </div>
+
+              </div>
+          </div>
+        </div>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <script type="text/javascript">

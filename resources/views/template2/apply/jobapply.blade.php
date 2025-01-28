@@ -52,7 +52,12 @@ Apply Job
   .button-link:hover {
     background-color: #0056b3;
   }
-
+  .modal-autoheight .modal-body {
+  position: relative;
+  overflow-y: auto;
+  min-height: 100px !important;
+  max-height: 600px !important;
+}
 </style>
 <section class="section-box">
     <div class="box-head-single">
@@ -67,6 +72,10 @@ Apply Job
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     Lihat deskripsi pekerjaa
                 </button>
+                {{-- <div class="container">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      Launch demo modal
+                </button> --}}
             </div>
         </div>
     </div>
@@ -261,25 +270,53 @@ Apply Job
 
 <!-- Button trigger modal -->
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-autoheight" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque ab expedita tempore nulla quaerat alias quidem velit. Ipsam, reprehenderit eos.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Deskripsi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <br>
             <div class="modal-body">
+                <h5>Jobs description :</h5>
                 <?php echo $getdataDetail->job_description; ?>
+                <br>
+                <h5>Skill requirement :</h5>
+                <?php echo $getdataDetail->skill_requirment; ?>
             </div>
 
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -330,6 +367,22 @@ Apply Job
 <script src="{{ asset('assets2/js/scripts.js')}}"></script>
 <script src="{{ asset('assets2/js/custom.js')}}"></script>
 <script type="text/javascript">
+$(function() {
+  if ($(".modal-autoheight").length > 0) {
+    $(".modal").on("show.bs.modal", resize);
+    $(window).on("resize", resize);
+  }
+});
+
+
+function resize() {
+  var winHeight = $(window).height();
+  $(".modal-autoheight .modal-body").css({
+    width: "auto",
+    height: (winHeight - 200) + "px"
+  });
+}
+
     function relocate_home() {
         const url = "https://trainingkerja.com/job-grid";
         window.open(url, '_blank'); // Membuka di tab baru
@@ -427,7 +480,7 @@ Apply Job
                 } else {
                     alert("Please complete all fields in Step " + currentStep);
                 }
-            }
+            }Job
 
             if (target.matches('[data-prev]')) {
                 const prevStep = parseInt(target.getAttribute('data-prev'));

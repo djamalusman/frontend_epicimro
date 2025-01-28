@@ -85,13 +85,17 @@ Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware
 
 
 Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
-Route::get('/jobclinetdetail/{id}', [JobClientController::class, 'detailJoblient'])->name('jobclinetdetail');
+Route::get('/jobclinetdetail/{id}', [JobClientController::class, 'detailJobClient'])->name('jobclinetdetail');
 Route::get('/viewapplyjob/{id}', [JobClientController::class, 'ViewApplyJob'])->name('viewapplyjob');
 Route::post('/storeJobClient', [JobClientController::class, 'StoreJobClient'])->name('storeJobClient');
 
 Route::get('/trainingclientindex', [TrainingClientController::class, 'indextrainingclient'])->name('trainingclientindex');
 Route::get('/registertraining/{id}', [TrainingClientController::class, 'registerTraining'])->name('registertraining');
 Route::post('/storeTrainingClient', [TrainingClientController::class, 'StoreTrainingClient'])->name('storeTrainingClient');
+Route::get('/trainingpayment/{id}', [TrainingClientController::class, 'indexPaymentTraining'])->name('trainingpayment');
+Route::get('/trainingclinetdetail/{id}', [TrainingClientController::class, 'detailTrainingClient'])->name('trainingclinetdetail');
+Route::post('/store-payment', [TrainingClientController::class, 'storePayment'])->name('storePayment');
+Route::get('/accounts-transfer/{idbank}', [TrainingClientController::class, 'getAccountsTransfer'])->name('accounts-transfer');
 
 Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
 

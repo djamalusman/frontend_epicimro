@@ -212,14 +212,16 @@ Register Training
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Deskripsi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <br>
             <div class="modal-body">
-                <?php echo $getdataDetail->job_description; ?>
+                <h5>About training</h5>
+                <?php echo $getdataDetail->abouttraining; ?>
+                <br>
+                <h5>Trainer</h5>
+                <?php echo $getdataDetail->abouttrainer; ?>
+                <br>
+                <h5>cCreer</h5>
+                <?php echo $getdataDetail->aboutcareer; ?>
             </div>
 
         </div>

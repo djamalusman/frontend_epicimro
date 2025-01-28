@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BankAccount extends Model
+class accounts_transfer extends Model
 {
     use HasFactory;
 
-    protected $table = 'bank_accounts'; // Nama tabel
+    protected $table = 'accounts_transfer'; // Nama tabel
 
     protected $fillable = [
-        'bank_name',
-        'status',
-        'notes',
+        'idbank',
+        'nama',
+        'nomor_rekening	',
+        'status	',
     ];
 }
+

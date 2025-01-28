@@ -3,7 +3,7 @@
 <title>{{ $data['title'] ?? 'Default Title' }}</title>
 @include('template2.includes.style')
 @stack('page-specific-css')
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <body style="background-color: white;">
     <!-- Preloader Start -->
     <div id="app">

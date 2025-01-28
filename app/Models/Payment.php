@@ -14,9 +14,10 @@ class Payment extends Model
     protected $fillable = [
         'idtraining',
         'idusers',
+        'idaccount_transfer',
         'amount',
         'payment_proof',
         'status',
     ];
-
+    public $incrementing = true;
 }
