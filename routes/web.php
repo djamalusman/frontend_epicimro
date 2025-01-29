@@ -100,6 +100,9 @@ Route::get('/accounts-transfer/{idbank}', [TrainingClientController::class, 'get
 Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
 
 
+Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->name('profleclientindex');
+Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
+Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
 //php artisan make:controller JobClientController
 //php artisan make:controller TrainingClientController
 //php artisan make:controller ProfessionalTrainingClientController

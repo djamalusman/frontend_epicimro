@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Menu_client;
+use App\Models\ApplyTraining;
+use App\Models\ApplyJob;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Models\TraningCourseDetailsModel;
+use App\Models\dtc_File_TrainingCourseModel;
+use App\Models\BankAccount;
+use App\Models\accounts_transfer;
+use Illuminate\Support\Facades\View;
+use App\Models\Payment;
+use Carbon\Carbon;
 class UserController extends Controller
 {
      // Menampilkan halaman login
@@ -38,8 +49,7 @@ class UserController extends Controller
             $user = Auth::user();
 
              // Login sukses
-             session(['email' => $user->email, 'name' => $user->name]);
-
+             session(['email' => $user->email, 'name' => $user->name,'lastname' => $user->lastname,'phone' => $user->phone,'photouser' => $user->photo],);
              return response()->json(['message' => 'Login successful']);
          } else {
              // Login gagal
@@ -76,7 +86,6 @@ class UserController extends Controller
 
          // Buat user baru
          User::create([
-             'id' => $no,
              'name' => $request->username,
              'email' => $request->email,
              'password' => Hash::make($request->password),
@@ -87,6 +96,7 @@ class UserController extends Controller
              'message' => 'Registration successful!',
          ]);
      }
+
      // Logout
     public function logout()
     {
@@ -101,6 +111,122 @@ class UserController extends Controller
     {
         session()->flash('session_expired', 'Your session has expired. Please log in again.');
         return redirect()->route('login');
+    }
+
+
+    public function profleclientindex(Request $request)
+    {
+        $userEmail = session('email');
+        $getdtUserClient = User::where('email', $userEmail)->first();
+        $ApplyJobCount = ApplyJob::count(); 
+        $ApplyTrainingCount = ApplyTraining::count(); 
+        $totalTransaksi= $ApplyJobCount + $ApplyTrainingCount;
+        // Siapkan data yang akan dikirim ke view
+        $data = [
+            'user_name' => $userEmail,
+            'title' => 'Profile',
+            'getdtUserClient' => $getdtUserClient,
+            'applyJobCount' =>$ApplyJobCount,
+            'applyTrainingCount' => $ApplyTrainingCount,
+            'totalTransaksi' => $totalTransaksi
+        ];
+        
+        // Ambil menu client
+        $menus = Menu_client::whereNull('parent_id')
+            ->with('children')
+            ->orderBy('order')
+            ->get();
+
+        // URL saat ini
+        $currentUrl = url()->current();
+
+        // Kirim ke view
+        $response = response()->view('template2.users.profleclientindex', compact('data', 'menus', 'currentUrl'));
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+        return $response;
+
+    }
+
+    public function updtaeUserClient(Request $request)
+    {
+            
+            // Cari user berdasarkan email yang dikirim dari form
+            $userEmail = session('email');
+            $user = User::where('email', $userEmail)->first();
+           
+            // Jika user tidak ditemukan, kirim error
+            if (!$user) {
+                return response()->json(['success' => false, 'message' => 'User not found!']);
+            }
+
+            // Simpan data lama untuk perbandingan
+            $oldData = [
+                'name' => $user->name,
+                'lastname' => $user->lastname,
+                'phone' => $user->phone,
+                'bio' => $user->bio,
+            ];
+
+            // Simpan data baru dari request
+            $newData = [
+                'name' => $request->firstname,
+                'lastname' => $request->lastname,
+                'phone' => $request->phone,
+                'bio' => $request->bio,
+            ];
+
+            // Cek apakah ada perubahan data
+            if ($oldData == $newData && !$request->hasFile('photo') && empty($request->password)) {
+                return response()->json(['success' => false, 'message' => 'No changes detected']);
+            }
+
+            // Update data jika ada perubahan
+            $user->name = $request->firstname;
+            $user->lastname = $request->lastname;
+            $user->phone = $request->phone;
+            $user->bio = $request->bio;
+
+            // Update password hanya jika diisi
+            if (!empty($request->password)) {
+                $user->password = Hash::make($request->password);
+            }
+
+            // Jika ada file foto baru diunggah, update foto
+            if ($request->hasFile('photo')) {
+                $FileName = time() . '_' . $request->file('photo')->getClientOriginalName();
+                $destinationPath = public_path('../public/storage');
+                $request->file('photo')->move($destinationPath, $FileName);
+                
+               
+                $user->photo = $FileName;
+            }
+
+            // Simpan perubahan ke database
+            $user->save();
+
+            return response()->json(['success' => true, 'message' => 'Profile updated successfully']);
+    }
+
+    
+
+    public function getdtUserclient()
+    {
+        $userEmail = session('email');
+        $user = User::where('email', $userEmail)->first(); 
+        
+        return response()->json([
+            'firstname' => $user->name,
+            'lastname' => $user->lastname,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'bio' => $user->bio,
+            'password' => $user->password, 
+            'photo' => $user->photo ? asset('storage/' . $user->photo) : asset('assets2/img/avatar/avatar-1.png'),
+           
+        ]);
     }
 
 }
