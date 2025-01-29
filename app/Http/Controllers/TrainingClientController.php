@@ -48,7 +48,7 @@ class TrainingClientController extends Controller
         // Siapkan data yang akan dikirim ke view
         $data = [
             'user_name' => $userEmail,
-            'title' => 'Job',
+            'title' => 'Training',
             'getdtTraining' => $getdtTraining,
         ];
 
@@ -77,7 +77,7 @@ class TrainingClientController extends Controller
         
         $data = [
             'user_name' => session('email'),
-            'title' => 'Job',
+            'title' => 'Training',
         ];
         $expectedsalary = DB::table('m_salary')->get();
         $education = DB::table('m_education')->get();
@@ -182,16 +182,17 @@ class TrainingClientController extends Controller
             'accounts_transfer.nomor_rekening',
             'accounts_transfer.id as idaccount_transfer',
             'bank_accounts.bank_name',
-            'bank_accounts.id as selectedBankId', // Ambil ID bank yang terpilih
+            'bank_accounts.id as selectedBankId', 
         )
         ->where('tr_applytraining.idusers', $getdtUserClient->id)
         ->where('tr_applytraining.id', base64_decode($id))
+        ->orderBy('payments.updated_at', 'desc') 
         ->first();
             
         // Siapkan data yang akan dikirim ke view
         $data = [
             'user_name' => $userEmail,
-            'title' => 'Job',
+            'title' => 'Training',
             'getdtTraining' => $getdtTraining,
             'bankAccount' =>$bankAccount,
             'idtraining' =>base64_decode($id),
@@ -254,6 +255,81 @@ class TrainingClientController extends Controller
     
         return response()->json(['message' => 'Payment submitted successfully.']);
     
+    }
+
+    public function detailTrainingClient($id) {
+        
+        $userEmail = session('email');
+        $getdtUserClient = User::where('email', $userEmail)->first();
+
+        // Pastikan user ditemukan
+        if (!$getdtUserClient) {
+            abort(404, 'User not found');
+        }
+
+        // Query untuk mengambil data pekerjaan yang dilamar
+        $bankAccount = BankAccount::all();
+        $accountsTransfer = accounts_transfer::all();
+        $getdtTraining = DB::table('tr_applytraining')
+        ->leftJoin('dtc_training_course_detail', 'tr_applytraining.idtraining', '=', 'dtc_training_course_detail.id')
+        ->leftJoin('m_education', 'm_education.id', '=', 'tr_applytraining.ideducation')
+        ->leftJoin('payments', 'payments.idtraining', '=', 'tr_applytraining.id')
+        ->leftJoin('dtc_file_training_course', 'dtc_file_training_course.id_training_course_dtl', '=', 'tr_applytraining.idtraining')
+        ->leftJoin('accounts_transfer', 'accounts_transfer.id', '=', 'payments.idaccount_transfer')
+        ->leftJoin('bank_accounts', 'bank_accounts.id', '=', 'accounts_transfer.idbank')
+        ->select(
+            'tr_applytraining.*',
+            'dtc_file_training_course.nama as imagetraining',
+            'payments.status as statuspayment',
+            'payments.payment_proof',
+            'dtc_training_course_detail.traning_name',
+            'dtc_training_course_detail.company_name',
+            'dtc_training_course_detail.abouttraining',
+            'dtc_training_course_detail.abouttrainer',
+            'dtc_training_course_detail.aboutcareer',
+            'dtc_training_course_detail.registrationfee',
+            'm_education.nama as education',
+            'accounts_transfer.nama as namatransfer',
+            'accounts_transfer.nomor_rekening',
+            'accounts_transfer.id as idaccount_transfer',
+            'bank_accounts.bank_name',
+            'bank_accounts.id as selectedBankId', 
+        )
+        ->where('tr_applytraining.idusers', $getdtUserClient->id)
+        ->where('tr_applytraining.id', base64_decode($id))
+        ->orderBy('payments.updated_at', 'desc') 
+        ->first();
+            
+        // Siapkan data yang akan dikirim ke view
+        $data = [
+            'user_name' => $userEmail,
+            'title' => 'Training',
+            'getdtTraining' => $getdtTraining,
+            'bankAccount' =>$bankAccount,
+            'idtraining' =>base64_decode($id),
+            'idusers'=> $getdtUserClient->id,
+            'selectedBankId' => $getdtTraining->selectedBankId ?? null,
+            'selectedAccountId'=> $getdtTraining->idaccount_transfer ?? null,
+            'accountsTransfer' => $accountsTransfer
+        ];
+
+        // Ambil menu client
+        $menus = Menu_client::whereNull('parent_id')
+            ->with('children')
+            ->orderBy('order')
+            ->get();
+
+        // URL saat ini
+        $currentUrl = url()->current();
+
+        $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
+        $currentUrl = url()->current();
+        $response = response()->view('template2.trainingclient.detailtrainingclinet', compact('data', 'menus','currentUrl'));
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+
+        return $response;
     }
 
 

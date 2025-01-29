@@ -13,7 +13,12 @@ class UserModel extends Model
     protected $fillable = [
         'id',
         'name',
+        'lastname',
         'email',
         'password',
+        'phone',
+        'photo',
+        'bio'
     ];
+    public $incrementing = true;
 }
