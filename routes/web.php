@@ -103,6 +103,8 @@ Route::get('/professionalclientindex', [ProfessionalTrainingClientController::cl
 Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->name('profleclientindex');
 Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
 Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
+// Route::get('/orderdata', [UserController::class, 'getOrderData'])->name('orderdata');
+Route::get('/get-chart-data', [UserController::class, 'getChartData']);
 //php artisan make:controller JobClientController
 //php artisan make:controller TrainingClientController
 //php artisan make:controller ProfessionalTrainingClientController
