@@ -29,3 +29,13 @@
 <!-- Template JS File -->
 <script src="{{ asset('assets2/js/scripts.js') }}"></script>
 <script src="{{ asset('assets2/js/custom.js') }}"></script>
+<!-- Moment.js (Wajib untuk Date Range Picker) -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<!-- Bootstrap Date Range Picker -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+
+
+    <!-- Bootstrap Date Range Picker -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

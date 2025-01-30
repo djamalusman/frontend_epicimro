@@ -1,26 +1,5 @@
 @extends('template2.layouts.app')
-@section('meta')
-    <!-- Meta Tags -->
 
-    <meta name="description"
-        content="Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Kerjateknik Academy" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kerjateknik.id" />
-    <meta property="og:image" content="https://kerjateknik.id/assets/imgs/theme/kerjateknik.png" />
-    <meta property="og:description"
-        content="Kerjateknik Academy: Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul" />
-
-    <!-- Twitter Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kerjateknik Academy">
-    <meta name="twitter:description"
-        content="Kerjateknik Academy: Pusat training dan lowongan kerja sektor Industri, EPC, Fabrikasi, Inspeksi, Operation, Maintenance, Repair, & Overhaul">
-    <meta name="twitter:image" content="https://kerjateknik.id/assets/imgs/theme/kerjateknik.png">
-@endsection
 @section('content')
     @push('page-specific-css')
         <!-- CSS Libraries -->
@@ -28,215 +7,246 @@
         <link rel="stylesheet" href="{{ asset('assets2/modules/summernote/summernote-bs4.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets2/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}" />
         <linkrel="stylesheet" href="{{ asset('assets2/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}"/>
+        
+
     @endpush
+    <style>
+        #jobChart {
+            width: 400px!important;
+            height: 400px!important;
+        }
+
+        #trainingChart {
+            width: 400px!important;
+            height: 400px!important;
+        }
+    </style>
     <section class="section">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-stats">
-                        <div class="card-stats-title">
-                            Order Apply -
-                            <div class="dropdown d-inline">
-                                <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#"
-                                    id="orders-month">January</a>
-                                <ul class="dropdown-menu dropdown-menu-sm">
-                                    <li class="dropdown-title">Select Month</li>
-                                    <li><a href="#" class="dropdown-item active">January</a></li>
-                                    <li><a href="#" class="dropdown-item">February</a></li>
-                                    <li><a href="#" class="dropdown-item">March</a></li>
-                                    <li><a href="#" class="dropdown-item">April</a></li>
-                                    <li><a href="#" class="dropdown-item">May</a></li>
-                                    <li><a href="#" class="dropdown-item">June</a></li>
-                                    <li><a href="#" class="dropdown-item">July</a></li>
-                                    <li><a href="#" class="dropdown-item">August</a></li>
-                                    <li><a href="#" class="dropdown-item">September</a></li>
-                                    <li><a href="#" class="dropdown-item">October</a></li>
-                                    <li><a href="#" class="dropdown-item">November</a></li>
-                                    <li><a href="#" class="dropdown-item">December</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-stats-items">
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">24</div>
-                                <div class="card-stats-item-label">Pending</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">12</div>
-                                <div class="card-stats-item-label">Shipping</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">23</div>
-                                <div class="card-stats-item-label">Completed</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-archive"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Orders</h4>
-                        </div>
-                        <div class="card-body">59</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-stats">
-                        <div class="card-stats-title">
-                            Order Training -
-                            <div class="dropdown d-inline">
-                                <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#"
-                                    id="orders-month">January</a>
-                                <ul class="dropdown-menu dropdown-menu-sm">
-                                    <li class="dropdown-title">Select Month</li>
-                                    <li><a href="#" class="dropdown-item active">January</a></li>
-                                    <li><a href="#" class="dropdown-item">February</a></li>
-                                    <li><a href="#" class="dropdown-item">March</a></li>
-                                    <li><a href="#" class="dropdown-item">April</a></li>
-                                    <li><a href="#" class="dropdown-item">May</a></li>
-                                    <li><a href="#" class="dropdown-item">June</a></li>
-                                    <li><a href="#" class="dropdown-item">July</a></li>
-                                    <li><a href="#" class="dropdown-item">August</a></li>
-                                    <li><a href="#" class="dropdown-item">September</a></li>
-                                    <li><a href="#" class="dropdown-item">October</a></li>
-                                    <li><a href="#" class="dropdown-item">November</a></li>
-                                    <li><a href="#" class="dropdown-item">December</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-stats-items">
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">24</div>
-                                <div class="card-stats-item-label">Pending</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">12</div>
-                                <div class="card-stats-item-label">Shipping</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">23</div>
-                                <div class="card-stats-item-label">Completed</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-archive"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Orders</h4>
-                        </div>
-                        <div class="card-body">59</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card card-statistic-2">
-                    <div class="card-stats">
-                        <div class="card-stats-title">
-                            Order Training Profesional -
-                            <div class="dropdown d-inline">
-                                <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#"
-                                    id="orders-month">January</a>
-                                <ul class="dropdown-menu dropdown-menu-sm">
-                                    <li class="dropdown-title">Select Month</li>
-                                    <li><a href="#" class="dropdown-item active">January</a></li>
-                                    <li><a href="#" class="dropdown-item">February</a></li>
-                                    <li><a href="#" class="dropdown-item">March</a></li>
-                                    <li><a href="#" class="dropdown-item">April</a></li>
-                                    <li><a href="#" class="dropdown-item">May</a></li>
-                                    <li><a href="#" class="dropdown-item">June</a></li>
-                                    <li><a href="#" class="dropdown-item">July</a></li>
-                                    <li><a href="#" class="dropdown-item">August</a></li>
-                                    <li><a href="#" class="dropdown-item">September</a></li>
-                                    <li><a href="#" class="dropdown-item">October</a></li>
-                                    <li><a href="#" class="dropdown-item">November</a></li>
-                                    <li><a href="#" class="dropdown-item">December</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-stats-items">
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">24</div>
-                                <div class="card-stats-item-label">Pending</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">12</div>
-                                <div class="card-stats-item-label">Shipping</div>
-                            </div>
-                            <div class="card-stats-item">
-                                <div class="card-stats-item-count">23</div>
-                                <div class="card-stats-item-label">Completed</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-icon shadow-primary bg-primary">
-                        <i class="fas fa-archive"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>Total Orders</h4>
-                        </div>
-                        <div class="card-body">59</div>
-                    </div>
-                </div>
-            </div>
+        <div class="section-header">
+            <h1>Dashboard</h1>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Line Chart</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart"></canvas>
+            
+          </div>
+          <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+              <form id="filterForm" class="needs-validation" novalidate="">
+                <div class="card-body">
+                    <div class="row">                               
+                      <div class="form-group col-md-4 col-12">
+                        <input type="text" id="dateRange" name="dateRange" class="form-control" placeholder="Select Date Range">
+                        
+                      </div>
+                      <div class="form-group col-md-4 col-12">
+                        <select id="filterDropdown" name="filter" class="form-control">
+                            <option value="all">All</option>
+                            <option value="job">Job</option>
+                            <option value="training">Training</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4 col-12">
+                            <button type="submit" class="btn btn-primary ">Apply Filter</button>
+                      </div>
                     </div>
                 </div>
+              </form>
             </div>
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Bar Chart</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart2"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+          </div>
+        <!-- Chart Section -->
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Doughnut Chart</h4>
+                        <h4>Pie Chart Job</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart3"></canvas>
+                        <canvas id="jobChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Pie Chart</h4>
+                        <h4>Pie Chart Training</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="myChart4"></canvas>
+                        <canvas id="trainingChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        let jobChartInstance = null;
+        let trainingChartInstance = null;
+        
+        function updateChart(data) {
+            const jobCanvas = document.getElementById("jobChart");
+            const trainingCanvas = document.getElementById("trainingChart");
+
+            if (jobChartInstance) jobChartInstance.destroy();
+            if (trainingChartInstance) trainingChartInstance.destroy();
+
+            // Cek apakah semua nilai dalam data.job.values adalah 0
+            const jobValues = data.job.values || [];
+            const trainingValues = data.training.values || [];
+
+            const allJobValuesZero = jobValues.every(value => value === 0);
+            const allTrainingValuesZero = trainingValues.every(value => value === 0);
+
+            // Jika semua nilai adalah 0, tambahkan kategori "No Data"
+            const jobLabels = allJobValuesZero ? ["No Data"] : data.job.labels;
+            const trainingLabels = allTrainingValuesZero ? ["No Data"] : data.training.labels;
+
+            const jobDataset = allJobValuesZero ? [1] : jobValues;
+            const trainingDataset = allTrainingValuesZero ? [1] : trainingValues;
+
+            // Fungsi untuk mendapatkan warna dinamis
+            function getDynamicColors(data) {
+                const colors = ["#F05537", "#0000FF", "#FF0000", "#36A2EB", "#FFCE56"];
+                let colorArray = [];
+
+                data.forEach((value, index) => {
+                    colorArray.push(colors[index % colors.length]);
+                });
+
+                return colorArray;
+            }
+
+            // Mendapatkan warna dinamis untuk job dan training
+            const jobBackgroundColors = allJobValuesZero 
+                ? ["black"] 
+                : getDynamicColors(jobValues);
+            
+            const trainingBackgroundColors = allTrainingValuesZero 
+                ? ["black"] 
+                : getDynamicColors(trainingValues);
+
+            // Buat Chart Job
+            jobChartInstance = new Chart(jobCanvas, {
+                type: "pie",
+                data: {
+                    labels: jobLabels,
+                    datasets: [{
+                        data: jobDataset,
+                        backgroundColor: jobBackgroundColors
+                    }]
+                },
+                options: {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return allJobValuesZero ? "No Data" : `${tooltipItem.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Buat Chart Training
+            trainingChartInstance = new Chart(trainingCanvas, {
+                type: "pie",
+                data: {
+                    labels: trainingLabels,
+                    datasets: [{
+                        data: trainingDataset,
+                        backgroundColor: trainingBackgroundColors
+                    }]
+                },
+                options: {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return allTrainingValuesZero ? "No Data" : `${tooltipItem.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+
+        function fetchChartData(dateRange = "", filter = "all") {
+            if (!dateRange || dateRange.trim() === "") {
+                console.warn("⚠️ Date Range kosong, menggunakan default!");
+                dateRange = ""; // Default jika kosong
+            }
+
+            const url = `/get-chart-data?dateRange=${encodeURIComponent(dateRange)}&filter=${encodeURIComponent(filter)}`;
+            console.log("📡 Fetching URL:", url); // Debugging URL
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                
+                    updateChart(data);
+                })
+                .catch(error => console.error("❌ Error fetching chart data:", error));
+        }
+
+        // Load data pertama kali saat halaman dimuat
+        fetchChartData();
+
+            // ✅ Event listener filter form
+            const filterForm = document.getElementById("filterForm");
+
+            if (filterForm) {
+                filterForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    let dateRange = document.getElementById("dateRange").value;
+                    let filter = document.getElementById("filterDropdown").value;
+
+                    console.log("📌 Selected Date Range:", dateRange);
+                    console.log("📌 Selected Filter:", filter);
+
+                    fetchChartData(dateRange, filter);
+                });
+            } else {
+                console.error("❌ Form tidak ditemukan!");
+            }
+        });
+
+        // ✅ Date Range Picker Initialization
+        $(document).ready(function () {
+            if ($.fn.daterangepicker) {
+                console.log("📅 Date Range Picker Loaded!");
+
+                $('#dateRange').daterangepicker({
+                    autoUpdateInput: false,
+                    locale: { cancelLabel: 'Clear' }
+                });
+
+                $('#dateRange').on('apply.daterangepicker', function (ev, picker) {
+                    let selectedDateRange = picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD');
+                    console.log("📅 Selected Date Range:", selectedDateRange);
+                    $(this).val(selectedDateRange);
+                });
+
+                $('#dateRange').on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                });
+            } else {
+                console.error("❌ Date Range Picker is not loaded!");
+            }
+        });
+
+    </script>
+    
     @push('page-specific-scripts')
-        <script src="{{ asset('assets2/modules/chart.min.js') }}"></script>
-        <script src="{{ asset('assets2/js/page/modules-chartjs.js') }}"></script>
-        <script type="text/javascript">
-            window.history.forward(1);
-        </script>
+        
     @endpush
 @endsection
