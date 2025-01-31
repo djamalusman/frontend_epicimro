@@ -247,57 +247,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function getChartData(Request $request)
-    {
-        $userEmail = session('email');
-        $getdtUserClient = User::where('email', $userEmail)->first();
-        
-        $dateRange = $request->query('dateRange');
-        $filter = $request->query('filter', 'all'); // Default ke 'all' jika tidak ada filter
     
-        \Log::info("Received filter data:", ['dateRange' => $dateRange, 'filter' => $filter]);
-    
-        // Query default hanya untuk data dengan status = 1
-        $queryJob = DB::table('tr_applyjob')->where('idusers', $getdtUserClient->id)->where('status', 1);
-        $queryTraining = DB::table('tr_applytraining')->where('idusers', $getdtUserClient->id)->where('status', 1);
-    
-        // Jika ada date range, filter berdasarkan tanggal
-        if (!empty($dateRange)) {
-            $dates = explode(' - ', $dateRange);
-    
-            if (count($dates) == 2) {
-                try {
-                    $startDate = Carbon::createFromFormat('Y-m-d', trim($dates[0]))->startOfDay();
-                    $endDate = Carbon::createFromFormat('Y-m-d', trim($dates[1]))->endOfDay();
-                    $queryJob->whereBetween('created_at', [$startDate, $endDate]);
-                    $queryTraining->whereBetween('created_at', [$startDate, $endDate]);
-                } catch (\Exception $e) {
-                    return response()->json(['error' => 'Invalid date format.'], 400);
-                }
-            } else {
-                return response()->json(['error' => 'Date range is missing or incorrect.'], 400);
-            }
-        }
-    
-        // Jika filter tidak 'all', hanya jalankan salah satu query
-        if ($filter === 'job') {
-            $queryTraining->whereRaw('1 = 0'); // Kosongkan training
-            $jobData = $queryJob->count();
-            $trainingData = 0;
-        } elseif ($filter === 'training') {
-            $queryJob->whereRaw('1 = 0'); // Kosongkan job
-            $jobData = 0;
-            $trainingData = $queryTraining->count();
-        } else {
-            $jobData = $queryJob->count();
-            $trainingData = $queryTraining->count();
-        }
-    
-        return response()->json([
-            'job' => ['labels' => ['Job'], 'values' => [$jobData]],
-            'training' => ['labels' => ['Training'], 'values' => [$trainingData]]
-        ]);
-    }
 
 
 
