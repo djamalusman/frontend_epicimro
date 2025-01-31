@@ -480,7 +480,7 @@ function resize() {
                 } else {
                     alert("Please complete all fields in Step " + currentStep);
                 }
-            }Job
+            }
 
             if (target.matches('[data-prev]')) {
                 const prevStep = parseInt(target.getAttribute('data-prev'));

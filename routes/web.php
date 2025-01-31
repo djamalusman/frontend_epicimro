@@ -81,8 +81,14 @@ Route::post('/login', [UserController::class, 'login'])->name('signIn');
 Route::get('/redirectToLogin', [UserController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
+Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->name('profleclientindex');
+Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
+Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
 
+Route::get('/get-chart-data', [DashboardController::class, 'getChartData']);
+Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
+Route::get('/activitiesJob', [DashboardController::class, 'ActivitiesJob'])->name('activitiesJob');
+Route::get('/activitiesTraining', [DashboardController::class, 'ActivitiesTraining'])->name('activitiesTraining');
 
 Route::get('/jobclinetindex', [JobClientController::class, 'indexJoblient'])->name('jobclinetindex');
 Route::get('/jobclinetdetail/{id}', [JobClientController::class, 'detailJobClient'])->name('jobclinetdetail');
@@ -100,14 +106,8 @@ Route::get('/accounts-transfer/{idbank}', [TrainingClientController::class, 'get
 Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
 
 
-Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->name('profleclientindex');
-Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
-Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
-// Route::get('/orderdata', [UserController::class, 'getOrderData'])->name('orderdata');
-Route::get('/get-chart-data', [UserController::class, 'getChartData']);
-//php artisan make:controller JobClientController
-//php artisan make:controller TrainingClientController
-//php artisan make:controller ProfessionalTrainingClientController
+
+
 
 
 
