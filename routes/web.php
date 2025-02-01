@@ -103,11 +103,30 @@ Route::get('/trainingclinetdetail/{id}', [TrainingClientController::class, 'deta
 Route::post('/store-payment', [TrainingClientController::class, 'storePayment'])->name('storePayment');
 Route::get('/accounts-transfer/{idbank}', [TrainingClientController::class, 'getAccountsTransfer'])->name('accounts-transfer');
 
-Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexprofessionalclient'])->name('professionalclientindex');
+Route::get('/professionalclientindex', [ProfessionalTrainingClientController::class, 'indexProfessionalclient'])->name('professionalclientindex');
+Route::get('/get-tasksprofTraining', [ProfessionalTrainingClientController::class, 'getTasks'])->name('get-tasksprofTraining');
+Route::get('/detailproftrainer/{id}', [ProfessionalTrainingClientController::class, 'dteailProfessionalclient'])->name('detailproftrainer');
 
+Route::get('/viewstoreproftrainer', [ProfessionalTrainingClientController::class, 'ViewStoreProfTran'])->name('viewstoreproftrainer');
+Route::post('/insert-task', [ProfessionalTrainingClientController::class, 'insertTask']);
 
+Route::get('/vieweditprof/{id}', [ProfessionalTrainingClientController::class, 'viewEditProf'])->name('vieweditprof');
+Route::get('/get-taskedit/{id}', [ProfessionalTrainingClientController::class, 'getTaskEdit']);  // Mengambil data yang akan diedit
+Route::post('/update-task', [ProfessionalTrainingClientController::class, 'updateTask']);
 
+Route::get('/get-profesionalPatner', [ProfessionalTrainingClientController::class, 'getprofesionalPatner']);
+Route::get('/get-background-pendidikan', [ProfessionalTrainingClientController::class, 'getBackgroundPendidikan']);
+Route::get('/get-jenjang-pendidikan', [ProfessionalTrainingClientController::class, 'getJenjangPendidikan']);
+Route::get('/get-province-data', [ProfessionalTrainingClientController::class, 'getProvinceData']);
+Route::get('/get-age-Data', [ProfessionalTrainingClientController::class, 'getAgeData']);
+Route::get('/get-workexperience-Data', [ProfessionalTrainingClientController::class, 'getWorkExperienceData']);
+Route::get('/get-sertifikat-Data', [ProfessionalTrainingClientController::class, 'getsertifikatData']);
 
+Route::get('/get-bidang-Data', [ProfessionalTrainingClientController::class, 'getBidangData']);
+Route::get('/get-software-Data', [ProfessionalTrainingClientController::class, 'getSoftwareData']);
+Route::get('/get-trainer-Data', [ProfessionalTrainingClientController::class, 'getTrainerData']);
 
-
+Route::get('/get-posisi-diminati', [ProfessionalTrainingClientController::class, 'getPosisiDiminati']);
+Route::get('/get-epc', [ProfessionalTrainingClientController::class, 'getepcData']);
+Route::get('/get-salaray', [ProfessionalTrainingClientController::class, 'getsalarayData']);
 
