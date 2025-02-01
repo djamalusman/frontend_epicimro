@@ -1,9 +1,9 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="index.html">Kerja Teknik</a>
+        <a href="#">Kerja Teknik</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">St</a>
+        <a href="#">KT</a>
     </div>
     <ul class="sidebar-menu">
         @foreach ($menus as $menu)

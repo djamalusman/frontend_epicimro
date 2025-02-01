@@ -225,7 +225,7 @@
         const trainingBackgroundColors = data.training.labels.length ? generateColors(trainingLabels.length) : ["#CCCCCC"];
 
         jobChartInstance = new Chart(jobCanvas, {
-            type: "pie",
+            type: "doughnut",
             data: {
                 labels: jobLabels,
                 datasets: [{
@@ -247,7 +247,7 @@
         });
 
         trainingChartInstance = new Chart(trainingCanvas, {
-            type: "pie",
+            type: "doughnut",
             data: {
                 labels: trainingLabels,
                 datasets: [{
