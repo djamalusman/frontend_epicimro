@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Menu_client;
+use App\Models\ProfTrainingModel;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -131,7 +133,18 @@ class ProfessionalTrainingClientController extends Controller
 
         $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
         $currentUrl = url()->current();
-        $response = response()->view('template2.professionalclient.vieweditprof', compact('data', 'menus','currentUrl'));
+        //dd($id);
+        $datas = ProfTrainingModel::where('id', $id)->first();
+        //dd($data->id_m_prof_training);
+        $val=$datas->id_m_prof_training;
+        if ($val == 1 ) {
+            $response = response()->view('template2.professionalclient.vieweditprof1', compact('data', 'menus','currentUrl'));
+        } else {
+            $response = response()->view('template2.professionalclient.vieweditprof2', compact('data', 'menus','currentUrl'));
+        }
+        
+        
+        
       
         $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
         $response->headers->set('Pragma', 'no-cache');
@@ -159,23 +172,27 @@ class ProfessionalTrainingClientController extends Controller
         
            
             if ($request->mproftraining =="1") {
-                $cvFileName =null;
-                $fotoFileName = null;
-                $sertifikatpathFileName = null;
-                if ($request->hasFile('cvpath') || $request->hasFile('fotopath') || $request->hasFile('sertifikatpath') ) 
-                {
-                    $cvFileName = time() . '_' . $request->file('cvpath')->getClientOriginalName();
-                    $destinationPath = public_path('../public/storage');
-                    $request->file('cvpath')->move($destinationPath, $cvFileName);
-                    
-                    $fotoFileName = time() . '_' . $request->file('fotopath')->getClientOriginalName();
-                    $destinationPath = public_path('../public/storage');
-                    $request->file('fotopath')->move($destinationPath, $fotoFileName);
+                    $destinationPath = public_path('storage');
 
-                    $sertifikatpathFileName = time() . '_' . $request->file('sertifikatpath')->getClientOriginalName();
-                    $destinationPath = public_path('../public/storage');
-                    $request->file('sertifikatpath')->move($destinationPath, $sertifikatpathFileName);
-                }
+                    $cvFileName = null;
+                    $fotoFileName = null;
+                    $sertifikatFileName = null;
+
+                    if ($request->hasFile('cvpath')) {
+                        $cvFileName = time() . '_' . $request->file('cvpath')->getClientOriginalName();
+                        $request->file('cvpath')->move($destinationPath, $cvFileName);
+
+                    }
+
+                    if ($request->hasFile('fotopath')) {
+                        $fotoFileName = time() . '_' . $request->file('fotopath')->getClientOriginalName();
+                        $request->file('fotopath')->move($destinationPath, $fotoFileName);
+                    }
+
+                    if ($request->hasFile('sertifikatpath')) {
+                        $sertifikatFileName = time() . '_' . $request->file('sertifikatpath')->getClientOriginalName();
+                        $request->file('sertifikatpath')->move($destinationPath, $sertifikatFileName);
+                    }
                     $insert = DB::table('tr_proftraining')->insert([
                     'idusers' => $getdtUserClient->id,
                     'id_m_bgrnd_deducation' => $request->mnamabgroudneducation,
@@ -205,20 +222,20 @@ class ProfessionalTrainingClientController extends Controller
                     'updated_at' => now(),
                 ]);
             }else {
-                $cvFileName =null;
-                $portofolioFileName = null;
+                    $destinationPath = public_path('storage');
+                    $cvFileName = null;
+                    $portofolioFileName = null;
 
-                if ($request->hasFile('cvpath2') || $request->hasFile('portofoliopath2') ) {
-                    $file = $request->file('cvpath2');
-                    $cvFileName = time() . '_' . $file->getClientOriginalName();
-                    $destinationPath = public_path('storage'); 
-                    $file->move($destinationPath, $cvFileName);
-                
-                    $portofolioFileName = time() . '_' . $request->file('portofoliopath2')->getClientOriginalName();
-                    $destinationPath = public_path('../public/storage');
-                    $request->file('portofoliopath2')->move($destinationPath, $portofolioFileName);
+                    if ($request->hasFile('cvpath2')) {
+                        $cvFileName = time() . '_' . $request->file('cvpath2')->getClientOriginalName();
+                        $request->file('cvpath2')->move($destinationPath, $cvFileName);
 
-                } 
+                    }
+
+                    if ($request->hasFile('portofoliopath2')) {
+                        $portofolioFileName = time() . '_' . $request->file('portofoliopath2')->getClientOriginalName();
+                        $request->file('portofoliopath2')->move($destinationPath, $fotoFileName);
+                    }
                     
                     $insert = DB::table('tr_proftraining')->insert([
                     'idusers' => $getdtUserClient->id,
@@ -285,6 +302,8 @@ class ProfessionalTrainingClientController extends Controller
             'tr_proftraining.other_certification',
             'tr_proftraining.other_software',
             'tr_proftraining.expected_fee_hour',
+            'tr_proftraining.tunjagnan',
+            'tr_proftraining.portofoliopath',
             'm_prof_training.id as idrof_training', 
             'm_bgrnd_education.id as idbgroundeducation',
             
@@ -303,9 +322,7 @@ class ProfessionalTrainingClientController extends Controller
             'm_job_vacancy.id as idjobvacancy', 
             'm_epc_project.id as ideproject',
             'm_salary.id as idsalary',
-            
-            
-
+        
         )
             ->where('tr_proftraining.id', $id)
             ->first();
@@ -320,29 +337,124 @@ class ProfessionalTrainingClientController extends Controller
 
     public function updateTask(Request $request)
     {
-        // Validasi input
+      
         $request->validate([
-            'phone' => 'required|string',
-            'namabgroudneducation' => 'required|integer',
-            'namaeducation' => 'required|integer',
-            'namajobvacancy' => 'required|integer',
+            'cvpath' => 'file|mimes:pdf,doc,docx|max:2048', // Max 2MB
+            'fotopath' => 'file|mimes:pdf,doc,docx|max:2048', // Max 2MB
+            'sertifikatpath' => 'file|mimes:pdf,doc,docx|max:2048', // Max 2MB
+            'cvpath2' => 'file|mimes:pdf,doc,docx|max:2048', // Max 2MB
+            'portofoliopath2' => 'file|mimes:pdf,doc,docx|max:2048', // Max 2MB
         ]);
 
-        // Update data ke tabel `tr_proftraining`
-        $update = DB::table('tr_proftraining')
-            ->where('id', $request->id)
-            ->update([
-                'phone' => $request->phone,
-                'id_m_bgrnd_deducation' => $request->namabgroudneducation,
-                'id_m_education' => $request->namaeducation,
-                'id_m_jobvacancy' => $request->namajobvacancy,
-                'updated_at' => now(),
+            //dd($request->cvpath);
+            $userEmail = session('email');
+            $getdtUserClient = User::where('email', $userEmail)->first();
+
+        
+            //dd($request->mproftraining );
+            if ($request->mproftraining =="1") {
+                $destinationPath = public_path('storage');
+
+                $cvFileName = null;
+                $fotoFileName = null;
+                $sertifikatFileName = null;
+
+                if ($request->hasFile('cvpath')) {
+                    $cvFileName = time() . '_' . $request->file('cvpath')->getClientOriginalName();
+                    $request->file('cvpath')->move($destinationPath, $cvFileName);
+
+                }
+
+                if ($request->hasFile('fotopath')) {
+                    $fotoFileName = time() . '_' . $request->file('fotopath')->getClientOriginalName();
+                    $request->file('fotopath')->move($destinationPath, $fotoFileName);
+                }
+
+                if ($request->hasFile('sertifikatpath')) {
+                    $sertifikatFileName = time() . '_' . $request->file('sertifikatpath')->getClientOriginalName();
+                    $request->file('sertifikatpath')->move($destinationPath, $sertifikatFileName);
+                }
+
+                // Simpan ke database
+                $update = DB::table('tr_proftraining')->where('id', $request->id)->update([
+                    'idusers' => $getdtUserClient->id,
+                    'id_m_bgrnd_deducation' => $request->mnamabgroudneducation,
+                    'other_bgrnd_education' => $request->otherbgrndeducation,
+                    'id_m_education' => $request->mnamaeducation,
+                    'id_m_provinsi' => $request->mprovinceData,
+                    'residence' => $request->residence,
+                    'idage' => $request->mage,
+                    'id_m_experience_l' => $request->mworkexperience,
+                    'id_m_sertifikat' => $request->msertifikat,
+                    'other_certification' => $request->othersertifikat,
+                    'id_m_sofware' => $request->msoftware,
+                    'other_software' => $request->othersoftware,
+                    'id_m_trainner' => $request->mtrainer,
+                    'id_m_bidang' => $request->mbidang,
+                    'expected_fee_hour' => $request->fee,
+                    'cvpath' => $cvFileName,
+                    'fotopath' => $fotoFileName,
+                    'sertifikatpath' => $sertifikatFileName,
+                    'status' => 1,
+                    'info' => $request->mproftraining,
+                    'opsion' => $request->mproftraining,
+                    'id_m_prof_training' => $request->mproftraining,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+            }else {
+
+                    $destinationPath = public_path('storage');
+                    $cvFileName = null;
+                    $portofolioFileName = null;
+
+                    if ($request->hasFile('cvpath2')) {
+                        $cvFileName = time() . '_' . $request->file('cvpath2')->getClientOriginalName();
+                        $request->file('cvpath2')->move($destinationPath, $cvFileName);
+
+                    }
+
+                    if ($request->hasFile('portofoliopath2')) {
+                        $portofolioFileName = time() . '_' . $request->file('portofoliopath2')->getClientOriginalName();
+                        $request->file('portofoliopath2')->move($destinationPath, $fotoFileName);
+                    }
+
+                    $update = DB::table('tr_proftraining')->where('id', $request->id)->update([
+                    'idusers' => $getdtUserClient->id,
+                    'id_m_bgrnd_deducation' => $request->mnamabgroudneducation2,
+                    'other_bgrnd_education' => $request->otherbgrndeducation2,
+                    'id_m_education' => $request->mnamaeducation2,
+                    'id_m_provinsi' => $request->mprovinceData2,
+                    'residence' => $request->residence2,
+                    'idage' => $request->mage2,
+                    'id_m_experience_l' => $request->mworkexperience2,
+                    'id_m_sertifikat' => $request->msertifikat2,
+                    'other_certification' =>$request->othersertifikat2,
+                    'id_m_sofware' => $request->msoftware2,
+                    'other_software' => $request->othersoftware2,
+
+                    'id_m_jobvacancy' => $request->mnamajobvacancy2,
+                    'id_m_epc' => $request->mepc2,
+                    'id_m_salary' => $request->msalaray2,
+                    'tunjagnan' => $request->tunjangan2,
+                    'cvpath' => $cvFileName,
+                    'portofoliopath' => $portofolioFileName,
+
+                    'status' => 1,
+                    'info' => $request->mproftraining,
+                    'opsion' => $request->mproftraining,
+                    'id_m_prof_training' => $request->mproftraining,
+                    'created_at' => now(),
+                    'updated_at' => now(),  
             ]);
 
+        }
+
         if ($update) {
-            return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui!']);
+            return response()->json(['success' => true, 'message' => 'Data berhasil disimpan!']);
         } else {
-            return response()->json(['success' => false, 'message' => 'Gagal memperbarui data!']);
+            return response()->json(['success' => false, 'message' => 'Gagal menyimpan data!']);
         }
     }
 

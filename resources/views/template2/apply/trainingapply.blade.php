@@ -129,7 +129,7 @@ Register Training
                                     <div class="form-group row">
                                         <label class="col-md-4 text-md-right text-left">No.Tlp</label>
                                         <div class="col-lg-4 col-md-6">
-                                            <input type="text"  readonly class="form-control">
+                                            <input type="text" value="{{session('phone')}}" readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">

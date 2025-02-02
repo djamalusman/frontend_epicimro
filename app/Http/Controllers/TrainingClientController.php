@@ -77,6 +77,7 @@ class TrainingClientController extends Controller
         
         $data = [
             'user_name' => session('email'),
+            'phone'=> session('phone'),
             'title' => 'Training',
         ];
         $expectedsalary = DB::table('m_salary')->get();

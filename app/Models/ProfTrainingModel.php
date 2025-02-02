@@ -40,6 +40,7 @@ class ProfTrainingModel extends Model
         'id_m_salary',
         'tunjangan',
         'portofoliopath',
+        'id_m_prof_training',
         'created_at',
         'updated_at',
     ];
