@@ -46,10 +46,21 @@
             <div class="col-12 col-md-12 col-lg-12">
               <div class="card">
                 <div class="card-body">
-                  <form id="editTaskForm">
+                  <form id="editTaskForm" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="{{$data['idprof']}}" id="taskId"> <!-- Untuk menyimpan ID data yang akan diedit -->
-
+                    @csrf
                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>PROFESSIONAL PARTNER DATABASE / CONSTRUCTION PROFESSIONAL DATABASE</label> 
+                            <input value="PROFESSIONAL PARTNER DATABASE" readonly class="form-control">
+                           
+                        </div>
+                        <div class="form-group col-md-6" hidden>
+                            <label>PROFESSIONAL PARTNER DATABASE / CONSTRUCTION PROFESSIONAL DATABASE</label> 
+                            <select name="mproftraining" id="profesionalPatner" class="form-control select2">
+                                <option value="">Pilih Profesional Patner</option>
+                            </select>
+                        </div>
                         <div class="form-group col-md-6">
                             <label>Name / Nama</label>
                             <input type="text" readonly name="nama" value="{{$data['name']}} {{$data['lastname']}}" class="form-control">
@@ -148,7 +159,8 @@
                             <label>Cv</label></br>
                             <div class="input-group mb-3">
                                 <!-- Menampilkan path file CV di input teks (readonly) -->
-                                <input type="text" class="form-control" id="cvPath">
+                                <input type="file" name="cvpath" class="form-control" id="cvpath">
+                                <input type="text" hidden class="form-control" id="cvpathy">
                                 <div class="input-group-append">
                                     <!-- Tombol View untuk melihat file CV -->
                                     <a href="#" id="viewCvButton" class="btn btn-primary" style="display:none;" type="button" rel="noopener noreferrer"> View</a>
@@ -156,13 +168,30 @@
                             </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Appload Sertifikat</label>
-                            <input type="file" name="sertifikatpath" class="form-control">
+                            <label>Appload Sertifikat</label></br>
+                            <div class="input-group mb-3">
+                                <!-- Menampilkan path file CV di input teks (readonly) -->
+                                <input type="file" name="sertifikatpath" class="form-control" id="sertifikatpath">
+                                <input type="text" hidden class="form-control" id="sertifikatpathy">
+                                <div class="input-group-append">
+                                    <!-- Tombol View untuk melihat file CV -->
+                                    <a href="#" id="viewSertifikatButton" class="btn btn-primary" style="display:none;" type="button" rel="noopener noreferrer"> View</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Appload Foto</label>
-                            <input type="file" name="fotopath" class="form-control">
+                            <label>Appload Foto</label></br>
+                            <div class="input-group mb-3">
+                                <!-- Menampilkan path file CV di input teks (readonly) -->
+                                <input type="file" name="fotopath" class="form-control" id="fotopath">
+                                <input type="text" hidden class="form-control" id="fotopathy">
+                                <div class="input-group-append">
+                                    <!-- Tombol View untuk melihat file CV -->
+                                    <a href="#" id="viewFotoButton" class="btn btn-primary" style="display:none;" type="button" rel="noopener noreferrer"> View</a>
+                                </div>
+                            </div>
                         </div>
+                       
                     </div> 
                     
 
@@ -178,10 +207,10 @@
         <script src="{{ asset('assets2/modules/select2/dist/js/select2.full.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.17/dist/sweetalert2.all.min.js"></script>
 
-      <script>
+    <script>
     $(document).ready(function() {
         // Fungsi untuk memuat dropdown
-        function loadOptions(url, selectId, selectedValue) {
+        function loadOptions(url, selectId, selectedValue = null) {
             $.ajax({
                 url: url,
                 method: 'GET',
@@ -189,8 +218,7 @@
                 success: function(response) {
                     $(selectId).empty().append('<option value="">Pilih</option>');
                     $.each(response.data, function(index, item) {
-                        // Menambahkan selected pada option yang sesuai
-                        var isSelected = item.id == selectedValue ? 'selected' : '';
+                        var isSelected = selectedValue && item.id == selectedValue ? 'selected' : '';
                         $(selectId).append('<option value="' + item.id + '" ' + isSelected + '>' + item.nama + '</option>');
                     });
                 },
@@ -201,100 +229,125 @@
         }
 
         // Memuat dropdown data ketika halaman di-load
-            loadOptions('/get-profesionalPatner', '#profesionalPatner');
-            loadOptions('/get-background-pendidikan', '#backgroundPendidikan');
-            loadOptions('/get-jenjang-pendidikan', '#jenjangPendidikan');
-            loadOptions('/get-province-data', '#provinceData');
-            loadOptions('/get-age-Data', '#ageData');
-            loadOptions('/get-workexperience-Data', '#workexperience');
-            loadOptions('/get-sertifikat-Data', '#sertifikat');
+        loadOptions('/get-profesionalPatner', '#profesionalPatner');
+        loadOptions('/get-background-pendidikan', '#backgroundPendidikan');
+        loadOptions('/get-jenjang-pendidikan', '#jenjangPendidikan');
+        loadOptions('/get-province-data', '#provinceData');
+        loadOptions('/get-age-Data', '#ageData');
+        loadOptions('/get-workexperience-Data', '#workexperience');
+        loadOptions('/get-sertifikat-Data', '#sertifikat');
+        loadOptions('/get-bidang-Data', '#bidang');
+        loadOptions('/get-software-Data', '#software');
+        loadOptions('/get-trainer-Data', '#trainer');
 
-            loadOptions('/get-bidang-Data', '#bidang');
-            loadOptions('/get-software-Data', '#software');
-            loadOptions('/get-trainer-Data', '#trainer');
         // Ambil data yang akan diedit
-        var taskId = {{$data['idprof']}}; // ID data yang akan diedit, bisa diambil dari URL atau variabel
-        $.ajax({
-            url: '/get-taskedit/' + taskId,
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    var task = response.data;
+        var taskId = {{$data['idprof']}}; 
+        if (taskId) {
+            $.ajax({
+                url: '/get-taskedit/' + taskId,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        var task = response.data;
+                        
+                        loadOptions('/get-profesionalPatner', '#profesionalPatner', task.idrof_training);
+                        loadOptions('/get-background-pendidikan', '#backgroundPendidikan', task.idbgroundeducation);
+                        $('#otherbgrndeducation').val(task.other_bgrnd_education);
+                        loadOptions('/get-jenjang-pendidikan', '#jenjangPendidikan', task.idducation);
+                        loadOptions('/get-province-data', '#provinceData', task.idprovince);
+                        $('#residence').val(task.residence);
+                        loadOptions('/get-age-Data', '#ageData', task.idage);
+                        loadOptions('/get-workexperience-Data', '#workexperience', task.idexperiencelevel);
+                        loadOptions('/get-sertifikat-Data', '#sertifikat', task.idsertifikat);
+                        $('#othersertifikat').val(task.other_certification);
+                        
+                        loadOptions('/get-software-Data', '#software', task.idsoftware);
+                        $('#othersoftware').val(task.other_software);
+                        loadOptions('/get-bidang-Data', '#bidang', task.idBidang);
+                        loadOptions('/get-trainer-Data', '#trainer', task.idtrainer);
+                        $('#fee').val(task.expected_fee_hour);
                     
-                    loadOptions('/get-profesionalPatner', '#profesionalPatner', task.idrof_training);
-                    loadOptions('/get-background-pendidikan', '#backgroundPendidikan',task.idbgroundeducation);
-                    $('#otherbgrndeducation').val(task.other_bgrnd_education);
-                    loadOptions('/get-jenjang-pendidikan', '#jenjangPendidikan',task.idducation);
-                    loadOptions('/get-province-data', '#provinceData',task.idprovince);
-                    $('#residence').val(task.residence);
-                    loadOptions('/get-age-Data', '#ageData',task.idage);
-                    loadOptions('/get-workexperience-Data', '#workexperience',task.idexperiencelevel);
-                    loadOptions('/get-sertifikat-Data', '#sertifikat',task.idsertifikat);
-                    $('#othersertifikat').val(task.other_certification);
-                    
-                    loadOptions('/get-software-Data', '#software',task.idsoftware);
-                    $('#othersoftware').val(task.other_software);
-                    loadOptions('/get-bidang-Data', '#bidang',task.idBidang);
-                    loadOptions('/get-trainer-Data', '#trainer',task.idtrainer);
-                    $('#fee').val(task.expected_fee_hour);
-                    // Mengatur nilai file path dan mengaktifkan tombol View
-                    $('#cvPath').val(task.cvpath); // Memasukkan path file CV
-                    $('#viewCvButton').show(); // Menampilkan tombol View jika ada file
-                    // loadOptions('/get-posisi-diminati', '#posisiDiminati', task.idjobvacancy);
-                    // loadOptions('/get-posisi-diminati', '#posisiDiminati', task.idtrainer);
-                    // loadOptions('/get-posisi-diminati', '#posisiDiminati', task.ideproject);
-                    // loadOptions('/get-posisi-diminati', '#posisiDiminati', task.idsalary);
-                    console.log("CV Path: ", task.cvpath);
-
+                        // Set file path dan tampilkan tombol jika ada file
+                        setFilePath('#cvpathy', '#viewCvButton', task.cvpath);
+                        setFilePath('#sertifikatpathy', '#viewSertifikatButton', task.sertifikatpath);
+                        setFilePath('#fotopathy', '#viewFotoButton', task.fotopath);
+                    }
+                },
+                error: function() {
+                    alert('Gagal memuat data untuk diedit');
                 }
-            },
-            error: function(xhr) {
-                alert('Gagal memuat data untuk diedit');
-            }
-        });
+            });
+        }
 
-        // Menangani klik tombol View untuk melihat file CV
-        $('#viewCvButton').click(function(e) {
-            e.preventDefault();
-            
-            // Ambil path file CV
-            var cvPath = $('#cvPath').val();
-            console.log(cvPath);
-            
-            if (cvPath) {
-                // Tentukan URL lengkap untuk menampilkan file
-                var fileUrl = "{{ asset('storage') }}/" + cvPath;
-
-                // Buka file di tab baru
-                window.open(fileUrl, '_blank'); // Membuka file di tab baru
+        // Menampilkan tombol hanya jika ada file
+        function setFilePath(inputId, buttonId, filePath) {
+            $(inputId).val(filePath);
+            if (filePath) {
+                $(buttonId).show();
             } else {
-                alert("File tidak ditemukan.");
+                $(buttonId).hide();
             }
-        });
+        }
+
+        // Fungsi untuk menangani klik tombol View file
+        function viewFile(buttonId, inputId) {
+            $(buttonId).click(function(e) {
+                e.preventDefault();
+                var filePath = $(inputId).val();
+                if (filePath) {
+                    var fileUrl = "{{ asset('storage') }}/" + filePath;
+                    window.open(fileUrl, '_blank');
+                } else {
+                    alert("File tidak ditemukan.");
+                }
+            });
+        }
+
+        // Panggil fungsi untuk setiap tombol file
+        viewFile('#viewCvButton', '#cvpathy');
+        viewFile('#viewSertifikatButton', '#sertifikatpathy');
+        viewFile('#viewFotoButton', '#fotopathy');
 
         // Handle form submit untuk update data
         $("#editTaskForm").submit(function(e) {
             e.preventDefault();
-
+            var formData = new FormData(this);
             $.ajax({
                 url: '/update-task',
                 method: 'POST',
-                data: $(this).serialize(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        alert(response.message);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Memperbarui data',
+                        }).then(() => {
+                            window.location.href = "{{ route('professionalclientindex') }}";
+                        });
                     } else {
-                        alert('Gagal memperbarui data');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Memperbarui data. Silakan coba lagi.',
+                        });
                     }
                 },
-                error: function(xhr) {
-                    alert('Terjadi kesalahan: ' + xhr.responseText);
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan. Silakan coba lagi.',
+                    });
                 }
             });
         });
     });
+
 
 </script>
 

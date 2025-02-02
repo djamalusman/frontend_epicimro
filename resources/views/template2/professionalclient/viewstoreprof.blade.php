@@ -48,7 +48,7 @@
               <div class="card">
                 
                 <div class="card-body">
-                  <form id="taskForm">
+                  <form id="taskForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-6">
