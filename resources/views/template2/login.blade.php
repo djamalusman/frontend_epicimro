@@ -152,7 +152,10 @@
                     title: 'Pendaftaran Berhasil',
                     text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
                     confirmButtonText: 'OK'
+                }).then(() => {
+                            window.location.href = "{{ route('login') }}";
                 });
+                
             }
             // Jika terdapat error dari server
             else if (data.error) {
