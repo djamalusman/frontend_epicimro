@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistrationSuccessMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -82,7 +83,7 @@ class UserController extends Controller
          $validator = Validator::make($request->all(), [
              'username' => 'required',
              'email' => 'required|email',
-             'password' => 'required|min:6', // Validasi password minimal 6 karakter
+             'password' => 'required', // Validasi password minimal 6 karakter
          ]);
 
          // Jika validasi gagal
@@ -108,6 +109,22 @@ class UserController extends Controller
              'email' => $request->email,
              'password' => Hash::make($request->password),
          ]);
+         $user = User::where('email', $request->email)->first();
+         //dd($user);
+         if ($user) {
+            try {
+                Mail::to($user->email)->send(new RegistrationSuccessMail($user,$request->password));
+    
+                return response()->json([
+                    'message' => 'Registration successful! Email sent.',
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Registration successful! But failed to send email.',
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
          // Berikan respons sukses
          return response()->json([
