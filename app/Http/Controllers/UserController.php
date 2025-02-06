@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\View;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use App\Mail\ForgotPasswordMail;
+
 class UserController extends Controller
 {
      // Menampilkan halaman login
@@ -264,8 +267,48 @@ class UserController extends Controller
         ]);
     }
 
-    
+    public function sendPasswordResetLink(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        
+        $user = User::where('email', $request->email)->first();
 
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan');
+        }
 
+        try {
+            $token = Str::random(60);
+            $user->remember_token = $token;
+            $user->save();
 
+            Mail::to($user->email)->send(new ForgotPasswordMail($user, $token));
+
+            return back()->with('success', 'Link reset password telah dikirim ke email Anda');
+        } catch (\Exception $e) {
+            Log::error('Email error: '.$e->getMessage());
+            return back()->with('error', 'Gagal mengirim email. Silakan coba lagi nanti.');
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|confirmed|min:8',
+            'token' => 'required'
+        ]);
+
+        $user = User::where('remember_token', $request->token)->first();
+
+        if (!$user) {
+            return back()->withErrors(['token' => 'Token tidak valid']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+            'remember_token' => null
+        ]);
+
+        return redirect()->route('login')->with('status', 'Password berhasil direset');
+    }
 }

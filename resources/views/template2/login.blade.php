@@ -28,12 +28,17 @@
                     <div class="input-group">
                         <input type="password" placeholder="Password" id="signInPassword" name="password" required>
                         <span class="input-icon">🔒</span>
+                        <br>
                     </div>
                     <button type="submit" class="btn">Login</button>
 
+                    
                     <p class="switch-text">
                         <br>
-                        Don’t have an account? <span class="toggle-form">Sign Up</span>
+                        <a href="{{ route('forgot.password') }}" class="text-primary">forgot password?</a>
+                         </br>
+                        <br>
+                        Don’t have an account? <span class="toggle-form">Sign Up </span>
                         </br>
                     </p>
                 </form>
@@ -67,7 +72,7 @@
         </div>
     </div>
     <!-- Modal -->
-   
+
     <div id="successModal" class="modal" style="display: none;">
         <div class="modal-content">
             <h2>Pendaftaran Berhasil</h2>
@@ -104,7 +109,7 @@
 
     <script type="text/javascript">
     @if(session('session_expired'))
-        
+
         Swal.fire({
             icon: 'warning',
             title: 'Session Expired',
@@ -155,7 +160,7 @@
                 }).then(() => {
                             window.location.href = "{{ route('login') }}";
                 });
-                
+
             }
             // Jika terdapat error dari server
             else if (data.error) {
