@@ -18,7 +18,9 @@ class UserModel extends Model
         'password',
         'phone',
         'photo',
-        'bio'
+        'bio',
+        'remember_token',
+        'email_verified_at'
     ];
     public $incrementing = true;
 }

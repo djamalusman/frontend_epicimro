@@ -85,6 +85,19 @@ Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->
 Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
 Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
 
+Route::get('/forgot-password', function () {
+    return view('template2.forgot-password');
+})->name('forgot.password');
+
+Route::post('/forgot-password', [UserController::class, 'sendPasswordResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}', function ($token) {
+    Log::info('Token received for reset: ' . $token);
+    return view('template2.reset-password', ['token' => $token]);
+})->name('password.reset');
+
+Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('password.update');
+
 Route::get('/get-chart-data', [DashboardController::class, 'getChartData']);
 Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
 Route::get('/activitiesJob', [DashboardController::class, 'ActivitiesJob'])->name('activitiesJob');
@@ -129,4 +142,3 @@ Route::get('/get-trainer-Data', [ProfessionalTrainingClientController::class, 'g
 Route::get('/get-posisi-diminati', [ProfessionalTrainingClientController::class, 'getPosisiDiminati']);
 Route::get('/get-epc', [ProfessionalTrainingClientController::class, 'getepcData']);
 Route::get('/get-salaray', [ProfessionalTrainingClientController::class, 'getsalarayData']);
-
