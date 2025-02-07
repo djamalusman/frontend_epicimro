@@ -32,7 +32,7 @@
                     </div>
                     <button type="submit" class="btn">Login</button>
 
-                    
+
                     <p class="switch-text">
                         <br>
                         <a href="{{ route('forgot.password') }}" class="text-primary">forgot password?</a>

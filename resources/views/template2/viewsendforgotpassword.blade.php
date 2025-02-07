@@ -230,8 +230,7 @@
         <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 100px 30px;font-family:'Raleway',sans-serif;" align="left">
 
     <div class="v-font-size" style="font-size: 14px; line-height: 170%; text-align: center; word-wrap: break-word;">
-      <p style="font-size: 14px; line-height: 170%; margin: 0px;">SUBSCRIBE   |   PRIVACY POLICY   |   WEB</p>
-  <p style="font-size: 14px; line-height: 170%; margin: 0px;">Jangan lewatkan update terbaru kami! ikuti kami sekarang dan dapatkan informasi menarik.!</p>
+        <p style="font-size: 14px; line-height: 170%; margin: 0px;">Jangan lewatkan update terbaru kami! ikuti kami sekarang dan dapatkan informasi menarik.!</p>
     </div>
 
         </td>
