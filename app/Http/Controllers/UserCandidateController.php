@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Mail\ForgotPasswordMail;
 
-class UserController extends Controller
+class UserCandidateController extends Controller
 {
      // Menampilkan halaman login
      public function showLoginForm()
@@ -36,7 +36,7 @@ class UserController extends Controller
             $ApplyJobCount = ApplyJob::count(); 
             $ApplyTrainingCount = ApplyTraining::count(); 
             $data = [
-                'user_name' => $userEmail,
+              
                 'title' => 'Dashboard',
                 'applyJobCount' =>$ApplyJobCount,
                 'applyTrainingCount' => $ApplyTrainingCount,
@@ -49,10 +49,10 @@ class UserController extends Controller
 
             // URL saat ini
             $currentUrl = url()->current();
-            $response = response()->view('template2.index', compact('data', 'menus', 'currentUrl'));
+            $response = response()->view('template2.login', compact('data', 'menus', 'currentUrl'));
             return redirect()->route('dashboardindex');
         } else {
-            return view('template2.login');
+            return view('template1.formlogin');
         }
 
      }

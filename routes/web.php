@@ -10,7 +10,8 @@ use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\SertifikatController;
 use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserCandidateController;
+use App\Http\Controllers\UserCompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobClientController;
 use App\Http\Controllers\TrainingClientController;
@@ -76,27 +77,27 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 // registratis user
 
 
-Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [UserController::class, 'login'])->name('signIn');
-Route::get('/redirectToLogin', [UserController::class, 'redirectToLogin'])->name('redirectToLogin');
-Route::post('/signup', [UserController::class, 'signup'])->name('signup');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-Route::get('/profleclientindex', [UserController::class, 'profleclientindex'])->name('profleclientindex');
-Route::post('/updatedtuser', [UserController::class, 'updtaeUserClient'])->name('updatedtuser');
-Route::get('/getdtuserclient', [UserController::class, 'getdtUserclient'])->name('getdtuserclient');
+Route::get('/login', [UserCandidateController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UserCandidateController::class, 'login'])->name('signIn');
+Route::get('/redirectToLogin', [UserCandidateController::class, 'redirectToLogin'])->name('redirectToLogin');
+Route::post('/signup', [UserCandidateController::class, 'signup'])->name('signup');
+Route::get('/logout', [UserCandidateController::class, 'logout'])->name('logout');
+Route::get('/profleclientindex', [UserCandidateController::class, 'profleclientindex'])->name('profleclientindex');
+Route::post('/updatedtuser', [UserCandidateController::class, 'updtaeUserClient'])->name('updatedtuser');
+Route::get('/getdtuserclient', [UserCandidateController::class, 'getdtUserclient'])->name('getdtuserclient');
 
 Route::get('/forgot-password', function () {
     return view('template2.forgot-password');
 })->name('forgot.password');
 
-Route::post('/forgot-password', [UserController::class, 'sendPasswordResetLink'])->name('password.email');
+Route::post('/forgot-password', [UserCandidateController::class, 'sendPasswordResetLink'])->name('password.email');
 
 Route::get('/reset-password/{token}', function ($token) {
     Log::info('Token received for reset: ' . $token);
     return view('template2.reset-password', ['token' => $token]);
 })->name('password.reset');
 
-Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-password', [UserCandidateController::class, 'resetPassword'])->name('password.update');
 
 Route::get('/get-chart-data', [DashboardController::class, 'getChartData']);
 Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');

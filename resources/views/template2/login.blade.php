@@ -61,7 +61,6 @@
                         <span class="input-icon">🔒</span>
                     </div>
                     <button type="submit" class="btn">Sign Up</button>
-
                     <p class="switch-text">
                         <br>
                         Already have an account? <span class="toggle-form">Login</span>
