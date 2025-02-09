@@ -2730,7 +2730,7 @@ label {
   background-color:#ffffff; /* Ganti dengan warna latar belakang yang diinginkan */
   border-radius: 0px; /* Sudut melengkung */
   /* box-shadow: 0 -2px 10px #f05537; Bayangan */
-  padding: 25px; /* Padding untuk ruang di dalam header */
+  padding: 15px; /* Padding untuk ruang di dalam header */
   border-bottom: 2px solid #f05537;
 }
 .header .main-header {
@@ -3168,7 +3168,7 @@ label {
   height: 20px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  top: 45px;
+  top: 35px;
   right: 27px;
   z-index: 999999;
 }

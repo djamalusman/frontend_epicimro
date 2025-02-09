@@ -45,9 +45,14 @@
                              @if (session('email'))
                              @else
                                  <li class="has">
-                                     <a href="{{ route('login') }}" class="btn btn-default ml-150"
+                                     <a href="{{ route('login') }}" class="btn btn-default ml-50"
                                          style="color: white;">Sign
                                          in</a>
+
+                                 </li>
+                                 <li class="has">
+                                     <a href="{{ route('login') }}" class="btn btn-default ml-50"
+                                         style="color: white;">Employe site</a>
 
                                  </li>
                              @endif
@@ -63,13 +68,7 @@
                  </div>
 
              </div>
-             {{-- <div class="header-right">
-                 <div class="block-signin">
-                     <a href="{{ route('login') }}" class="btn btn-default  ml-150 hover-up">Sign
-                         in</a>
-                     <a href="#" class="btn btn-default  ml-10 hover-up">Sign up</a>
-                 </div>
-             </div> --}}
+            
          </div>
 
 
@@ -143,7 +142,7 @@
                              <ul class="mobile-menu font-heading">
 
                                  <li><a href="#">Sign In</a></li>
-                                 <li><a href="#">Sign Up</a></li>
+                                
                              </ul>
                          </div>
                      @endif
