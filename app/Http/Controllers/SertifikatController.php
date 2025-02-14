@@ -21,7 +21,7 @@ class SertifikatController extends Controller
         $data['Count'] = $dataCount->count();
         $data['listSertifikat']=$dataCount;
 
-       return view('template1/sertifikat.index', $data);
+       return view('sertifikat.index', $data);
 
     }
     public function getData(Request $request)
@@ -50,7 +50,7 @@ class SertifikatController extends Controller
 
         return response()->json([
             'content' => view('sertifikat.viewdata', ['data' => $data])->render(),
-            'pagination' => view('template1/partials.pagination', ['data' => $data])->render(),
+            'pagination' => view('partials.pagination', ['data' => $data])->render(),
 
         ]);
 

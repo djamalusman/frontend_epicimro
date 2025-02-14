@@ -1,5 +1,5 @@
 jobapply
-@extends('template1.layouts.app')
+@extends('layouts.app')
 @section('title')
 Register Training
 @endsection

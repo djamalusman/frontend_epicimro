@@ -31,6 +31,6 @@ class WelcomeController extends Controller
         // $email = session('email');
         //  dd($email);
 
-        return view('template1.welcome',$data);
+        return view('welcome',$data);
     }
 }

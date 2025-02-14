@@ -16,7 +16,7 @@ class AboutController extends Controller
 
         $data['dataVisi']  = SideListModel::where('id_menu', 4)->where('id_pages_content_order', '1')->first();
         $data['datalistVisimisi']  = ListItemDetail::where('id_side_list', 4)->get();
-        return view('template1/about.visimisi', $data);
+        return view('about.visimisi', $data);
     }
 
     public function companyBrief()
@@ -30,6 +30,6 @@ class AboutController extends Controller
         ->where('ifg_pages_content.id_menu', '3')
         ->where('ifg_pages_content.id_pages_content_order', '1')
         ->first();
-        return view('template1/about.company-brief', $data);
+        return view('about.company-brief', $data);
     }
 }

@@ -13,12 +13,12 @@
     @yield('meta')
 
     <!-- Styles -->
-    @include('template1.includes.style')
+    @include('includes.style')
 </head>
 
 <body style="background-color: white;">
     <!-- Preloader Start -->
-    @include('template1.includes.header')
+    @include('includes.header')
 
     <!--End header-->
     <!-- Content -->
@@ -26,8 +26,8 @@
         @yield('content')
     </main>
     <!-- End Content -->
-    @include('template1.includes.footer')
-    @include('template1.includes.script')
+    @include('includes.footer')
+    @include('includes.script')
 </body>
 
 </html>

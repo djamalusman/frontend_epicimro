@@ -52,7 +52,7 @@ class UserCandidateController extends Controller
             $response = response()->view('template2.login', compact('data', 'menus', 'currentUrl'));
             return redirect()->route('dashboardindex');
         } else {
-            return view('template1.formlogin');
+            return view('formlogin');
         }
 
      }
