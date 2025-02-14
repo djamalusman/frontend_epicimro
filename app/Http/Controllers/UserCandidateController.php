@@ -32,29 +32,28 @@ class UserCandidateController extends Controller
      {
         if (Auth::check()) {
             // Pengguna sudah login
-            $user = Auth::user(); // Mengambil data pengguna yang sedang login
-            $ApplyJobCount = ApplyJob::count(); 
-            $ApplyTrainingCount = ApplyTraining::count(); 
-            $data = [
-              
-                'title' => 'Dashboard',
-                'applyJobCount' =>$ApplyJobCount,
-                'applyTrainingCount' => $ApplyTrainingCount,
-            ];
-            // Ambil menu client
-                $menus = Menu_client::whereNull('parent_id')
-                ->with('children')
-                ->orderBy('order')
-                ->get();    
-
-            // URL saat ini
-            $currentUrl = url()->current();
-            $response = response()->view('template2.login', compact('data', 'menus', 'currentUrl'));
-            return redirect()->route('dashboardindex');
-        } else {
-            return view('formlogin');
+            $user = Auth::user();
+            
+            // Redirect berdasarkan role
+            switch($user->role) {
+                case 'candidate':
+                    return redirect()->route('welcome');
+                case 'employee':
+                    return redirect()->route('welcome');
+                default:
+                    return redirect()->route('welcome'); // Redirect ke welcome page
+            }
         }
 
+        // Ambil menu untuk guest
+        $menus = Menu_client::where(function($query) {
+            $query->where('role', 'guest');
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->get();
+
+        return view('formlogin', compact('menus'));
      }
 
      // Handle Login
