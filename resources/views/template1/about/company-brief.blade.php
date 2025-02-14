@@ -1,4 +1,4 @@
-@extends('template1.layouts.app')
+@extends('layouts.app')
 @section('title')
     HOME
 @endsection
