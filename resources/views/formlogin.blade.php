@@ -188,19 +188,34 @@ Register as Professional
 
                 <!-- Sign Up Form (Hidden by Default) -->
                 <form id="signUpForm" class="hidden">
+                     <!-- Checkbox untuk memilih Employee -->
+                     <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="isEmployee">
+                        <label class="form-check-label" for="isEmployee">Sign up as Employee</label>
+                    </div>
+                    
                     <div class="form-group">
-                        <label>Username</label>
+                        <label id="usernameLabel">Username</label>
                         <input type="text" class="form-control" id="signUpUsername" placeholder="Enter username">
                     </div>
                     <div class="form-group">
-                        <label>Email Address</label>
+                        <label id="emailLabel">Email Address</label>
                         <input type="email" class="form-control" id="signUpEmail" placeholder="Enter email">
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
+                        <label id="passwordLabel">Password</label>
                         <input type="password" class="form-control" id="signUpPassword" placeholder="Enter password">
                     </div>
-                    <button type="submit" class="btn btn-success">Sign Up</button>
+
+                    <!-- Inputan tambahan untuk Employee (Tersembunyi awalnya) -->
+                    <div id="employeeFields" class="mt-3 d-none" hidden>
+                        <div class="form-group">
+                            <label>Employee ID</label>
+                            <input type="text" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+                        </div>
+                        
+                    </div>
+                    <button type="submit" class="btn btn-warning">Sign Up</button>
                     <p class="mt-3">Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
                 </form>
             </div>
@@ -211,6 +226,17 @@ Register as Professional
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        document.getElementById("isEmployee").addEventListener("change", function () {
+            let isChecked = this.checked;
+            
+            // Mengubah label input sesuai pilihan
+            document.getElementById("usernameLabel").textContent = isChecked ? "Employee Name" : "Username";
+            document.getElementById("emailLabel").textContent = isChecked ? "Work Email" : "Email Address";
+            document.getElementById("passwordLabel").textContent = isChecked ? "Work Password" : "Password";
+
+            // Menampilkan atau menyembunyikan input Employee
+            document.getElementById("employeeFields").classList.toggle("d-none", !isChecked);
+        });
         // Toggle between Sign In and Sign Up forms
         $("#showSignUp").click(function() {
             $("#signInForm").addClass("hidden");
@@ -231,6 +257,7 @@ Register as Professional
             let username = $("#signUpUsername").val();
             let email = $("#signUpEmail").val();
             let password = $("#signUpPassword").val();
+            let employeeId = $("#employeeId").val();
 
             $.ajax({
                 url: "{{ route('signup') }}",
@@ -239,14 +266,18 @@ Register as Professional
                     _token: $("meta[name='csrf-token']").attr("content"),
                     username: username,
                     email: email,
-                    password: password
+                    password: password,
+                    employeeId: employeeId,
                 },
                 success: function(response) {
-                    Swal.fire("Success!", "Account created successfully!", "success");
-                    $("#signUpForm")[0].reset();
-                    $("#signUpForm").addClass("hidden");
-                    $("#signInForm").removeClass("hidden");
-                    $("#formTitle").text("Register as Professional");
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Pendaftaran Berhasil',
+                    text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
+                    confirmButtonText: 'OK'
+                    }).then(() => {
+                                window.location.href = "{{ route('login') }}";
+                    });
                 },
                 error: function(response) {
                     Swal.fire("Error!", "Failed to create account.", "error");
@@ -271,7 +302,7 @@ Register as Professional
                 },
                 success: function(response) {
                     Swal.fire("Success!", "Logged in successfully!", "success").then(() => {
-                        window.location.href = "/dashboardindex"; 
+                        window.location.href = "/welcome"; 
                     });
                 },
                 error: function(response) {

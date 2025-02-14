@@ -16,10 +16,12 @@ class CheckRole
 
         $user = Auth::user();
         
-        if(in_array($user->role, $roles)) {
-            return $next($request);
+        foreach($roles as $role) {
+            if($user->role == $role) {
+                return $next($request);
+            }
         }
-        
-        return redirect('/')->with('error', 'Unauthorized access');
+
+        return redirect()->back()->with('error', 'Unauthorized access');
     }
 }

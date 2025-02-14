@@ -26,10 +26,17 @@ class User extends Authenticatable
     protected $fillable = [
         'id',
         'name',
+        'lastname',
         'email',
         'password',
+        'phone',
+        'photo',
+        'bio',
+        'remember_token',
+        'email_verified_at',
+        'role'  // Menambahkan field role
     ];
-
+    public $incrementing = true;
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -48,4 +55,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function certifications()
+    {
+        return $this->hasMany(Certification::class);
+    }
 }

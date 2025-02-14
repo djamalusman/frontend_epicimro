@@ -24,6 +24,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use App\Mail\ForgotPasswordMail;
+use App\Models\Experience;
+use App\Models\Education;
+use App\Models\Certification;
 
 class UserCandidateController extends Controller
 {
@@ -80,7 +83,7 @@ class UserCandidateController extends Controller
 
      // Handle Signup
     public function signUp(Request $request)
-     {
+    {
          // Validasi data form registrasi
          $validator = Validator::make($request->all(), [
              'username' => 'required',
@@ -104,12 +107,15 @@ class UserCandidateController extends Controller
 
          // Generate ID user
          $no = User::count() + 1;
+         
+         $role = $request->employeeId ? 'employee' : 'candidate';
 
          // Buat user baru
          User::create([
              'name' => $request->username,
              'email' => $request->email,
              'password' => Hash::make($request->password),
+             'role' => $role,
          ]);
          $user = User::where('email', $request->email)->first();
          //dd($user);
@@ -132,16 +138,17 @@ class UserCandidateController extends Controller
          return response()->json([
              'message' => 'Registration successful!',
          ]);
-     }
+    }
+
 
      // Logout
-    public function logout()
+    public function logout(Request $request)
     {
-        // Menghapus session email jika ada
-        Session::flush();
-
-        // Redirect ke halaman login setelah logout
-        return redirect()->route('login');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/');
     }
 
     public function redirectToLogin()
@@ -309,5 +316,98 @@ class UserCandidateController extends Controller
         ]);
 
         return redirect()->route('login')->with('status', 'Password berhasil direset');
+    }
+
+    public function profileCandidate()
+    {
+        $user = Auth::user();
+        
+        // Get menus for candidate
+        $menus = Menu_client::where(function($query) {
+            $query->where('role', 'candidate');
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->get();
+
+        // Get experiences, educations, and certifications
+        $experiences = Experience::where('user_id', $user->id)
+                               ->orderBy('start_date', 'desc')
+                               ->get();
+                               
+        $educations = Education::where('user_id', $user->id)
+                             ->orderBy('start_date', 'desc')
+                             ->get();
+                             
+        $certifications = Certification::where('user_id', $user->id)
+                                    ->orderBy('issue_date', 'desc')
+                                    ->get();
+        
+        return view('candidate.profile', compact('user', 'menus', 'experiences', 'educations', 'certifications'));
+    }
+
+    public function saveExperience(Request $request, $id = null)
+    {
+        try {
+            $data = $request->validate([
+                'position' => 'required|string|max:255',
+                'company' => 'required|string|max:255',
+                'start_date' => 'required|date',
+                'end_date' => 'nullable|date',
+                'description' => 'nullable|string',
+                'is_current' => 'nullable|boolean'
+            ]);
+
+            $data['user_id'] = auth()->id();
+            
+            // Handle is_current and end_date
+            $data['is_current'] = $request->has('is_current');
+            if ($data['is_current']) {
+                $data['end_date'] = null;
+            }
+            
+            if ($id) {
+                $experience = Experience::findOrFail($id);
+                
+                // Check if the experience belongs to the authenticated user
+                if ($experience->user_id !== auth()->id()) {
+                    return response()->json(['error' => 'Unauthorized'], 403);
+                }
+                
+                $experience->update($data);
+            } else {
+                $experience = Experience::create($data);
+            }
+
+            // Reload the experience to get the formatted dates
+            $experience = Experience::find($experience->id);
+
+            return response()->json([
+                'message' => $id ? 'Experience updated successfully' : 'Experience added successfully',
+                'data' => $experience
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $id ? 'Failed to update experience' : 'Failed to add experience',
+                'details' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function deleteExperience($id)
+    {
+        try {
+            $experience = Experience::findOrFail($id);
+            
+            // Check if the experience belongs to the authenticated user
+            if ($experience->user_id !== auth()->id()) {
+                return response()->json(['error' => 'Unauthorized'], 403);
+            }
+
+            $experience->delete();
+            return response()->json(['message' => 'Experience deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete experience'], 500);
+        }
     }
 }
