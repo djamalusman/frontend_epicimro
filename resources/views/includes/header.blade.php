@@ -1,3 +1,8 @@
+@php
+    // Ambil role user yang sedang login
+    $user = Auth::user();
+    $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+@endphp
  <!-- Preloader Start -->
  <div id="preloader-active">
      <div class="preloader d-flex align-items-center justify-content-center">
@@ -21,44 +26,38 @@
                  </div>
                  <div class="header-nav">
                      <nav class="nav-main-menu d-none d-xl-block">
-                         <ul class="main-menu">
-                             <li class="has">
-                                 <a class="active" href="{{ route('welcome') }}">Home</a>
-                             </li>
-
-                             <li class="has">
-                                 <a href="{{ route('course-grid') }}">Training</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('job-grid') }}">Jobs</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('news-list') }}">News</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('certification') }}">Certificate</a>
-                             </li>
-
-                             <li class="has">
-                                 <a href="{{ route('registration') }}">Join Us</a>
-                             </li>
-                             @if (session('email'))
-                             @else
-                                 <li class="has">
-                                     <a href="{{ route('login') }}" class="btn btn-default ml-50"
-                                         style="color: white;">Sign
-                                         in</a>
-
-                                 </li>
-                                 <li class="has">
-                                     <a href="{{ route('login') }}" class="btn btn-default ml-50"
-                                         style="color: white;">Employe site</a>
-
-                                 </li>
-                             @endif
-
-
-                         </ul>
+                        <ul class="main-menu">
+                            @foreach($menus as $menu)
+                                <li class="has">
+                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
+                                       {{ $menu->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            
+                            @if(Auth::check())
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ Auth::user()->name }}
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @if(Auth::user()->role == 'candidate')
+                                            <li><a class="dropdown-item" href="/candidate/profile">Profile</a></li>
+                                            <li><a class="dropdown-item" href="/candidate/applications">My Applications</a></li>
+                                        @elseif(Auth::user()->role == 'employee')
+                                            <li><a class="dropdown-item" href="/employee/profile">Profile</a></li>
+                                            <li><a class="dropdown-item" href="/employee/dashboard">Dashboard</a></li>
+                                        @endif
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="has">
+                                    <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>
+                                </li>
+                            @endif
+                        </ul>
                      </nav>
                      <div class="burger-icon burger-icon-white">
                          <span class="burger-icon-top"></span>
@@ -68,7 +67,13 @@
                  </div>
 
              </div>
-            
+             {{-- <div class="header-right">
+                 <div class="block-signin">
+                     <a href="{{ route('login') }}" class="btn btn-default  ml-150 hover-up">Sign
+                         in</a>
+                     <a href="#" class="btn btn-default  ml-10 hover-up">Sign up</a>
+                 </div>
+             </div> --}}
          </div>
 
 
@@ -141,8 +146,7 @@
                              <h6 class="mb-10">Your Account</h6>
                              <ul class="mobile-menu font-heading">
 
-                                 <li><a href="#">Sign In</a></li>
-                                
+                                 <li><a href="{{ route('login') }}">Sign In</a></li>
                              </ul>
                          </div>
                      @endif
@@ -150,7 +154,7 @@
                  </div>
 
 
-                 <div class="site-copyright">Copyright 2024 © Training Kerja</div>
+                 <div class="site-copyright">Copyright 2024 Training Kerja</div>
              </div>
          </div>
      </div>

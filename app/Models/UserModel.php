@@ -20,7 +20,8 @@ class UserModel extends Model
         'photo',
         'bio',
         'remember_token',
-        'email_verified_at'
+        'email_verified_at',
+        'role'  // Menambahkan field role
     ];
     public $incrementing = true;
 }

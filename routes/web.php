@@ -16,8 +16,30 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobClientController;
 use App\Http\Controllers\TrainingClientController;
 use App\Http\Controllers\ProfessionalTrainingClientController;
+use App\Http\Controllers\MenuManagementController;
 
+// Route untuk menu default
+// Route untuk menu default (guest)
 Route::get('/', [WelcomeController::class, 'welcome']);
+
+// Route untuk mengambil menu berdasarkan role
+Route::get('/menu/{role}', [MenuManagementController::class, 'getMenuByRole']);
+
+// Route untuk mengambil menu default (guest)
+Route::get('/menu/default', [MenuManagementController::class, 'getDefaultMenu']);
+
+// Route untuk candidate
+Route::middleware(['auth', 'role:candidate'])->group(function () {
+    Route::get('/candidate/profile', [UserCandidateController::class, 'profile']);
+    Route::get('/candidate/applications', [UserCandidateController::class, 'applications']);
+});
+
+// Route untuk employee
+Route::middleware(['auth', 'role:employee'])->group(function () {
+    Route::get('/employee/profile', [UserCompanyController::class, 'profile']);
+    Route::get('/employee/dashboard', [UserCompanyController::class, 'dashboard']);
+});
+
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::get('/visimisi', [AboutController::class, 'visiMisi'])->name('visimisi');
 Route::get('/companybrief', [AboutController::class, 'companyBrief'])->name('companybrief');
@@ -78,7 +100,7 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 
 
 Route::get('/login', [UserCandidateController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [UserCandidateController::class, 'login'])->name('signIn');
+Route::post('/signIn', [UserCandidateController::class, 'login'])->name('signIn');
 Route::get('/redirectToLogin', [UserCandidateController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserCandidateController::class, 'signup'])->name('signup');
 Route::get('/logout', [UserCandidateController::class, 'logout'])->name('logout');
