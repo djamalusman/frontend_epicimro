@@ -49,7 +49,11 @@
                                             <li><a class="dropdown-item" href="/employee/dashboard">Dashboard</a></li>
                                         @endif
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                                        <li> <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item">Logout</button>
+                                            </form>
+                                        </li>
                                     </ul>
                                 </li>
                             @else
@@ -67,13 +71,6 @@
                  </div>
 
              </div>
-             {{-- <div class="header-right">
-                 <div class="block-signin">
-                     <a href="{{ route('login') }}" class="btn btn-default  ml-150 hover-up">Sign
-                         in</a>
-                     <a href="#" class="btn btn-default  ml-10 hover-up">Sign up</a>
-                 </div>
-             </div> --}}
          </div>
 
 
@@ -117,7 +114,43 @@
                  <div class="mobile-menu-wrap mobile-header-border">
                      <!-- mobile menu start -->
                      <nav>
-                         <ul class="mobile-menu font-heading">
+                     <ul class="mobile-menu font-heading">
+                            @foreach($menus as $menu)
+                                <li class="has">
+                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
+                                       {{ $menu->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            
+                            @if(Auth::check())
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ Auth::user()->name }}
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @if(Auth::user()->role == 'candidate')
+                                            <li><a class="dropdown-item" href="/candidate/profile">Profile</a></li>
+                                            <li><a class="dropdown-item" href="/candidate/applications">My Applications</a></li>
+                                        @elseif(Auth::user()->role == 'employee')
+                                            <li><a class="dropdown-item" href="/employee/profile">Profile</a></li>
+                                            <li><a class="dropdown-item" href="/employee/dashboard">Dashboard</a></li>
+                                        @endif
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li> <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="dropdown-item">Logout</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li class="has">
+                                    <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>
+                                </li>
+                            @endif
+                        </ul>
+                         <!-- <ul class="mobile-menu font-heading">
                              <li class="has">
                                  <a href="{{ route('course-grid') }}">Training</a>
                              </li>
@@ -149,7 +182,7 @@
                                  <li><a href="{{ route('login') }}">Sign In</a></li>
                              </ul>
                          </div>
-                     @endif
+                     @endif -->
                      <!-- mobile menu end -->
                  </div>
 

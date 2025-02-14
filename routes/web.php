@@ -17,6 +17,8 @@ use App\Http\Controllers\JobClientController;
 use App\Http\Controllers\TrainingClientController;
 use App\Http\Controllers\ProfessionalTrainingClientController;
 use App\Http\Controllers\MenuManagementController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\CertificationController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
@@ -32,6 +34,26 @@ Route::get('/menu/default', [MenuManagementController::class, 'getDefaultMenu'])
 Route::middleware(['auth', 'role:candidate'])->group(function () {
     Route::get('/candidate/profile', [UserCandidateController::class, 'profile']);
     Route::get('/candidate/applications', [UserCandidateController::class, 'applications']);
+});
+
+// Route untuk profile
+Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
+    Route::get('/profile', [UserCandidateController::class, 'profileCandidate'])->name('profile');
+    
+    // Experience routes
+    Route::post('/save-experience', [UserCandidateController::class, 'saveExperience'])->name('save.experience');
+    Route::put('/save-experience/{id}', [UserCandidateController::class, 'saveExperience'])->name('update.experience');
+    Route::post('/profile/experience/delete/{id}', [UserCandidateController::class, 'deleteExperience'])->name('profile.experience.delete');
+    
+    // Education routes
+    Route::post('/education', [EducationController::class, 'store'])->name('education.store');
+    Route::put('/education/{id}', [EducationController::class, 'update'])->name('education.update');
+    Route::delete('/education/{id}', [EducationController::class, 'destroy'])->name('education.destroy');
+    
+    // Certification routes
+    Route::post('/certification', [CertificationController::class, 'store'])->name('certification.store');
+    Route::put('/certification/{id}', [CertificationController::class, 'update'])->name('certification.update');
+    Route::delete('/certification/{id}', [CertificationController::class, 'destroy'])->name('certification.destroy');
 });
 
 // Route untuk employee
@@ -103,7 +125,7 @@ Route::get('/login', [UserCandidateController::class, 'showLoginForm'])->name('l
 Route::post('/signIn', [UserCandidateController::class, 'login'])->name('signIn');
 Route::get('/redirectToLogin', [UserCandidateController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserCandidateController::class, 'signup'])->name('signup');
-Route::get('/logout', [UserCandidateController::class, 'logout'])->name('logout');
+Route::post('/logout', [UserCandidateController::class, 'logout'])->name('logout');
 Route::get('/profleclientindex', [UserCandidateController::class, 'profleclientindex'])->name('profleclientindex');
 Route::post('/updatedtuser', [UserCandidateController::class, 'updtaeUserClient'])->name('updatedtuser');
 Route::get('/getdtuserclient', [UserCandidateController::class, 'getdtUserclient'])->name('getdtuserclient');
