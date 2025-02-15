@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Register as Professional
+Sign In & Sign Up
 @endsection
 
 @section('meta')
@@ -169,7 +169,7 @@ Register as Professional
             <!-- Right Side -->
             <div class="col-md-7 right-side">
                 <div class="title-container">
-                    <h6 id="formTitle" style="font-size: 18px;">Register as Professional</h6>
+                    <h6 id="formTitle" style="font-size: 18px;">Sign In & SingUp</h6>
                     <img src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" alt="Register Icon">
                 </div>
                 <!-- Sign In Form -->

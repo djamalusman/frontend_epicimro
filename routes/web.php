@@ -46,13 +46,13 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::post('/profile/experience/delete/{id}', [UserCandidateController::class, 'deleteExperience'])->name('profile.experience.delete');
     
     // Education routes
-    Route::post('/education', [EducationController::class, 'store'])->name('education.store');
-    Route::put('/education/{id}', [EducationController::class, 'update'])->name('education.update');
+    Route::post('/education-store', [EducationController::class, 'store'])->name('education.store');
+    Route::put('/education-store/{id}', [EducationController::class, 'update'])->name('education.update');
     Route::delete('/education/{id}', [EducationController::class, 'destroy'])->name('education.destroy');
     
     // Certification routes
-    Route::post('/certification', [CertificationController::class, 'store'])->name('certification.store');
-    Route::put('/certification/{id}', [CertificationController::class, 'update'])->name('certification.update');
+    Route::post('/certification-store', [CertificationController::class, 'store'])->name('certification.store');
+    Route::put('/certification-store/{id}', [CertificationController::class, 'update'])->name('certification.update');
     Route::delete('/certification/{id}', [CertificationController::class, 'destroy'])->name('certification.destroy');
 });
 

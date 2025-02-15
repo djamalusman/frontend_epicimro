@@ -15,6 +15,10 @@ class EducationController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'is_current' => filter_var($request->input('is_current', false), FILTER_VALIDATE_BOOLEAN),
+        ]);
+        
         try {
             $data = $request->validate([
                 'school_name' => 'required|string|max:255',
@@ -25,11 +29,10 @@ class EducationController extends Controller
                 'description' => 'nullable|string',
                 'is_current' => 'nullable|boolean'
             ]);
-
             $data['user_id'] = auth()->id();
             
             // Handle is_current and end_date
-            $data['is_current'] = $request->has('is_current');
+            $data['is_current'] = $data['is_current'] ? 1 : 0;
             if ($data['is_current']) {
                 $data['end_date'] = null;
             }
@@ -52,6 +55,10 @@ class EducationController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->merge([
+                'is_current' => filter_var($request->input('is_current', false), FILTER_VALIDATE_BOOLEAN),
+            ]);
+            
             $education = Education::findOrFail($id);
             
             if ($education->user_id !== auth()->id()) {
@@ -69,7 +76,7 @@ class EducationController extends Controller
             ]);
             
             // Handle is_current and end_date
-            $data['is_current'] = $request->has('is_current');
+            $data['is_current'] = $data['is_current'] ? 1 : 0;
             if ($data['is_current']) {
                 $data['end_date'] = null;
             }

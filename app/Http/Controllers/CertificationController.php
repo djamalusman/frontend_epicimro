@@ -15,7 +15,11 @@ class CertificationController extends Controller
 
     public function store(Request $request)
     {
+        
         try {
+            $request->merge([
+                'has_expiration' => filter_var($request->input('has_expiration', false), FILTER_VALIDATE_BOOLEAN),
+            ]);
             $data = $request->validate([
                 'name' => 'required|string|max:255',
                 'issuing_organization' => 'required|string|max:255',
@@ -29,10 +33,11 @@ class CertificationController extends Controller
             $data['user_id'] = auth()->id();
             
             // Handle has_expiration and expiration_date
-            $data['has_expiration'] = $request->has('has_expiration');
+            $data['has_expiration'] = $data['has_expiration'] ? 1 : 0;
             if (!$data['has_expiration']) {
                 $data['expiration_date'] = null;
             }
+
 
             $certification = Certification::create($data);
             $certification = Certification::find($certification->id);
@@ -52,6 +57,9 @@ class CertificationController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $request->merge([
+                'has_expiration' => filter_var($request->input('has_expiration', false), FILTER_VALIDATE_BOOLEAN),
+            ]);
             $certification = Certification::findOrFail($id);
             
             if ($certification->user_id !== auth()->id()) {
@@ -64,12 +72,13 @@ class CertificationController extends Controller
                 'credential_id' => 'nullable|string|max:255',
                 'issue_date' => 'required|date',
                 'expiration_date' => 'nullable|date',
-                'description' => 'nullable|string',
+                'descriptioncertifications' => 'nullable|string',
                 'has_expiration' => 'nullable|boolean'
             ]);
             
+           
             // Handle has_expiration and expiration_date
-            $data['has_expiration'] = $request->has('has_expiration');
+            $data['has_expiration'] = $data['has_expiration'] ? 1 : 0;
             if (!$data['has_expiration']) {
                 $data['expiration_date'] = null;
             }

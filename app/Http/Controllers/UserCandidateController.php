@@ -348,6 +348,7 @@ class UserCandidateController extends Controller
 
     public function saveExperience(Request $request, $id = null)
     {
+        
         try {
             $data = $request->validate([
                 'position' => 'required|string|max:255',
