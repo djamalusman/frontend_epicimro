@@ -19,6 +19,7 @@ use App\Http\Controllers\ProfessionalTrainingClientController;
 use App\Http\Controllers\MenuManagementController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\CertificationController;
+use App\Http\Controllers\SkillController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
@@ -40,10 +41,14 @@ Route::middleware(['auth', 'role:candidate'])->group(function () {
 Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::get('/profile', [UserCandidateController::class, 'profileCandidate'])->name('profile');
     
+    // Personal routes
+    Route::post('/save-personal', [UserCandidateController::class, 'saveSummaryPersonal'])->name('save.personal');
+    Route::put('/save-personal/{id}', [UserCandidateController::class, 'saveSummaryPersonal'])->name('update.personal');
+    Route::post('/profile/personal/delete/{id}', [UserCandidateController::class, 'deletePersonal'])->name('profile.personal.delete');
+
     // Experience routes
-    Route::post('/save-experience', [UserCandidateController::class, 'saveExperience'])->name('save.experience');
-    Route::put('/save-experience/{id}', [UserCandidateController::class, 'saveExperience'])->name('update.experience');
-    Route::post('/profile/experience/delete/{id}', [UserCandidateController::class, 'deleteExperience'])->name('profile.experience.delete');
+    Route::post('/save-experience', [UserCandidateController::class, 'saveSummaryPersonal'])->name('save.experience');
+    Route::put('/save-experience/{id}', [UserCandidateController::class, 'saveSummaryPersonal'])->name('update.experience');
     
     // Education routes
     Route::post('/education-store', [EducationController::class, 'store'])->name('education.store');
@@ -54,6 +59,12 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::post('/certification-store', [CertificationController::class, 'store'])->name('certification.store');
     Route::put('/certification-store/{id}', [CertificationController::class, 'update'])->name('certification.update');
     Route::delete('/certification/{id}', [CertificationController::class, 'destroy'])->name('certification.destroy');
+
+    Route::get('/skills', [SkillController::class, 'index']);
+    Route::post('/skills', [UserCandidateController::class, 'storeSkill']);
+    Route::get('/skills/search', [UserCandidateController::class, 'search']);
+    Route::delete('/skills/{id}', [UserCandidateController::class, 'destroySkill']);
+
 });
 
 // Route untuk employee
