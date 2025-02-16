@@ -20,6 +20,7 @@ use App\Http\Controllers\MenuManagementController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\ResumeCandidateController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
@@ -47,9 +48,9 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::post('/profile/personal/delete/{id}', [UserCandidateController::class, 'deletePersonal'])->name('profile.personal.delete');
 
     // Experience routes
-    Route::post('/save-experience', [UserCandidateController::class, 'saveSummaryPersonal'])->name('save.experience');
-    Route::put('/save-experience/{id}', [UserCandidateController::class, 'saveSummaryPersonal'])->name('update.experience');
-    
+    Route::post('/save-experience', [UserCandidateController::class, 'saveExperience'])->name('save.experience');
+    Route::put('/save-experience/{id}', [UserCandidateController::class, 'saveExperience'])->name('update.experience');
+    Route::post('/profile/experience/delete/{id}', [UserCandidateController::class, 'deleteExperience'])->name('profile.personal.delete');
     // Education routes
     Route::post('/education-store', [EducationController::class, 'store'])->name('education.store');
     Route::put('/education-store/{id}', [EducationController::class, 'update'])->name('education.update');
@@ -64,6 +65,13 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::post('/skills', [UserCandidateController::class, 'storeSkill']);
     Route::get('/skills/search', [UserCandidateController::class, 'search']);
     Route::delete('/skills/{id}', [UserCandidateController::class, 'destroySkill']);
+
+    // Route::post('/resume', [UserCandidateController::class, 'storeResume']);
+    // Route::delete('/resume', [UserCandidateController::class, 'destroyResume']);
+
+    Route::get('/resume', [ResumeCandidateController::class, 'index']);
+    Route::post('/resume', [ResumeCandidateController::class, 'storeResume']);
+    Route::delete('/resume', [ResumeCandidateController::class, 'destroyResume']);
 
 });
 

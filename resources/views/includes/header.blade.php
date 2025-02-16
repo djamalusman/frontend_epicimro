@@ -130,7 +130,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @if(Auth::user()->role == 'candidate')
-                                            <li><a class="dropdown-item" href="/candidate/profile">Profile</a></li>
+                                            <li> <a class="dropdown-item" href="/candidate/profile"> <p>Profile</p></a></li>
                                             <li><a class="dropdown-item" href="/candidate/applications">My Applications</a></li>
                                         @elseif(Auth::user()->role == 'employee')
                                             <li><a class="dropdown-item" href="/employee/profile">Profile</a></li>

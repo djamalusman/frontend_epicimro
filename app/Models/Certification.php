@@ -10,13 +10,13 @@ class Certification extends Model
     
     protected $fillable = [
         'user_id',
-        'name',
+        'namesertifikat',
         'issuing_organization',
         'credential_id',
         'issue_date',
         'expiration_date',
         'has_expiration',
-        'description'
+        'descriptioncertifications'
     ];
 
     protected $casts = [
