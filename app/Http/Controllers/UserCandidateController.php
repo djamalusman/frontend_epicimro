@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Menu_client;
 use App\Models\ApplyTraining;
+use App\Models\SkillCandidate;
 use App\Models\ApplyJob;
+use App\Models\McategoryTraining;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -318,6 +320,7 @@ class UserCandidateController extends Controller
         return redirect()->route('login')->with('status', 'Password berhasil direset');
     }
 
+
     public function profileCandidate()
     {
         $user = Auth::user();
@@ -329,6 +332,18 @@ class UserCandidateController extends Controller
         ->where('is_active', true)
         ->orderBy('order')
         ->get();
+        $userEmail = session('email');
+        $userData = User::where('email', $userEmail)->firstOrFail();
+
+        
+
+        $personalsummarys = User::where('id', $user->id)
+                               ->orderBy('updated_at', 'desc')
+                               ->get();
+
+        $personalsummarys = User::where('id', $user->id)
+                               ->orderBy('updated_at', 'desc')
+                               ->get();
 
         // Get experiences, educations, and certifications
         $experiences = Experience::where('user_id', $user->id)
@@ -342,8 +357,10 @@ class UserCandidateController extends Controller
         $certifications = Certification::where('user_id', $user->id)
                                     ->orderBy('issue_date', 'desc')
                                     ->get();
-        
-        return view('candidate.profile', compact('user', 'menus', 'experiences', 'educations', 'certifications'));
+
+        $skills = SkillCandidate::where('user_id', $user->id)->get();
+
+        return view('candidate.profile', compact('user', 'menus','personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
     }
 
     public function saveExperience(Request $request, $id = null)
@@ -411,4 +428,103 @@ class UserCandidateController extends Controller
             return response()->json(['error' => 'Failed to delete experience'], 500);
         }
     }
+
+    public function saveSummaryPersonal(Request $request, $id = null)
+    {
+        try {
+            // Validasi data
+            $validatedData = $request->validate([
+                'name' => 'nullable|string|max:255',
+                'lastname' => 'nullable|string|max:255',
+                'password' => 'nullable|string|min:6',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'phone' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'lokasi' => 'nullable|string',
+            ]);
+
+            // Ambil user berdasarkan email dari session
+            $userEmail = session('email');
+            $user = User::where('email', $userEmail)->firstOrFail();
+
+            // Data yang akan diupdate
+            $updateData = [];
+
+            // Cek jika ada perubahan di field selain password & foto
+            foreach ($validatedData as $key => $value) {
+                if ($value !== null && $key !== 'password' && $key !== 'photo' && $user->$key !== $value) {
+                    $updateData[$key] = $value;
+                }
+            }
+
+            // **Cek apakah ada file foto diupload**
+            if ($request->hasFile('photo')) {
+                $FileName = time() . '_' . $request->file('photo')->getClientOriginalName();
+                $destinationPath = public_path('../public/storage');
+                $request->file('photo')->move($destinationPath, $FileName);
+                
+               
+                $user->photo = $FileName;
+            }
+
+            // **Cek apakah password diubah**
+            if (!empty($validatedData['password']) && !Hash::check($validatedData['password'], $user->password)) {
+                $updateData['password'] = Hash::make($validatedData['password']);
+            }
+
+            // Jika ada perubahan, lakukan update
+            if (!empty($updateData)) {
+                $user->update($updateData);
+            }
+
+            return response()->json([
+                'message' => 'Profile updated successfully',
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update profile',
+                'details' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    
+    public function storeSkill(Request $request)
+    {
+        $request->validate([
+            'skill_name' => 'required|string|max:255',
+        ]);
+
+        $skill = SkillCandidate::create([
+            'user_id' => Auth::id(),
+            'skill_name' => $request->skill_name,
+        ]);
+
+        return response()->json($skill);
+    }
+
+    public function search(Request $request)
+    {
+        $skills = McategoryTraining::where('nama', 'LIKE', "%{$request->term}%")
+                        ->pluck('nama')
+                        ->toArray();
+        return response()->json($skills);
+    }
+
+    public function destroySkill($id)
+    {
+        $skill = SkillCandidate::findOrFail($id);
+
+        if ($skill->user_id !== Auth::id()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $skill->delete();
+        return response()->json(['message' => 'Skill deleted successfully']);
+    }
+
+
+
+
 }

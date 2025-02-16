@@ -31,7 +31,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'photo',
-        'bio',
+        'description',
+        'lokasi',
         'remember_token',
         'email_verified_at',
         'role'  // Menambahkan field role
