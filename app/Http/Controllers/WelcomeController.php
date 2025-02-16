@@ -39,16 +39,21 @@ class WelcomeController extends Controller
     public function welcome()
     {
         // Ambil role user yang sedang login
-        $user = Auth::User();
+        $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
-
-        // Ambil menu berdasarkan role
+        //dd($role);
+        // Ambil menu berdasarkan role dengan menghindari duplikasi
         $menus = Menu_client::where(function($query) use ($role) {
-            $query->where('role', $role)
-                  ->orWhere('role', 'guest');
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            } else {
+                $query->where('role', ['guest']);
+            }
         })
         ->where('is_active', true)
         ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
         ->get();
 
         // Ambil data provinsi
@@ -72,5 +77,6 @@ class WelcomeController extends Controller
 
         return view('welcome', compact('menus', 'getDtProvinsi', 'sponsor', 'news'));
     }
+
 
 }

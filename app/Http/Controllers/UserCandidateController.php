@@ -452,7 +452,7 @@ class UserCandidateController extends Controller
 
             // Cek jika ada perubahan di field selain password & foto
             foreach ($validatedData as $key => $value) {
-                if ($value !== null && $key !== 'password' && $key !== 'photo' && $user->$key !== $value) {
+                if ($value !== null && $key !== $user->password && $key !== 'photo' && $user->$key !== $value) {
                     $updateData[$key] = $value;
                 }
             }
@@ -525,6 +525,9 @@ class UserCandidateController extends Controller
     }
 
 
+
+
+    
 
 
 }

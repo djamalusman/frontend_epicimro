@@ -122,7 +122,7 @@
                                 <div class="col-lg-6 col-md-6" id="experienceList">
                                         <div class="card-grid-2 hover-up wow animate__ animate__fadeIn animated" data-wow-delay=".s" style="visibility: visible; animation-name: fadeIn;" data-id="{{ $experience->id }}">
                                             <div class="mt-15" style="display: flex; justify-content: flex-end; gap: 10px;">
-                                                <button class="btn-default edit-experience" 
+                                                {{-- <button class="btn-default edit-experience" 
                                                     data-id="{{ $experience->id }}"
                                                     data-position="{{ $experience->position }}"
                                                     data-company="{{ $experience->company }}"
@@ -137,8 +137,27 @@
                                                         data-id="{{ $experience->id }}" 
                                                         style="border: 0px; background-color:white;">
                                                     <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
+                                                </button> --}}
+                                                <img id="resumeImage" src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" 
+                                                alt="Register Icon" style="max-width: 150px; height: auto; cursor: pointer; margin-left: 27px;">
+                                            
+                                                <button class=" btn-default edit-experience" 
+                                                        data-id="{{ $experience->id }}"
+                                                        data-position="{{ $experience->position }}"
+                                                        data-company="{{ $experience->company }}"
+                                                        data-start-date="{{ $experience->start_date ? $experience->start_date->format('Y-m-d') : '' }}"
+                                                        data-end-date="{{ $experience->end_date ? $experience->end_date->format('Y-m-d') : '' }}"
+                                                        data-is-current="{{ $experience->is_current ? '1' : '0' }}"
+                                                        data-description="{{ $experience->description }}" 
+                                                        style="border: 0px; background-color: white; margin-left: 150px;">
+                                                    <i class='fas fa-edit' style='font-size:20px;color:#f05537'></i>
+                                                </button>
+                                                <button type="button" class="btn-defaultt delete-experience" 
+                                                            data-id="{{ $experience->id }}" style="border: 0px; background-color: white; margin-left: 5px;">
+                                                    <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
                                                 </button>
                                             </div>
+                                            
                                             <div class="card-block-info" >
                                             
                                                 <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 26px;">
@@ -183,8 +202,8 @@
                         <div class="divider mt-5"></div>
                         <div class="row align-items-end">
                             <div class="col-lg-6">
-                                <h4 class="mb-20 mt-5"> Riwayat Pendidikan <button type="button" style="border: 0px; background-color:white;"  class="btn-default  mb-20 mt-25" data-bs-toggle="modal" data-bs-target="#educationModal">
-                                   
+                                <h4 class="mb-20 mt-5"> Riwayat Pendidikan <button type="button" style="border: 0px; background-color:white;"  
+                                    class="btn-default mb-20 mt-25" onclick="addEducation()">
                                     <i class='fas fa-plus-circle' style='font-size:25px;color:#f05537'></i>
                                 </button></h4>
                             </div>
@@ -194,37 +213,46 @@
                                 <div class="col-lg-6 col-md-6" id="educationList">
                                         <div class="card-grid-2 hover-up wow animate__ animate__fadeIn animated" data-wow-delay=".s" style="visibility: visible; animation-name: fadeIn;" data-id="{{ $education->id }}">
                                             <div class="mt-15" style="display: flex; justify-content: flex-end; gap: 10px;">
-                                                <button class=" btn-default" onclick="editEducation({{ $education->id }})" style="border: 0px; background-color:white;">
+                                                {{-- <button class=" btn-default" onclick="editEducation({{ $education->id }})" style="border: 0px; background-color:white;">
                                                     <i class='fas fa-edit' style='font-size:20px;color:#f05537'></i>
                                                 </button>
                                                 <button class="btn-defaultt" style="border: 0px; background-color:white;" onclick="deleteEducation({{ $education->id }})">
                                                     
                                                     <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
+                                                </button> --}}
+                                                <img id="resumeImage" src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" 
+                                                    alt="Register Icon" style="max-width: 150px; height: auto; cursor: pointer; margin-left: 27px;">
+                                                
+                                                <button class=" btn-default" onclick="editEducation({{ $education->id }})" style="border: 0px; background-color: white; margin-left: 150px;">
+                                                    <i class='fas fa-edit' style='font-size:20px;color:#f05537'></i>
+                                                </button>
+                                                <button class="btn-defaultt" style="border: 0px; background-color: white; margin-left: 5px;" onclick="deleteEducation({{ $education->id }})">
+                                                    <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
                                                 </button>
                                             </div>
-                                        <div class="card-block-info">
-                                           
-                                            <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 26px;">
-                                                {{ $education->school_name }}
-                                            </div>
-                                            <div class="mt-10">
-                                                <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-size: 16px;">
-                                                    {{ $education->degree }} - {{ $education->field_of_study }} </h6>
-                                            </div>
-                                            <div class="mt-10">
-                                                <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-size: 16px;">
-                                                    {{ \Carbon\Carbon::parse($education->start_date)->format('M Y') }} - 
-                                                    {{ $education->is_current ? 'Sekarang' : \Carbon\Carbon::parse($education->end_date)->format('M Y') }} </h6>
-                                            </div>
-                                            <div class="single-body">
-                                                <div class="single-content">
-                                                    <p id="descriptioneducation-{{ $education->id }}" class="truncate">{{ $education->description }}</p>
-                                                    <button id="toggleButtoneducation-{{ $education->id }}" class="btn-more" style="display: none;">More</button>
-                                                </div>
-                                            </div>
+                                            <div class="card-block-info">
                                             
+                                                <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 26px;">
+                                                    {{ $education->school_name }}
+                                                </div>
+                                                <div class="mt-10">
+                                                    <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-size: 16px;">
+                                                        {{ $education->degree }} - {{ $education->field_of_study }} </h6>
+                                                </div>
+                                                <div class="mt-10">
+                                                    <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-size: 16px;">
+                                                        {{ \Carbon\Carbon::parse($education->start_date)->format('M Y') }} - 
+                                                        {{ $education->is_current ? 'Sekarang' : \Carbon\Carbon::parse($education->end_date)->format('M Y') }} </h6>
+                                                </div>
+                                                <div class="single-body">
+                                                    <div class="single-content">
+                                                        <p id="descriptioneducation-{{ $education->id }}" class="truncate">{{ $education->description }}</p>
+                                                        <button id="toggleButtoneducation-{{ $education->id }}" class="btn-more" style="display: none;">More</button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -232,17 +260,18 @@
                         <div class="divider mt-5"></div>
                         <div class="row align-items-end">
                             <div class="col-lg-6">
-                                <h4 class="mb-20 mt-5">Lisensi & sertifikasi <button type="button" style="border: 0px; background-color:white;"  class=" btn-default  mb-20 mt-25" data-bs-toggle="modal" data-bs-target="#certificationModal">
-                                    
+                                <h4 class="mb-20 mt-5">Lisensi & sertifikasi <button type="button" style="border: 0px; background-color:white;"  
+                                    class="btn-default mb-20 mt-25" onclick="addCertification()">
                                     <i class='fas fa-plus-circle' style='font-size:25px;color:#f05537'></i>
-                                </button></h4>
+                                </button>
+                                
                             </div>
                         </div>
                         <div class="row">
                             @foreach($certifications as $certification)
                                 <div class="col-lg-6 col-md-6" id="certificationList">
                                         <div class="card-grid-2 hover-up wow animate__ animate__fadeIn animated" data-wow-delay=".s" style="visibility: visible; animation-name: fadeIn;" data-id="{{ $certification->id }}">
-                                            <div class="mt-15" style="display: flex; justify-content: flex-end; gap: 10px;">
+                                            {{-- <div class="mt-15" style="display: flex; justify-content: flex-end; gap: 10px;">
                                                 <button class=" btn-default" onclick="editCertification({{ $certification->id }})" style="border: 0px; background-color:white;">
                                                     
                                                     <i class='fas fa-edit' style='font-size:20px;color:#f05537'></i>
@@ -251,11 +280,22 @@
                                                     
                                                     <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
                                                 </button>
+                                            </div> --}}
+                                            <div class="mt-15 d-flex align-items-center">
+                                                <img id="resumeImage" src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" 
+                                                    alt="Register Icon" style="max-width: 150px; height: auto; cursor: pointer; margin-left: 27px;">
+                                                
+                                                <button class=" btn-default" onclick="editCertification({{ $certification->id }})" style="border: 0px; background-color: white; margin-left: 150px;">
+                                                    <i class='fas fa-edit' style='font-size:20px;color:#f05537'></i>
+                                                </button>
+                                                <button class="btn-defaultt" style="border: 0px; background-color: white; margin-left: 5px;" onclick="deleteCertification({{ $certification->id }})">
+                                                    <i class='fas fa-trash' style='font-size:20px;color:#f05537'></i>
+                                                </button>
                                             </div>
                                         <div class="card-block-info">
                                            
                                             <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 26px;">
-                                                {{ $certification->name }}
+                                                {{ $certification->namesertifikat }}
                                             </div>
                                             <div class="mt-10">
                                                 <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-size: 16px;">
@@ -270,7 +310,7 @@
                                             </div>
                                             <div class="single-body">
                                                 <div class="single-content">
-                                                    <p id="descriptioncertification-{{ $certification->id }}" class="truncate">{{ $certification->description }}</p>
+                                                    <p id="descriptioncertification-{{ $certification->id }}" class="truncate">{{ $certification->descriptioncertifications }}</p>
                                                     <button id="toggleButton-{{ $certification->id }}" class="btn-more" style="display: none;">More</button>
                                                 </div>
                                             </div>
@@ -302,6 +342,47 @@
                             </div>
                             
                         </div>
+
+
+                        <div class="divider mt-5"></div>
+                        <div class="row align-items-end">
+                            <div class="col-lg-6">
+                                <h4 class="mb-20 mt-5">Upload Resume
+                                
+                                    <button type="button" style="border: 0px; background-color:white;" class="btn-default mb-20 mt-25" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                        <i class='fas fa-plus-circle' style='font-size:25px;color:#f05537'></i>
+                                    </button>
+                                    
+
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-12 mb-60">
+                                <div class="card-grid-2 hover-up wow animate__ animate__fadeIn animated" data-wow-delay=".s" style="visibility: visible; animation-name: fadeIn;" >
+                                    <div class="mt-15 d-flex align-items-center">
+                                        <img id="resumeImage" src="https://admin.trainingkerja.com/public/storage/6727b1318a81e.webp" 
+                                            alt="Register Icon" style="max-width: 150px; height: auto; cursor: pointer; margin-left: 27px;">
+                                        
+                                        <button id="downloadResume" class="btn-default" style="border: 0px; background-color: white; margin-left: 190px;">
+                                            <i class='fas fa-download' style='font-size:20px;color:#f05537'></i>
+                                        </button>
+                                    </div>
+                                    
+                                    
+                                    <div class="card-block-info">
+                                        <div class="mt-10" style="color:black;font-family: 'Open Sans' ;font-weight:520;font-size: 26px;">
+                                            <p id="resumeName"></p>
+                                        </div>
+                                    
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
                     
                 </div>
             </div>
@@ -493,7 +574,6 @@
     </div>
 </section>
 
-
 <div class="modal fade" id="addPersonalModal" tabindex="-1" aria-labelledby="addPersonalModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -656,7 +736,7 @@
                     <input type="hidden" id="certificationId">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Sertifikasi</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="namesertifikat" name="namesertifikat" required>
                     </div>
                     <div class="mb-3">
                         <label for="issuing_organization" class="form-label">Organisasi Penerbit</label>
@@ -714,6 +794,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Upload Resume</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="resumeFile" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-default" id="submitResumeBtn">Upload</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -790,6 +887,10 @@
                     $('#expiration_date_group').hide();
                     $('#expiration_date').val('');
                 }
+        });
+
+        $('#modalTambah').on('shown.bs.modal', function () {
+            $(this).find('form')[0].reset();  // Reset saat modal muncul
         });
 
         // Riwayat Pribadi
@@ -871,7 +972,7 @@
                                                 data-description="${response.data.description || ''}">
                                             <i class="fas fa-pen"></i>
                                         </button>
-                                        <button type="button" class="btn btn-link text-danger delete-experience" 
+                                        <button type="button" class="btn btn-link text-danger" 
                                                 data-id="${response.data.id}">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -898,18 +999,15 @@
                     title: 'Berhasil',
                     text: 'Informasi pribadi berhasil disimpan'
                     }).then(() => {
-                        // **Reload halaman setelah notifikasi ditutup**
+                      
                         window.location.href = '/profile';
                     });
                 },
                 error: function(xhr) {
                     Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Terjadi kesalahan saat menyimpan data'
-                    }).then(() => {
-                        // **Reload halaman jika terjadi error**
-                        window.location.href = '/profile';
+                        icon: 'error',
+                        title: 'Error',
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan saat menyimpan data'
                     });
                 }
             });
@@ -1040,18 +1138,20 @@
                         // Add new card
                         $('#experienceList').prepend(experienceHtml);
                     }
-                    
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: 'Pengalaman kerja berhasil disimpan'
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Pengalaman kerja berhasil disimpan'
+                    }).then(() => {
+                        // **Reload halaman setelah notifikasi ditutup**
+                        window.location.href = '/profile';
                     });
                 },
                 error: function(xhr) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Terjadi kesalahan saat menyimpan data'
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan saat menyimpan data'
                     });
                 }
             });
@@ -1091,18 +1191,21 @@
                                 }
                             });
                             
-                            Swal.fire(
-                                'Terhapus!',
-                                'Pengalaman kerja telah dihapus.',
-                                'success'
-                            );
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Terhapus',
+                            text: 'Pengalaman kerja telah dihapus'
+                            }).then(() => {
+                                // **Reload halaman setelah notifikasi ditutup**
+                                window.location.href = '/profile';
+                            });
                         },
                         error: function(xhr) {
-                            Swal.fire(
-                                'Error!',
-                                'Gagal menghapus pengalaman kerja.',
-                                'error'
-                            );
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: xhr.responseJSON?.message || 'Terjadi kesalahan saat menyimpan data'
+                            });
                         }
                     });
                 }
@@ -1160,6 +1263,22 @@
         };
 
 
+        window.addEducation = function () {
+            $('#certificationModalLabel').text('Tambah Sertifikasi');
+            $('#school_name').val(''); // Kosongkan ID agar ini mode tambah
+            $('#degree').val('');
+            $('#field_of_study').val('');
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#is_current').val('');
+            $('#description').val('');
+
+            $('#expiration_date_group').hide(); // Sembunyikan field expiration date
+
+            // Buka modal dengan Bootstrap
+            var myModal = new bootstrap.Modal(document.getElementById('educationModal'));
+            myModal.show();
+        };
 
         $('#saveEducation').click(function() {
                 const id = $('#educationId').val();
@@ -1197,6 +1316,7 @@
                             title: 'Error',
                             text: xhr.responseJSON?.message || 'Terjadi kesalahan saat menyimpan data'
                         });
+                        
                     }
                 });
         });
@@ -1249,6 +1369,26 @@
             $('#certificationModal').modal('show');
         }
 
+        // Fungsi untuk membuka modal tambah sertifikasi
+        window.addCertification = function () {
+            $('#certificationModalLabel').text('Tambah Sertifikasi');
+            $('#certificationId').val(''); // Kosongkan ID agar ini mode tambah
+            $('#namesertifikat').val('');
+            $('#issuing_organization').val('');
+            $('#credential_id').val('');
+            $('#issue_date').val('');
+            $('#expiration_date').val('');
+            $('#has_expiration').prop('checked', false);
+            $('#descriptioncertifications').val('');
+
+            $('#expiration_date_group').hide(); // Sembunyikan field expiration date
+
+            // Buka modal dengan Bootstrap
+            var myModal = new bootstrap.Modal(document.getElementById('certificationModal'));
+            myModal.show();
+        };
+
+
         window.editCertification = function (id) {
             const certification = @json($certifications->keyBy('id'));
             const certificationData = certification[id];
@@ -1260,7 +1400,7 @@
 
             $('#certificationModalLabel').text('Edit Sertifikasi');
             $('#certificationId').val(id);
-            $('#name').val(certificationData.name || '');
+            $('#namesertifikat').val(certificationData.namesertifikat || '');
             $('#issuing_organization').val(certificationData.issuing_organization || '');
             $('#credential_id').val(certificationData.credential_id || '');
             $('#issue_date').val(certificationData.issue_date ? certificationData.issue_date.substring(0, 10) : '');
@@ -1273,6 +1413,7 @@
             } else {
                 $('#expiration_date_group').hide();
             }
+            
 
             $('#certificationModal').modal('show');
         };
@@ -1281,7 +1422,7 @@
             const id = $('#certificationId').val();
             const formData = {
                 _token: $('meta[name="csrf-token"]').attr('content'),
-                name: $('#name').val(),
+                namesertifikat: $('#namesertifikat').val(),
                 issuing_organization: $('#issuing_organization').val(),
                 credential_id: $('#credential_id').val(),
                 issue_date: $('#issue_date').val(),
@@ -1289,6 +1430,7 @@
                 has_expiration: $('#has_expiration').is(':checked'),
                 descriptioncertifications: $('#descriptioncertifications').val()
             };
+            
             
             const url = id ? `/certification-store/${id}` : '/certification-store';
             const method = id ? 'PUT' : 'POST';
@@ -1449,6 +1591,74 @@
         }
 
         loadSkills();
+        
+
+        
+        // Upload Resume
+
+            loadResume();
+
+            // Upload Resume
+            $("#submitResumeBtn").click(function() {
+                var formData = new FormData();
+                var file = $("#resumeFile")[0].files[0];
+
+                if (!file) {
+                    alert("Pilih file resume terlebih dahulu!");
+                    return;
+                }
+
+                formData.append("resume", file);
+                formData.append("_token", "{{ csrf_token() }}");
+
+                $.ajax({
+                    url: "/resume",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert("Resume berhasil diunggah!");
+                        $("#uploadModal").modal('hide');
+                        loadResume();
+                    },
+                    error: function() {
+                        alert("Gagal mengunggah resume!");
+                    }
+                });
+            });
+
+            // Hapus Resume
+            $("#deleteResumeBtn").click(function() {
+                $.ajax({
+                    url: "/resume",
+                    type: "DELETE",
+                    data: { _token: "{{ csrf_token() }}" },
+                    success: function() {
+                        alert("Resume berhasil dihapus!");
+                        loadResume();
+                    },
+                    error: function() {
+                        alert("Gagal menghapus resume!");
+                    }
+                });
+            });
+
+            // Load Resume
+            function loadResume() {
+                $.get("/resume", function(data) {
+                    if (data) {
+                        $("#resumeName").text(data.file_name);
+                        $("#downloadResume").off("click").on("click", function() {
+                            window.open("/storage/" + data.file_path, "_blank"); // Buka di tab baru
+                        });
+                    } else {
+                        $("#resumeName").text("Belum ada resume yang diunggah.");
+                        $("#downloadResume").prop("disabled", true);
+                    }
+                });
+            }
+
 
     });
 </script>

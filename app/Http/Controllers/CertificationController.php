@@ -21,12 +21,12 @@ class CertificationController extends Controller
                 'has_expiration' => filter_var($request->input('has_expiration', false), FILTER_VALIDATE_BOOLEAN),
             ]);
             $data = $request->validate([
-                'name' => 'required|string|max:255',
+                'namesertifikat' => 'required|string|max:255',
                 'issuing_organization' => 'required|string|max:255',
                 'credential_id' => 'nullable|string|max:255',
                 'issue_date' => 'required|date',
                 'expiration_date' => 'nullable|date',
-                'description' => 'nullable|string',
+                'descriptioncertifications' => 'nullable|string',
                 'has_expiration' => 'nullable|boolean'
             ]);
 
@@ -56,6 +56,7 @@ class CertificationController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         try {
             $request->merge([
                 'has_expiration' => filter_var($request->input('has_expiration', false), FILTER_VALIDATE_BOOLEAN),
@@ -67,7 +68,7 @@ class CertificationController extends Controller
             }
 
             $data = $request->validate([
-                'name' => 'required|string|max:255',
+                'namesertifikat' => 'required|string|max:255',
                 'issuing_organization' => 'required|string|max:255',
                 'credential_id' => 'nullable|string|max:255',
                 'issue_date' => 'required|date',
