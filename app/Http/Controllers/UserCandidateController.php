@@ -75,7 +75,7 @@ class UserCandidateController extends Controller
             $user = Auth::user();
 
              // Login sukses
-             session(['email' => $user->email, 'name' => $user->name,'lastname' => $user->lastname,'phone' => $user->phone,'photouser' => $user->photo],);
+             session(['id' => $user->id,'email' => $user->email, 'name' => $user->name,'lastname' => $user->lastname,'phone' => $user->phone,'photouser' => $user->photo],);
              return response()->json(['message' => 'Login successful']);
          } else {
              // Login gagal
@@ -88,11 +88,12 @@ class UserCandidateController extends Controller
     {
          // Validasi data form registrasi
          $validator = Validator::make($request->all(), [
-             'username' => 'required',
+             'username' => 'nullable|string',
              'email' => 'required|email',
-             'password' => 'required', // Validasi password minimal 6 karakter
+             'password' => 'nullable|string',
+             'employeeId' => 'nullable|string',
          ]);
-
+        //  dd($request->all());
          // Jika validasi gagal
          if ($validator->fails()) {
              return response()->json([
@@ -255,8 +256,6 @@ class UserCandidateController extends Controller
 
             return response()->json(['success' => true, 'message' => 'Profile updated successfully']);
     }
-
-    
 
     public function getdtUserclient()
     {
@@ -436,7 +435,7 @@ class UserCandidateController extends Controller
             $validatedData = $request->validate([
                 'name' => 'nullable|string|max:255',
                 'lastname' => 'nullable|string|max:255',
-                'password' => 'nullable|string|min:6',
+                'password' => 'nullable|string',
                 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'phone' => 'nullable|string|max:255',
                 'description' => 'nullable|string',
@@ -449,10 +448,11 @@ class UserCandidateController extends Controller
 
             // Data yang akan diupdate
             $updateData = [];
+            $passwordChanged = false;
 
             // Cek jika ada perubahan di field selain password & foto
             foreach ($validatedData as $key => $value) {
-                if ($value !== null && $key !== $user->password && $key !== 'photo' && $user->$key !== $value) {
+                if ($value !== null && $key !== 'password' && $key !== 'photo' && $user->$key !== $value) {
                     $updateData[$key] = $value;
                 }
             }
@@ -460,21 +460,32 @@ class UserCandidateController extends Controller
             // **Cek apakah ada file foto diupload**
             if ($request->hasFile('photo')) {
                 $FileName = time() . '_' . $request->file('photo')->getClientOriginalName();
-                $destinationPath = public_path('../public/storage');
+                $destinationPath = public_path('storage');
                 $request->file('photo')->move($destinationPath, $FileName);
                 
-               
-                $user->photo = $FileName;
+                if ($user->photo !== $FileName) {
+                    $user->photo = $FileName;
+                }
             }
 
             // **Cek apakah password diubah**
             if (!empty($validatedData['password']) && !Hash::check($validatedData['password'], $user->password)) {
                 $updateData['password'] = Hash::make($validatedData['password']);
+                $passwordChanged = true;
             }
 
             // Jika ada perubahan, lakukan update
-            if (!empty($updateData)) {
+            if (!empty($updateData) || $user->isDirty('photo')) {
                 $user->update($updateData);
+                $user->save();
+            }
+
+            // Jika password diubah, redirect ke logout
+            if ($passwordChanged) {
+                Auth::logout();
+                return response()->json([
+                    'message' => 'Password changed, please log in again.'
+                ], 401);
             }
 
             return response()->json([
@@ -488,6 +499,8 @@ class UserCandidateController extends Controller
             ], 500);
         }
     }
+
+
 
     
     public function storeSkill(Request $request)

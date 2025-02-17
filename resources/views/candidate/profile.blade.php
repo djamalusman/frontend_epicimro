@@ -50,21 +50,20 @@
             </div>
                 <div class="heading-main-info">
                     <h4 class="mb-20 mt-25">{{ $personalsummary->name }} {{ $personalsummary->lastname }}
-                        {{-- <button class="btn-default edit-summary" 
+                        <button class="btn-default edit-summary" 
                             data-id="{{ $personalsummary->id }}"
-                            data-position="{{ $personalsummary->name }}"
-                            data-company="{{ $personalsummary->lastname }}"
-                            data-company="{{ $personalsummary->email }}"
-                            data-company="{{ $personalsummary->password }}"
-                            data-company="{{ $personalsummary->phone }}"
-                            data-is-current="{{ $personalsummary->photo}}"
-                            data-description="{{ $personalsummary->bio }}" 
+                            data-name="{{ $personalsummary->name }}"
+                            data-lastname="{{ $personalsummary->lastname }}"
+                            data-email="{{ $personalsummary->email }}"
+                            data-password="{{ $personalsummary->password }}"
+                            data-phone="{{ $personalsummary->phone }}"
+                            data-description="{{ $personalsummary->description }}" 
                             style="border: 0px; background-color:white;">
                             <i class='fas fa-edit' style='font-size:25px;color:#f05537'></i>
-                        </button> --}}
-                        <button  class="btn-default" data-bs-toggle="modal" data-bs-target="#addPersonalModal" style="border: 0px; background-color:white;">
-                            <i class='fas fa-edit' style='font-size:25px;color:#f05537'></i>
                         </button>
+                        {{-- <button  class="btn-default" data-bs-toggle="modal" data-bs-target="#addPersonalModal" style="border: 0px; background-color:white;">
+                            <i class='fas fa-edit' style='font-size:25px;color:#f05537'></i>
+                        </button> --}}
                     </h4>
                     <div class="head-info-profile">
                         <span class="text-small mr-20"><i class="fi-rr-marker text-mutted"></i> Chicago, US</span>
@@ -582,20 +581,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="personalForm">
+                <form id="personalForm" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="personal_id" id="personal_id">
                     <div class="mb-3">
                         <label>First Name</label>
-                        <input type="text" class="form-control" id="name" value="{{$userData->name}}"  name="name">
+                        <input type="text" class="form-control" id="name"  name="name">
                     </div>
                     <div class="mb-3">
                         <label>last Name</label>
-                        <input type="text" class="form-control" id="lastname" value="{{$userData->lastname}}"  name="lastname">
+                        <input type="text" class="form-control" id="lastname" name="lastname">
                     </div>
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" class="form-control" value="{{$userData->password}}" id="password" name="password">
+                        <input type="password" class="form-control"  id="password" name="password">
                     </div>
                     <div class="mb-3">
                         <label>Upload Foto</label>
@@ -603,15 +602,15 @@
                     </div>
                     <div class="mb-3">
                         <label>Email</label>
-                        <input readonly type="email" disabled class="form-control" value="{{$userData->email}}" id="email" name="email">
+                        <input readonly type="email" disabled class="form-control"  id="email" name="email">
                     </div>
                     <div class="mb-3">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" value="{{$userData->phone}}" id="phone" name="phone">
+                        <input type="tel" class="form-control" id="phone" name="phone">
                     </div>
                     <div class="mb-3">
                         <label>Ringkasan pribadi</label>
-                        <textarea name="description"  class="form-control" rows="3"> {{$userData->description}}</textarea>
+                        <textarea name="description"  class="form-control" rows="3"></textarea>
                     </div>
                 </form>
             </div>
@@ -898,29 +897,48 @@
             
         $(document).on('click', '.edit-summary', function() {
             var btn = $(this);
-            var modal = $('#addExperienceModal');
+            var modal = $('#addPersonalModal');
             
             // Set form values
-            modal.find('#experience_id').val(btn.data('id'));
-            modal.find('input[name="position"]').val(btn.data('position'));
-            modal.find('input[name="company"]').val(btn.data('company'));
-            modal.find('input[name="start_date"]').val(btn.data('start-date'));
-            
-            // Handle current job and end date
-            var isCurrent = btn.data('is-current') == '1';
-            modal.find('.current-job').prop('checked', isCurrent);
-            
-            var endDateInput = modal.find('input[name="end_date"]');
-            if (isCurrent) {
-                endDateInput.val('').prop('disabled', true);
-            } else {
-                endDateInput.val(btn.data('end-date')).prop('disabled', false);
-            }
-            
+            modal.find('#personal_id').val(btn.data('id'));
+            modal.find('input[name="name"]').val(btn.data('name'));
+            modal.find('input[name="lastname"]').val(btn.data('lastname'));
+
+            modal.find('input[name="password"]').val(btn.data('password'));
+            modal.find('input[name="email"]').val(btn.data('email'));
+            modal.find('input[name="phone"]').val(btn.data('phone'));
             modal.find('textarea[name="description"]').val(btn.data('description'));
-            
+                    // <input type="hidden" name="personal_id" id="personal_id">
+                    // <div class="mb-3">
+                    //     <label>First Name</label>
+                    //     <input type="text" class="form-control" id="name"  name="name">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>last Name</label>
+                    //     <input type="text" class="form-control" id="lastname" name="lastname">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>Password</label>
+                    //     <input type="password" class="form-control"  id="password" name="password">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>Upload Foto</label>
+                    //     <input type="file" name="photo" class="form-control">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>Email</label>
+                    //     <input readonly type="email" disabled class="form-control"  id="email" name="email">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>Phone</label>
+                    //     <input type="tel" class="form-control" id="phone" name="phone">
+                    // </div>
+                    // <div class="mb-3">
+                    //     <label>Ringkasan pribadi</label>
+                    //     <textarea name="description"  class="form-control" rows="3"></textarea>
+                    // </div>
             // Update modal title
-            modal.find('.modal-title').text('Edit Pengalaman Kerja');
+            modal.find('.modal-title').text('Ubah informasi pribadi');
             
             // Show modal
             modal.modal('show');
