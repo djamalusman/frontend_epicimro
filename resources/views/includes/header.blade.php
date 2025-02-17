@@ -37,25 +37,13 @@
                             
                             @if(Auth::check())
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ Auth::user()->name }}
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @if(Auth::user()->role == 'candidate')
-                                            <li><a class="dropdown-item" href="/candidate/profile">Profile</a></li>
-                                            <li><a class="dropdown-item" href="/candidate/applications">My Applications</a></li>
-                                        @elseif(Auth::user()->role == 'employee')
-                                            <li><a class="dropdown-item" href="/employee/profile">Profile</a></li>
-                                            <li><a class="dropdown-item" href="/employee/dashboard">Dashboard</a></li>
-                                        @endif
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li> <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item">Logout</button>
-                                            </form>
-                                        </li>
-                                    </ul>
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline ">
+                                        @csrf
+                                        <button type="submit" class="btn btn-defaults wow animate__ animate__fadeInUp hover-up mt-5  animated">Logout</button>
+                                    </form>
+                                    
                                 </li>
+                                
                             @else
                                 <li class="has">
                                     <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>
@@ -85,7 +73,8 @@
                      <img src="{{ asset('assets/imgs/avatar/ava_1.png')}}" alt="jobhub" />
                      <div class="content">
                          <h6 class="user-name">{{ session('name') }}</h6>
-                         <p class="font-xs text-muted">Welcome Back</p>
+                         <p class="font-xs text-muted">Welcome Back </p>
+                         
                      </div>
                  </div>
                  <div class="burger-icon burger-icon-white">
@@ -124,26 +113,9 @@
                             @endforeach
                             
                             @if(Auth::check())
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ Auth::user()->name }}
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @if(Auth::user()->role == 'candidate')
-                                            <li> <a class="dropdown-item" href="/candidate/profile"> <p>Profile</p></a></li>
-                                            <li><a class="dropdown-item" href="/candidate/applications">My Applications</a></li>
-                                        @elseif(Auth::user()->role == 'employee')
-                                            <li><a class="dropdown-item" href="/employee/profile">Profile</a></li>
-                                            <li><a class="dropdown-item" href="/employee/dashboard">Dashboard</a></li>
-                                        @endif
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li> <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="dropdown-item">Logout</button>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </li>
+                           
+                            <li><hr class="dropdown-divider"></li>
+                            
                             @else
                                 <li class="has">
                                     <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>

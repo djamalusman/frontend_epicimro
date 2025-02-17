@@ -16,6 +16,7 @@ class JobVacancyDetailModel extends Model
     public $incrementing = true;
 
     protected $fillable = [
+        'id_employee',
         'id_m_employee_status',
         'id_m_work_location',
         'id_m_salaray_date_mont',

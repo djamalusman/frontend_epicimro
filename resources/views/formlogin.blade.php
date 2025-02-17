@@ -189,31 +189,31 @@ Sign In & Sign Up
                 <!-- Sign Up Form (Hidden by Default) -->
                 <form id="signUpForm" class="hidden">
                      <!-- Checkbox untuk memilih Employee -->
-                     <div class="form-check mt-3">
+                     <!-- Checkbox untuk memilih Employee -->
+                    <div class="form-check mt-3">
                         <input type="checkbox" class="form-check-input" id="isEmployee">
                         <label class="form-check-label" for="isEmployee">Sign up as Employee</label>
                     </div>
-                    
+
                     <div class="form-group">
                         <label id="usernameLabel">Username</label>
-                        <input type="text" class="form-control" id="signUpUsername" placeholder="Enter username">
+                        <input type="text" class="form-control" id="signUpUsername" name="username" placeholder="Enter username">
                     </div>
                     <div class="form-group">
                         <label id="emailLabel">Email Address</label>
-                        <input type="email" class="form-control" id="signUpEmail" placeholder="Enter email">
+                        <input type="email" class="form-control" id="signUpEmail" name="email" placeholder="Enter email">
                     </div>
                     <div class="form-group">
                         <label id="passwordLabel">Password</label>
-                        <input type="password" class="form-control" id="signUpPassword" placeholder="Enter password">
+                        <input type="password" class="form-control" id="signUpPassword" name="password" placeholder="Enter password">
                     </div>
 
-                    <!-- Inputan tambahan untuk Employee (Tersembunyi awalnya) -->
-                    <div id="employeeFields" class="mt-3 d-none" hidden>
+                    <!-- Input tambahan untuk Employee -->
+                    <div id="employeeFields" class="mt-3 d-none">
                         <div class="form-group">
                             <label>Employee ID</label>
-                            <input type="text" class="form-control" id="employeeId" placeholder="Enter Employee ID">
+                            <input type="text" class="form-control" id="employeeId" name="employeeId" placeholder="Enter Employee ID">
                         </div>
-                        
                     </div>
                     <button type="submit" class="btn btn-warning">Sign Up</button>
                     <p class="mt-3">Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
@@ -228,15 +228,24 @@ Sign In & Sign Up
     <script>
         document.getElementById("isEmployee").addEventListener("change", function () {
             let isChecked = this.checked;
-            
+            let employeeField = $("#employeeId");
+
             // Mengubah label input sesuai pilihan
             document.getElementById("usernameLabel").textContent = isChecked ? "Employee Name" : "Username";
             document.getElementById("emailLabel").textContent = isChecked ? "Work Email" : "Email Address";
             document.getElementById("passwordLabel").textContent = isChecked ? "Work Password" : "Password";
 
-            // Menampilkan atau menyembunyikan input Employee
-            document.getElementById("employeeFields").classList.toggle("d-none", !isChecked);
+            if (isChecked) {
+                $("#employeeFields").removeClass("d-none").removeAttr("hidden"); // Tampilkan input
+                employeeField.val("EMP-" + Math.floor(10000 + Math.random() * 90000)); // Atur ID otomatis
+                employeeField.prop("readonly", true); // Mencegah perubahan
+            } else {
+                $("#employeeFields").addClass("d-none").attr("hidden", true);
+                employeeField.val(""); // Kosongkan nilai jika tidak dicentang
+                employeeField.prop("readonly", false); // Kembalikan agar bisa diubah jika diperlukan
+            }
         });
+
         // Toggle between Sign In and Sign Up forms
         $("#showSignUp").click(function() {
             $("#signInForm").addClass("hidden");
@@ -257,7 +266,8 @@ Sign In & Sign Up
             let username = $("#signUpUsername").val();
             let email = $("#signUpEmail").val();
             let password = $("#signUpPassword").val();
-            let employeeId = $("#employeeId").val();
+            let isEmployee = $("#isEmployee").is(":checked"); // Cek apakah dicentang
+            let employeeId = isEmployee ? $("#employeeId").val() : null; // Kirim jika Employee
 
             $.ajax({
                 url: "{{ route('signup') }}",
@@ -267,16 +277,17 @@ Sign In & Sign Up
                     username: username,
                     email: email,
                     password: password,
-                    employeeId: employeeId,
+                    isEmployee: isEmployee, // Kirim status Employee
+                    employeeId: employeeId, // Kirim Employee ID hanya jika checkbox dicentang
                 },
                 success: function(response) {
                     Swal.fire({
-                    icon: 'success',
-                    title: 'Pendaftaran Berhasil',
-                    text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
-                    confirmButtonText: 'OK'
+                        icon: 'success',
+                        title: 'Pendaftaran Berhasil',
+                        text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
+                        confirmButtonText: 'OK'
                     }).then(() => {
-                                window.location.href = "{{ route('login') }}";
+                        window.location.href = "{{ route('login') }}";
                     });
                 },
                 error: function(response) {
@@ -299,17 +310,19 @@ Sign In & Sign Up
                     _token: $("meta[name='csrf-token']").attr("content"),
                     email: email,
                     password: password
-                },
-                success: function(response) {
-                    Swal.fire("Success!", "Logged in successfully!", "success").then(() => {
-                        window.location.href = "/welcome"; 
-                    });
-                },
-                error: function(response) {
-                    Swal.fire("Error!", "Invalid credentials.", "error");
                 }
+            })
+            .done(function(response) {  // Jika login sukses
+                Swal.fire("Success!", "Logged in successfully!", "success").then(() => {
+                    window.location.href = "/welcome"; 
+                });
+            })
+            .fail(function(xhr) {  // Jika login gagal
+                let errorMessage = xhr.responseJSON?.error || "Invalid credentials.";
+                Swal.fire("Error!", errorMessage, "error");
             });
         });
+
     </script>
 
 @endsection

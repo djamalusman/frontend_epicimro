@@ -47,7 +47,10 @@ class WelcomeController extends Controller
             if ($role == 'candidate') {
                 $query->where('role', $role);
                 
-            } else {
+            }elseif ($role == 'employee') {
+                $query->where('role', $role);
+            } 
+            else {
                 $query->where('role', ['guest']);
             }
         })

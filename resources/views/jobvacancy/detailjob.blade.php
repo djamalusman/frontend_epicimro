@@ -97,6 +97,25 @@
             color: #000000
                 /* background-color: #ffffff; */
         }
+        .button-group {
+        display: flex;
+        gap: 10px; /* Memberikan jarak antar tombol */
+        align-items: center;
+    }
+
+    .btn-defaults {
+        background-color: #f05537;
+        border: none;
+        padding: 10px 15px;
+        color: white;
+        font-size: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-defaults:hover {
+        background-color: #f05537;
+    }
     </style>
 @section('head')
     <meta charset="utf-8" />
@@ -124,10 +143,7 @@
 @endsection
 <section class="section-box">
     <div class="box-head-single">
-        <div class="container">
-            <h3 style="font-size: 34px!important;">{{ $getdataDetail->companyName }} </h3>
-        </div>
-    </div>
+        <div class="container">appUrl
     <section class="section-box mt-20">
         <div class="container">
             <div class="row">
@@ -164,32 +180,34 @@
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                     <div class="sidebar-shadow">
                         <div class="text-start mt-20">
-                            @if (session('email'))
-                                <input type="text" hidden id="textToCopy"
-                                    value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
-                                    readonly>
-                                    @if ($getdtApplyJob !=null || $getdtApplyJob !="")
-                                        <a href="#"class="btn btn-defaults mr-10"
-                                            style="font-size:15px;color:white">Success Apply</a>
+                            
+                            <div class="button-group">
+                                @if (session('email') && $role !='employee')
+                                    <input type="text" hidden id="textToCopy"
+                                        value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
+                                        readonly>
+                                    
+                                    @if ($getdtApplyJob != null || $getdtApplyJob != "")
+                                        <a href="#" class="btn btn-defaults">Success Apply</a>
                                     @else
-                                        <a href="{{ route('viewapplyjob', ['id' => base64_encode($getdataDetail->id)]) }}"
-                                            target="_blank" class="btn btn-defaults mr-10"
-                                            style="font-size:15px;color:white">Apply now</a>
+                                        <form id="jobForm" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" value="{{ base64_encode($getdataDetail->id_employee) }}" name="idemployee" id="idemployee">
+                                            <input type="hidden" value="{{ base64_encode($getdataDetail->id) }}" name="idjob" id="idjob">
+                                            <button type="submit" class="btn btn-defaults">Apply now</button>
+                                        </form>
                                     @endif
-                                
-                            @else
-                                <input type="text" hidden id="textToCopy"
-                                    value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
-                                    readonly>
-                                <a href="{{ '/login' }}" class="btn btn-defaults mr-10"
-                                    style="font-size:15px;color:white">
-                                    Apply now
-                                </a>
-                            @endif
-                            <button class="btn btn-defaults mr-10" data-bs-toggle="modal"
-                                data-bs-target="#shareModal"style="font-size:15px; color:white">
-                                Share Link
-                            </button>
+                                @else
+                                        @if ($role !='employee')
+                                            <a href="{{ '/login' }}" class="btn btn-defaults">Apply now</a>
+                                        @endif
+                                @endif
+                            
+                                <!-- Tombol Share -->
+                                <button class="btn btn-defaults" data-bs-toggle="modal" data-bs-target="#shareModal">
+                                    Share Link
+                                </button>
+                            </div>
                             <div id="popup" class="popup">
                                 <p>Tautan telah disalin</p>
                             </div>
@@ -305,8 +323,41 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
+         $(document).ready(function() {
+            $('#jobForm').on('submit', function(event) {
+                event.preventDefault(); // Mencegah reload halaman
+
+                let formData = new FormData(this); // Ambil data form
+
+                $.ajax({
+                    url: "{{ route('storeJobClient') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false, // Jangan ubah data
+                    contentType: false, // Jangan set contentType
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload(); // Refresh halaman jika berhasil
+                        } else {
+                            alert('Error: ' + response.error); // Tampilkan pesan error khusus
+                        }
+                    },
+                    error: function(xhr) {
+                        let response = xhr.responseJSON;
+                        if (response && response.message) {
+                            alert('Gagal: ' + response.message); // Menampilkan pesan error dari server
+                        } else {
+                            alert('Terjadi kesalahan saat mengirim data.');
+                        }
+                    }
+                });
+            });
+        });
         document.addEventListener('DOMContentLoaded', function() {
             var olElements = document.querySelectorAll('ol');
             olElements.forEach(function(ol) {

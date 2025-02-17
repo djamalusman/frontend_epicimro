@@ -8,7 +8,8 @@ use App\Models\ApplyJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Menu_client;
 class JobVacancyController extends Controller
 {
     public function JobList(Request $request)
@@ -34,32 +35,74 @@ class JobVacancyController extends Controller
 
     public function JobGrid(Request $request)
     {
-        $data['title'] = 'Jobs';
+        // $data['title'] = 'Jobs';
+
+        // $dataCount = JobVacancyDetailModel::where('status', 1)->get();
+        // $data['CountJob'] = $dataCount->count();
+        // $data['filter'] = DB::table('m_employee_status')
+        //     ->select(
+        //         'm_employee_status.nama as employees_status'
+        //     )->get();
+        // // Get all courses
+
+        // return view('jobvacancy.jobgrid', $data);
+        $title = 'Jobs';
+        $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+        $menus = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            } else {
+                $query->where('role', ['guest']);
+            }
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
+        ->get();
 
         $dataCount = JobVacancyDetailModel::where('status', 1)->get();
-        $data['CountJob'] = $dataCount->count();
-        $data['filter'] = DB::table('m_employee_status')
+
+        $CountJob = $dataCount->count();
+
+        $filter = DB::table('m_employee_status')
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-        // Get all courses
 
-        return view('jobvacancy.jobgrid', $data);
+        return view('jobvacancy.jobgrid', compact('title','menus', 'dataCount', 'CountJob', 'filter'));
 
     }
 
     public function detailJob($id,$slug,Request $request)
     {
-        $data['title'] = 'Details Jobs';
+
+        $title = 'Details Jobs';
+        $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+        $menus = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            } else {
+                $query->where('role', ['guest']);
+            }
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
+        ->get();
+        
         $userEmail = session('email');
         
-        $getdtApplyJob= ApplyJob::where('idjob', base64_decode($id))->first();
-        if ($getdtApplyJob !=null || $getdtApplyJob !="") {
-            $data['getdtApplyJob'] = User::where('id', $getdtApplyJob->idusers)->first();
+        $getdtApplyJobs= ApplyJob::where('idjob', base64_decode($id))->first();
+        if ($getdtApplyJobs !=null || $getdtApplyJobs !="") {
+            $getdtApplyJob = User::where('id', $getdtApplyJobs->idusers)->first();
         }
         else
         {
-            $data['getdtApplyJob']=null;
+            $getdtApplyJob=null;
         }
         
         //dd($data['getdtApplyJob']);
@@ -84,7 +127,7 @@ class JobVacancyController extends Controller
                 'm_provinsi.nama as provinsi'
             );
             
-        $data['getdataDetail']=$query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
+        $getdataDetail=$query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $datadetail = $query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $url = $request->input('url', url()->current());
         $title = $request->input('title', $datadetail->job_title);
@@ -93,9 +136,10 @@ class JobVacancyController extends Controller
           ->twitter()
           ->linkedin()
           ->whatsapp();
-          $data['share_buttons'] = $share_buttons;
-          $data['dataIdJob'] =base64_decode($id);
-        return view('jobvacancy.detailjob', $data);
+          $share_buttons = $share_buttons;
+          $dataIdJob =base64_decode($id);
+          return view('jobvacancy.detailjob', compact('title','menus', 'getdtApplyJob', 'getdataDetail', 'share_buttons','dataIdJob','role'));
+        
     }
 
     public function previewFilter(Request $request)
