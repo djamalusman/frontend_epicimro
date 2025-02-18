@@ -39,14 +39,14 @@
                                 <li class="nav-item dropdown">
                                     <form action="{{ route('logout') }}" method="POST" class="d-inline ">
                                         @csrf
-                                        <button type="submit" class="btn btn-defaults wow animate__ animate__fadeInUp hover-up mt-5  animated">Logout</button>
+                                        <button type="submit" style="background-color:#f05537px!mportant; " class="btn btn-border float-right">Logout</button>
                                     </form>
                                     
                                 </li>
                                 
                             @else
                                 <li class="has">
-                                    <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>
+                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
                                 </li>
                             @endif
                         </ul>
