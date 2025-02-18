@@ -41,7 +41,8 @@ Route::middleware(['auth', 'role:candidate'])->group(function () {
 // Route untuk profile
 Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::get('/profile', [UserCandidateController::class, 'profileCandidate'])->name('profile');
-    
+    Route::get('/applications', [JobClientController::class, 'JobList'])->name('applications');
+    Route::get('/get-content-job-list', [JobClientController::class, 'getContentJobList'])->name('get-content-job-list');
     // Personal routes
     Route::post('/save-personal', [UserCandidateController::class, 'saveSummaryPersonal'])->name('save.personal');
     Route::put('/save-personal/{id}', [UserCandidateController::class, 'saveSummaryPersonal'])->name('update.personal');
@@ -74,11 +75,11 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::delete('/resume', [ResumeCandidateController::class, 'destroyResume']);
 
 });
-
 // Route untuk employee
 Route::middleware(['auth', 'role:employee'])->group(function () {
-    Route::get('/employee/profile', [UserCompanyController::class, 'profile']);
-    Route::get('/employee/dashboard', [UserCompanyController::class, 'dashboard']);
+
+    Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
+    Route::get('/dashboard', [UserCompanyController::class, 'dashboard']);
 });
 
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');
@@ -131,7 +132,7 @@ Route::get('/load-filter-salaray-range', [JobVacancyController::class, 'previewF
 Route::get('/filter-placement', [JobVacancyController::class, 'previewFilterPlacement'])->name('filter-placement');
 Route::get('/filter-experience-level-job', [JobVacancyController::class, 'previewFilterExperienceLevel'])->name('filter-experience-level-job');
 Route::get('/filter-education-job', [JobVacancyController::class, 'previewFilterEducation'])->name('filter-education-job');
-Route::get('/get-content-job-list', [JobVacancyController::class, 'getContentJobList'])->name('get-content-job-list');
+// Route::get('/get-content-job-list', [JobVacancyController::class, 'getContentJobList'])->name('get-content-job-list');
 Route::get('/get-content-job-grid', [JobVacancyController::class, 'getContentJobGrid'])->name('get-content-job-grid');
 Route::get('/load-filter-employeeStatusTop', [JobVacancyController::class, 'priviewEmployeeStatusTop'])->name('load-filter-employeeStatusTop');
 Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'SidebarJobvacancy'])->name('fetch-upcoming-jobs-sidebar');
