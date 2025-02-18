@@ -190,7 +190,11 @@ class JobClientController extends Controller
         $title = 'Jobs';
 
         $dataCount = JobVacancyDetailModel::where('status', 1)->get();
-        $CountJob = $dataCount->count();
+        $CountJob = DB::table('tr_applyjob')
+            ->Join('djv_job_vacancy_detail', 'djv_job_vacancy_detail.id', '=', 'tr_applyjob.idjob')
+            ->where('tr_applyjob.idusers', $user->id)
+            ->count();
+        //$CountJob = $dataCount->count();
         $filter = DB::table('m_employee_status')
             ->select(
                 'm_employee_status.nama as employees_status'
