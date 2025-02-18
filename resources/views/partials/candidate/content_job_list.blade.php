@@ -4,7 +4,7 @@
         <div class="card-job hover-up wow animate__animated animate__fadeIn">
             <div class="card-job-top">
                 <div class="card-job-top--image">
-                    <a href="/detail-job/{{base64_encode($value->id)}}">
+                    <a href="/detail-job/{{base64_encode($value->id)}}/{{ Str::slug($value->job_title) }}">
                         <figure>
                             <img class="imgGrid" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
                         </figure>
@@ -12,10 +12,10 @@
                 </div>
                 <div class="card-job-top--info">
 
-                    <h6 class="card-job-top--info-heading"><a href="/detail-job/{{base64_encode($value->id)}}">{{ $value->job_title }}</a></h6>
+                    <h6 class="card-job-top--info-heading"><a href="/detail-job/{{base64_encode($value->id)}}/{{ Str::slug($value->job_title) }}">{{ $value->job_title }}</a></h6>
                     <div class="row">
                         <div class="col-lg-12">
-                            <a href="/detail-job/{{base64_encode($value->id)}}"> <span class="card-job-top--type-job text-sm"style="font-size: 15px"><h5> {{$value->companyName}}</h5></span></a>
+                            <a href="/detail-job/{{base64_encode($value->id)}}/{{ Str::slug($value->job_title) }}"> <span class="card-job-top--type-job text-sm"style="font-size: 15px"><h5> {{$value->companyName}}</h5></span></a>
 
                         </div>
 

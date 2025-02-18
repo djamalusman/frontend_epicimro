@@ -1,7 +1,7 @@
 @php
-    // Ambil role user yang sedang login
-    $user = Auth::user();
-    $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+    // Ambil role user yang sedang login$userRole = Auth::check() ? Auth::user()->role : 'guest';
+$userRole = Auth::check() ? Auth::user()->role : 'guest';
+
 @endphp
  <!-- Preloader Start -->
  <div id="preloader-active">
@@ -26,7 +26,7 @@
                  </div>
                  <div class="header-nav">
                      <nav class="nav-main-menu d-none d-xl-block">
-                        <ul class="main-menu">
+                        {{-- <ul class="main-menu">
                             @foreach($menus as $menu)
                                 <li class="has">
                                     <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
@@ -49,7 +49,87 @@
                                     <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
                                 </li>
                             @endif
+                        </ul> --}}
+                        {{-- <ul class="main-menu">
+                            @foreach($menus->where('is_header', 0)->where('role', $userRole) as $menu)
+                                @php
+                                    // Ambil submenu berdasarkan is_header dan role
+                                    $submenus = $menus->where('is_header', $menu->id)->where('role', $userRole);
+                                @endphp
+                        
+                                <li class="has-children {{ $submenus->isNotEmpty() ? 'menu-item-has-children' : '' }}">
+                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
+                                        {{ $menu->name }}
+                                    </a>
+                        
+                                    @if($submenus->isNotEmpty())
+                                        <ul class="sub-menu">
+                                            @foreach($submenus as $submenu)
+                                                <li>
+                                                    <a href="{{ $submenu->url }}" class="{{ Request::is(trim($submenu->url, '/')) ? 'active' : '' }}">
+                                                        {{ $submenu->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                    
+                
+                            
+                            @if(Auth::check())
+                                <li class="nav-item dropdown">
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline ">
+                                        @csrf
+                                        <button type="submit" style="background-color:#f05537px!mportant; " class="btn btn-border float-right">Logout</button>
+                                    </form>
+                                    
+                                </li>
+                                
+                            @else
+                                <li class="has">
+                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
+                                </li>
+                            @endif
+                        </ul> --}}
+                        <ul class="main-menu">
+                            @foreach($menus->where('is_header', 0)->where('role', $userRole) as $menu)
+                                @php
+                                    // Ambil submenu berdasarkan is_header dan role
+                                    $submenus = $menus->where('is_header', $menu->id)->where('role', $userRole);
+                                @endphp
+                                <li @if($submenus->isNotEmpty()) class="has-children" @endif>
+                                    <a class="active" href="{{ $menu->url }}">
+                                        {{ $menu->name }}
+                                    </a>
+                                    @if($submenus->isNotEmpty())
+                                    <ul class="sub-menu">
+                                        @foreach($submenus as $submenu)
+                                        <li>
+                                            <a href="{{ $submenu->url }}">
+                                                {{ $submenu->name }}
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                            @if(Auth::check())
+                                <li class="nav-item dropdown">
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-border float-right" style="background-color:#f05537!important;">Logout</button>
+                                    </form>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
+                                </li>
+                            @endif
                         </ul>
+                        
                      </nav>
                      <div class="burger-icon burger-icon-white">
                          <span class="burger-icon-top"></span>
@@ -104,58 +184,45 @@
                      <!-- mobile menu start -->
                      <nav>
                      <ul class="mobile-menu font-heading">
-                            @foreach($menus as $menu)
-                                <li class="has">
-                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
-                                       {{ $menu->name }}
+                            @foreach($menus->where('is_header', 0)->where('role', $userRole) as $menu)
+                                @php
+                                    // Ambil submenu berdasarkan is_header dan role
+                                    $submenus = $menus->where('is_header', $menu->id)->where('role', $userRole);
+                                @endphp
+                                <li @if($submenus->isNotEmpty()) class="has-children" @endif>
+                                    <a class="active" href="{{ $menu->url }}">
+                                        {{ $menu->name }}
                                     </a>
+                                    @if($submenus->isNotEmpty())
+                                    <ul class="sub-menu">
+                                        @foreach($submenus as $submenu)
+                                        <li>
+                                            <a href="{{ $submenu->url }}">
+                                                {{ $submenu->name }}
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
                                 </li>
                             @endforeach
-                            
+                    
                             @if(Auth::check())
-                           
-                            <li><hr class="dropdown-divider"></li>
-                            
+                                <li class="has">
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline ">
+                                        @csrf
+                                        <button type="submit" style="background-color:#f05537px!mportant; " class="btn btn-border float-right">Logout</button>
+                                    </form>
+                                </li>
                             @else
                                 <li class="has">
-                                    <a href="{{ route('login') }}" class="btn btn-default ml-50" style="color: white;">Sign in</a>
+                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
                                 </li>
                             @endif
                         </ul>
-                         <!-- <ul class="mobile-menu font-heading">
-                             <li class="has">
-                                 <a href="{{ route('course-grid') }}">Training</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('job-grid') }}">Jobs</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('news-list') }}">News</a>
-                             </li>
-
-                             <li class="has">
-                                 <a href="{{ route('certification') }}">Certificate</a>
-                             </li>
-                             <li class="has">
-                                 <a href="{{ route('registration') }}">Join Us</a>
-                             </li>
-
-                         </ul>
+                         
                      </nav>
-                     @if (session('name'))
-                         <li class="has">
-                             <a href="{{ route('dashboardindex') }}">Account</a>
-                         </li>
-                     @else
-                         <div class="mobile-account">
-                             <h6 class="mb-10">Your Account</h6>
-                             <ul class="mobile-menu font-heading">
-
-                                 <li><a href="{{ route('login') }}">Sign In</a></li>
-                             </ul>
-                         </div>
-                     @endif -->
-                     <!-- mobile menu end -->
+                     
                  </div>
 
 

@@ -6,7 +6,7 @@
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
-                <h4>There Are {{ $CountJob }} Jobs<br />Here For you!</h4>
+                <h4>There are {{ $CountJob }} job data that have been applied</h4>
                 <div class="row mt-15 mb-40">
                     <div class="col-lg-7 col-md-9">
                         <span class="text-mutted" style="color: black">Discover your next career move, freelance gig, or
