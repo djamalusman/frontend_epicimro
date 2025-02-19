@@ -209,10 +209,10 @@ Sign In & Sign Up
                     </div>
 
                     <!-- Input tambahan untuk Employee -->
-                    <div id="employeeFields" class="mt-3 d-none">
+                    <div id="employeeFields" class="mt-3 d-none" hidden>
                         <div class="form-group">
-                            <label>Employee ID</label>
-                            <input type="text" class="form-control" id="employeeId" name="employeeId" placeholder="Enter Employee ID">
+                            <label>Compnay ID</label>
+                            <input type="text" class="form-control" id="companyId" name="companyId" placeholder="Enter Employee ID">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-warning">Sign Up</button>
@@ -267,7 +267,7 @@ Sign In & Sign Up
             let email = $("#signUpEmail").val();
             let password = $("#signUpPassword").val();
             let isEmployee = $("#isEmployee").is(":checked"); // Cek apakah dicentang
-            let employeeId = isEmployee ? $("#employeeId").val() : null; // Kirim jika Employee
+            let companyId = isEmployee ? $("#companyId").val() : null; // Kirim jika Employee
 
             $.ajax({
                 url: "{{ route('signup') }}",
@@ -278,7 +278,7 @@ Sign In & Sign Up
                     email: email,
                     password: password,
                     isEmployee: isEmployee, // Kirim status Employee
-                    employeeId: employeeId, // Kirim Employee ID hanya jika checkbox dicentang
+                    companyId: companyId, // Kirim Employee ID hanya jika checkbox dicentang
                 },
                 success: function(response) {
                     Swal.fire({

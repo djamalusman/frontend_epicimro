@@ -21,7 +21,7 @@ class JobVacancyController extends Controller
             if ($role == 'candidate') {
                 $query->where('role', $role);
                 
-            }elseif ($role == 'employee') {
+            }elseif ($role == 'company') {
                 $query->where('role', $role);
             } 
             else {
@@ -70,7 +70,7 @@ class JobVacancyController extends Controller
             if ($role == 'candidate') {
                 $query->where('role', $role);
                 
-            }elseif ($role == 'employee') {
+            }elseif ($role == 'company') {
                 $query->where('role', $role);
             } 
             else {

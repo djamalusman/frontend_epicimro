@@ -40,6 +40,16 @@
 {{--                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i>Posted at : {{ \Carbon\Carbon::parse($value->posted_date)->format('d M Y') }}</span>--}}
                             <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i> {{$value->work_location}}</span>
                             <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i>Closed at : {{ \Carbon\Carbon::parse($value->close_date)->format('d M Y') }}</span>
+                            @if ($value->status_applyjob == 4)
+                                <span class="card-job-top--location text-sm" style="background-color: #f05537;color:white"><i class="fi-rr-clock"></i> <strong> di tolak </strong></span>
+                            @elseif ($value->status_applyjob == 3)
+                                <span class="card-job-top--location text-sm" style="background-color: #f05537;color:white"><i class="fi-rr-clock"></i><strong> Menunggu riview company </strong></span>
+                            {{-- @elseif ($value->status_applyjob == 2)
+                                <span class="card-job-top--location text-sm"><i class="fi-rr-clock"></i> Job Publish</span> --}}
+                            @elseif ($value->status_applyjob == 1)
+                            <span class="card-job-top--location text-sm" style="background-color: #f05537;color:white"><i class="fi-rr-clock"></i><strong> Di terima </stron>g</span>
+                            @endif
+                           
 
 
                         </div>

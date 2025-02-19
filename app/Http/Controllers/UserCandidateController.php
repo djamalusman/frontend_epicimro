@@ -43,7 +43,7 @@ class UserCandidateController extends Controller
             switch($user->role) {
                 case 'candidate':
                     return redirect()->route('welcome');
-                case 'employee':
+                case 'company':
                     return redirect()->route('welcome');
                 default:
                     return redirect()->route('welcome'); // Redirect ke welcome page
@@ -91,7 +91,7 @@ class UserCandidateController extends Controller
              'username' => 'nullable|string',
              'email' => 'required|email',
              'password' => 'nullable|string',
-             'employeeId' => 'nullable|string',
+             'companyId' => 'nullable|string',
          ]);
         //  dd($request->all());
          // Jika validasi gagal
@@ -111,7 +111,7 @@ class UserCandidateController extends Controller
          // Generate ID user
          $no = User::count() + 1;
          
-         $role = $request->employeeId ? 'employee' : 'candidate';
+         $role = $request->companyId ? 'company' : 'candidate';
 
          // Buat user baru
          User::create([
