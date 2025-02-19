@@ -92,7 +92,59 @@
             <div class="divider"></div>
             <div class="col-lg-8 col-md-12 col-sm-12 col-12">
                 <div class="content-single">
-                    
+
+                    <div class="row align-items-end">
+                        <div class="col-lg-4">
+                            <h4 class="mb-20 mt-25">Company Profile
+                                @if($companyprofile->isEmpty())
+                                    <button class="btn-default" data-bs-toggle="modal" data-bs-target="#addCompanyProfileModal" style="border: 0px; background-color:white;">
+                                        <i class='fas fa-plus' style='font-size:25px;color:#f05537'></i>
+                                    </button>
+                                @else
+                                    <button class="btn-default edit-company-profile" 
+                                        data-id="{{ $companyprofile->id }}"
+                                        data-companyname="{{ $companyprofile->company_name }}"
+                                        data-companyemail="{{ $companyprofile->company_email }}"
+                                        data-companyaddress="{{ $companyprofile->company_address }}"
+                                        data-companyprovince="{{ $companyprofile->province->nama }}"
+                                        data-companysector="{{ $companyprofile->sector->nama }}"
+                                        data-companyphone="{{ $companyprofile->phone_number }}" 
+                                        data-companyoverview="{{ $companyprofile->company_overview }}" 
+                                        style="border: 0px; background-color:white;">
+                                        <i class='fas fa-edit' style='font-size:25px;color:#f05537'></i>
+                                    </button>
+                                @endif
+                            </h4>
+                        </div>
+                    </div>
+                    @if($companyprofile->isEmpty())
+                        <div class="alert alert-info">
+                            Belum ada company profile
+                        </div>
+                    @else
+                        <p>
+                            {{$companyprofile->company_name}}
+                        </p>
+                        <p>
+                            {{$companyprofile->company_email}}
+                        </p>
+                        <p>
+                            {{$companyprofile->company_address}}
+                        </p>
+                        <p>
+                            {{$companyprofile->province->nama}}
+                        </p>
+                        <p>
+                            {{$companyprofile->sector->nama}}
+                        </p>
+                        <p>
+                            {{$companyprofile->phone_number}}
+                        </p>
+                        <p>
+                            {{$companyprofile->company_overview}}
+                        </p>
+                    @endif
+
                         <div class="row align-items-end">
                             <div class="col-lg-4">
                                 <h4 class="mb-20 mt-25">Ringkasan pribadi</h4>
@@ -622,6 +674,71 @@
     </div>
 </div>
 
+<!-- Modal Tambah Company Profile -->
+<div class="modal fade" id="addCompanyProfileModal" tabindex="-1" aria-labelledby="addCompanyProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCompanyProfileModalLabel">Tambah Company Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyProfileForm">
+                    @csrf
+                    <input type="hidden" name="companyProfile_id" id="companyProfile_id">
+                    <div class="mb-3">
+                        <label>Nama Perusahaan</label>
+                        <input type="text" name="company_name" class="form-control" required>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label>Alamat Perusahaan</label>
+                        <input type="text" name="company_address" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email Perusahaan</label>
+                        <input type="text" name="company_email" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Nomor Telepon Perusahaan</label>
+                        <input type="text" name="phone_number" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Provinsi</label>
+                        <select>
+                            @foreach ($provinces as $province)
+                                <option value="{{ $province->id }}">{{ $province->name }}></option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Sektor</label>
+                        <select>
+                            @foreach ($sectors as $sector)
+                                <option value="{{ $sector->id }}">{{ $sector->name }}></option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Overview Perusahaan</label>
+                        <input type="text" name="overview" class="form-control" required>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-default" id="saveCompanyProfile">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Tambah Pengalaman -->
 <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1035,6 +1152,137 @@
 
         
         //end riwayat pribadi
+
+        // company profile
+
+        $(document).on('click', '.edit-company-profile', function() {
+            var btn = $(this);
+            var modal = $('#addCompanyProfileModal');
+            
+            // Set form values
+            modal.find('#companyProfile_id').val(btn.data('id'));
+            modal.find('input[name="company_name"]').val(btn.data('company_name'));
+            modal.find('input[name="company_address"]').val(btn.data('company_address'));
+            modal.find('input[name="company_email"]').val(btn.data('company_email'));
+            modal.find('input[name="phone_number"]').val(btn.data('phone_number'));
+            modal.find('input[name="company_email"]').val(btn.data('company_email'));
+            modal.find('input[name="company_email"]').val(btn.data('company_email'));
+            
+            // Handle current job and end date
+            var isCurrent = btn.data('is-current') == '1';
+            modal.find('.current-job').prop('checked', isCurrent);
+            
+            var endDateInput = modal.find('input[name="end_date"]');
+            if (isCurrent) {
+                endDateInput.val('').prop('disabled', true);
+            } else {
+                endDateInput.val(btn.data('end-date')).prop('disabled', false);
+            }
+            
+            modal.find('textarea[name="description"]').val(btn.data('description'));
+            
+            // Update modal title
+            modal.find('.modal-title').text('Edit Pengalaman Kerja');
+            
+            // Show modal
+            modal.modal('show');
+        });
+
+        // Reset modal on close
+        $('#addCompanyProfileModal').on('hidden.bs.modal', function() {
+            var modal = $(this);
+            modal.find('#companyProfile_id').val('');
+            modal.find('form')[0].reset();
+            modal.find('.end-date').prop('disabled', false);
+            modal.find('.modal-title').text('Tambah Company Profile');
+        });
+
+        // Form submission
+        $('#saveCompanyProfile').click(function() {
+            var form = $('#companyProfileForm');
+            var formData = new FormData(form[0]);
+            var companyProfileId = $('#companyProfile_id').val();
+
+            var url = companyProfileId 
+                ? `/save-company-profile/${companyProfileId}` 
+                : '/save-company-profile';
+
+            $.ajax({
+                url: url,
+                type: companyProfileId ? 'PUT' : 'POST',
+                data: Object.fromEntries(formData),
+                success: function(response) {
+                    // Close modal
+                    $('#addCompanyProfileModal').modal('hide');
+                    
+                    // Reset form
+                    form[0].reset();
+
+                    // Update atau tambah experience ke list
+                    var companyProfileHtml = `
+                        <div class="card mb-3 company-profile-card" data-id="${response.data.id}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="card-title mb-1">${response.data.company_name}</h5>
+                                        <h6 class="card-subtitle mb-2">
+                                            <a href="#" class="text-muted text-decoration-none">${response.data.company_email}</a>
+                                        </h6>
+                                        <p class="card-text text-muted mb-2" style="font-size: 0.9rem;">
+                                            ${startDate} - ${endDate}
+                                        </p>
+                                        <p class="card-text">${response.data.description || ''}</p>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-link edit-experience" 
+                                                data-id="${response.data.id}"
+                                                data-position="${response.data.position}"
+                                                data-company="${response.data.company}"
+                                                data-start-date="${response.data.start_date}"
+                                                data-end-date="${response.data.end_date || ''}"
+                                                data-is-current="${response.data.is_current ? '1' : '0'}"
+                                                data-description="${response.data.description || ''}">
+                                            <i class="fas fa-pen"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-link text-danger delete-experience" 
+                                                data-id="${response.data.id}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    if (companyProfileId) {
+                        // Update existing card
+                        $(`.company-profile-card[data-id="${companyProfileId}"]`).replaceWith(experienceHtml);
+                    } else {
+                        // Remove "No experience" message if present
+                        if ($('#experienceList .alert').length) {
+                            $('#experienceList .alert').remove();
+                        }
+                        // Add new card
+                        $('#experienceList').prepend(experienceHtml);
+                    }
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Pengalaman kerja berhasil disimpan'
+                    }).then(() => {
+                        // **Reload halaman setelah notifikasi ditutup**
+                        window.location.href = '/profile';
+                    });
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan saat menyimpan data'
+                    });
+                }
+            });
+        });
 
         // Handle edit button click
         $(document).on('click', '.edit-experience', function() {

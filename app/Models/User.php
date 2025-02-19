@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Certification::class);
     }
+
+    public function companyProfiles()
+    {
+        return $this->hasMany(CompanyProfile::class);
+    }
 }

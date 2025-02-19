@@ -40,7 +40,7 @@ Route::middleware(['auth', 'role:candidate'])->group(function () {
 
 // Route untuk profile
 Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
-    Route::get('/profile', [UserCandidateController::class, 'profileCandidate'])->name('profile');
+    Route::get('/profiles', [UserCandidateController::class, 'profileCandidate'])->name('profiles');
     Route::get('/applications', [JobClientController::class, 'JobList'])->name('applications');
     Route::get('/get-content-job-list', [JobClientController::class, 'getContentJobList'])->name('get-content-job-list');
     // Personal routes
@@ -80,6 +80,9 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
 
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
     Route::get('/dashboard', [UserCompanyController::class, 'dashboard']);
+
+    Route::post('/save-company-profile', [UserCompanyController::class, 'saveCompanyProfile'])->name('save.company.profile');
+    Route::put('/save-company-profile/{id}', [UserCompanyController::class, 'saveCompanyProfile'])->name('update.company.profile');
 });
 
 Route::get('/welcome', [WelcomeController::class, 'welcome'])->name('welcome');

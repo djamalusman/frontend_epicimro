@@ -30,6 +30,9 @@ use App\Mail\ForgotPasswordMail;
 use App\Models\Experience;
 use App\Models\Education;
 use App\Models\Certification;
+use App\Models\CompanyProfile;
+use App\Models\Province;
+use App\Models\Sector;
 
 class UserCompanyController extends Controller
 {
@@ -48,7 +51,9 @@ class UserCompanyController extends Controller
         $userEmail = session('email');
         $userData = User::where('email', $userEmail)->firstOrFail();
 
-        
+        $companyprofile = CompanyProfile::with('province', 'sector')->where('user_id', $user->id)->get();
+        $provinces = Province::all();
+        $sectors = Sector::all();
 
         $personalsummarys = User::where('id', $user->id)
                                ->orderBy('updated_at', 'desc')
@@ -73,6 +78,50 @@ class UserCompanyController extends Controller
 
         $skills = SkillCandidate::where('user_id', $user->id)->get();
 
-        return view('employee.profileemployee', compact('user', 'menus','personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
+        return view('employee.profileemployee', compact('user', 'menus', 'companyprofile', 'provinces', 'sectors', 'personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
+    }
+
+    public function saveCompanyProfile(Request $request, $id = null)
+    {
+        
+        try {
+            $data = $request->validate([
+                'company_name' => 'nullable|string|max:100',
+                'company_address' => 'nullable|string|max:100',
+                'company_email' => 'nullable|string|max:100',
+                'phone_number' => 'nullable|regex:/^(\+62|62|0)[0-9]{9,12}$/|max:13',   // phone number validation
+                'company_overview' => 'nullable|string|max:65535',                      // description validation text
+                'province_id' => 'nullable|integer|exists:provinces,id',                // province_id validation
+                'sector_id' => 'nullable|integer|exists:sectors,id'                     // sector_id validation
+            ]);
+
+            $data['user_id'] = auth()->id();
+            
+            if ($id) {
+                $companyprofile = CompanyProfile::findOrFail($id);
+                
+                // Check if the experience belongs to the authenticated user
+                if ($companyprofile->user_id !== auth()->id()) {
+                    return response()->json(['error' => 'Unauthorized'], 403);
+                }
+                
+                $companyprofile->update($data);
+            } else {
+                $companyprofile = CompanyProfile::create($data);
+            }
+
+            // Reload the experience to get the formatted dates
+            $companyprofile = CompanyProfile::find($companyprofile->id);
+
+            return response()->json([
+                'message' => $id ? 'Company profile updated successfully' : 'Company profile added successfully',
+                'data' => $companyprofile
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $id ? 'Failed to update company profile' : 'Failed to add company profile',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
 }
