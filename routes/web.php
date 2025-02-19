@@ -76,7 +76,7 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
 
 });
 // Route untuk employee
-Route::middleware(['auth', 'role:employee'])->group(function () {
+Route::middleware(['auth', 'role:company'])->group(function () {
 
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
     Route::get('/dashboard', [UserCompanyController::class, 'dashboard']);
