@@ -84,7 +84,7 @@ class MenuClientSeeder extends Seeder
             'name' => 'Apply Data',
             'url' => '/apply-data',
             'icon' => 'fas fa-file-alt',
-            'role' => 'employee',
+            'role' => 'company',
             'order' => 1,
             'is_active' => true
         ]);

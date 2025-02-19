@@ -10,7 +10,7 @@ class CompanyProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'checkRole:employee']);
+        $this->middleware(['auth', 'checkRole:company']);
     }
 
     public function store(Request $request)

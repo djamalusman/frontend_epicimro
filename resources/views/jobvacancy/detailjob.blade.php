@@ -192,7 +192,7 @@
                                     @else
                                         <form id="jobForm" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" value="{{ base64_encode($getdataDetail->id_employee) }}" name="idemployee" id="idemployee">
+                                            <input type="hidden" value="{{ base64_encode($getdataDetail->idcompany) }}" name="idcompany" id="idcompany">
                                             <input type="hidden" value="{{ base64_encode($getdataDetail->id) }}" name="idjob" id="idjob">
                                             <button type="submit" class="btn btn-defaults">Apply now</button>
                                         </form>
