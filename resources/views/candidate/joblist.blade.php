@@ -6,7 +6,7 @@
     <section class="section-box-2">
         <div class="box-head-single none-bg">
             <div class="container">
-                <h4>There Are {{ $CountJob }} Jobs<br />Here For you!</h4>
+                <h4>There are {{ $CountJob }} job data that have been applied</h4>
                 <div class="row mt-15 mb-40">
                     <div class="col-lg-7 col-md-9">
                         <span class="text-mutted" style="color: black">Discover your next career move, freelance gig, or
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-lg-7 text-lg-end mt-sm-15">
                                     <div class="display-flex2">
-                                        <div class="dropdown dropdown-sort">
+                                        <div class="dropdown dropdown-sort" hidden>
                                             <button class="btn dropdown-toggle" type="button" id="dropdownSort"
                                                 data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
                                                 <span id="currentSort">Newest Post</span> <i
@@ -139,7 +139,17 @@
                     <div class="sidebar-shadow none-shadow mb-30">
                         <h5 class="sidebar-title">Filters</h5>
                         <div class="sidebar-filters">
-                            
+                            <div class="filter-block mb-30">
+                                <h5 class="medium-heading mb-15">Search  Job title</h5>
+                                <div class="form-group">
+                                    <div class="box-search-job">
+                                        <form class="form-search-job">
+                                            <input type="text" id="filterJobtitle" class="input-search-job"
+                                                placeholder="Search  Job title" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-15">Job type</h5>
 
@@ -151,7 +161,7 @@
                                 </div>
                             </div>
 
-                            <div class="filter-block mb-30">
+                            {{-- <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-15">Experience Level</h5>
                                 <div class="form-group">
                                     <ul class="list-checkbox">
@@ -161,8 +171,8 @@
 
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="filter-block mb-30">
+                            </div> --}}
+                            {{-- <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-15">Placement</h5>
                                 <div class="form-group">
                                     <ul class="list-checkbox">
@@ -171,8 +181,8 @@
                                         </div>
 
                                     </ul>
-                                </div>
-                            </div>
+                                </div>  
+                            </div> --}}
                             <div class="filter-block mb-30">
                                 <h5 class="medium-heading mb-15">Salary Range</h5>
                                 <div class="form-group select-style select-style-icon">
@@ -184,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="buttons-filter">
-                                <button id="applyFilterBtnBottom" class="btn btn-default">Apply filter</button>
+                                <button id="applyFilterBtnBottom"  class="btn btn-border">Apply filter</button>
                                 <button id="resetFilterBtn" class="btn btn-border">Reset filter</button>
                             </div>
                         </div>
@@ -240,8 +250,8 @@
             let lokasi = <?php echo json_encode($valuLokasi); ?>;
 
             //PreviewemployeeStatus();
-            PriviewfilterPlacement();
-            filterExperienceLevel();
+            //PriviewfilterPlacement();
+            //filterExperienceLevel();
             loadSalaryRanges();
             loadEmployeeStatusTop();
             loadProvinsisTop();
@@ -287,15 +297,15 @@
                 console.log('Sort by selected:', currentSort); // Debugging line
                 const filters = {
                     jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
-                    placement: $('.filterPlacement:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // placement: $('.filterPlacement:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                     //     return $(this).val();
                     // }).get(),
-                    experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     salaryRange: $('#salaryRangeSelect').val(),
                     employestatus: $('#filterEmployeeStatus').val(),
                     employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -311,15 +321,15 @@
                 console.log('Pager number clicked, page:', page); // Debugging line
                 const filters = {
                     jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
-                    placement: $('.filterPlacement:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // placement: $('.filterPlacement:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                     //     return $(this).val();
                     // }).get(),
-                    experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     salaryRange: $('#salaryRangeSelect').val(),
                     employestatus: $('#filterEmployeeStatus').val(),
                     employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -337,15 +347,15 @@
                     const filters = {
                        
                         jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
-                        placement: $('.filterPlacement:checked').map(function() {
-                            return $(this).val();
-                        }).get(),
+                        // placement: $('.filterPlacement:checked').map(function() {
+                        //     return $(this).val();
+                        // }).get(),
                         // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                         //     return $(this).val();
                         // }).get(),
-                        experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                            return $(this).val();
-                        }).get(),
+                        // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                        //     return $(this).val();
+                        // }).get(),
                         salaryRange: $('#salaryRangeSelect').val(),
                         employestatus: $('#filterEmployeeStatus').val(),
                         employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -363,15 +373,15 @@
                 if (page) {
                     const filters = {
                         jobtitle: (jobtitleval == '' ? $('#filterJobtitle').val() : jobtitleval),
-                        placement: $('.filterPlacement:checked').map(function() {
-                            return $(this).val();
-                        }).get(),
+                        // placement: $('.filterPlacement:checked').map(function() {
+                        //     return $(this).val();
+                        // }).get(),
                         // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                         //     return $(this).val();
                         // }).get(),
-                        experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                            return $(this).val();
-                        }).get(),
+                        // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                        //     return $(this).val();
+                        // }).get(),
                         salaryRange: $('#salaryRangeSelect').val(),
                         employestatus: $('#filterEmployeeStatus').val(),
                         employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -386,15 +396,15 @@
                 const filters = {
                     //jobtype: $('#filterJobtype').val(),
                     jobtitle: $('#filterJobtitle').val(),
-                    placement: $('.filterPlacement:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // placement: $('.filterPlacement:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                     //     return $(this).val();
                     // }).get(),
-                    experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     salaryRange: $('#salaryRangeSelect').val(),
                     employestatus: $('#filterEmployeeStatus').val(),
                     employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -408,15 +418,15 @@
                 const filters = {
                     //jobtype: $('#filterJobtype').val(),
                     jobtitle: $('#filterJobtitle').val(),
-                    placement: $('.filterPlacement:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // placement: $('.filterPlacement:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     // employestatus: $('.filterEmployeeStatus:checked').map(function() {
                     //     return $(this).val();
                     // }).get(),
-                    experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                        return $(this).val();
-                    }).get(),
+                    // experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+                    //     return $(this).val();
+                    // }).get(),
                     salaryRange: $('#salaryRangeSelect').val(),
                     employestatus: $('#filterEmployeeStatus').val(),
                     employeeStatusSelect: $('#employeeStatusSelect').val(),
@@ -434,14 +444,14 @@
                 $('#filterEmployeeStatus').val('');
                 $('#employeeStatusSelect').val('');
                 $('#provinsiSelect').val('');
-                $('#filterexperiencelevel').val('');
+                // $('#filterexperiencelevel').val('');
                 //$('.filterEmployeeStatus').prop('checked', false);
-                $('.filterPlacement').prop('checked', false);
-                $('.filterexperiencelevel').prop('checked', false);
+                //$('.filterPlacement').prop('checked', false);
+                // $('.filterexperiencelevel').prop('checked', false);
                 console.log('Reset filter button clicked'); // Debugging line
                 loadContent(1, {}, currentSort); // Fetch content without filters and current sort
-                PriviewfilterPlacement();
-                filterExperienceLevel();
+                // PriviewfilterPlacement();
+                // filterExperienceLevel();
                 loadSalaryRanges();
                 loadEmployeeStatusTop();
                 loadProvinsisTop();
@@ -513,45 +523,45 @@
 
 
 
-        function PriviewfilterPlacement() {
-            const filters = {
-                placement: $('.filterPlacement:checked').map(function() {
-                    return $(this).val();
-                }).get(),
+        // function PriviewfilterPlacement() {
+        //     const filters = {
+        //         placement: $('.filterPlacement:checked').map(function() {
+        //             return $(this).val();
+        //         }).get(),
 
-            };
-            $.ajax({
-                url: '/filter-placement', // Endpoint untuk pratinjau filter
-                method: 'GET',
-                data: filters,
-                success: function(response) {
-                    $('#filterPlacement').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching filter preview:', error);
-                }
-            });
-        }
+        //     };
+        //     $.ajax({
+        //         url: '/filter-placement', // Endpoint untuk pratinjau filter
+        //         method: 'GET',
+        //         data: filters,
+        //         success: function(response) {
+        //             $('#filterPlacement').html(response);
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('Error fetching filter preview:', error);
+        //         }
+        //     });
+        // }
 
-        function filterExperienceLevel() {
-            const filters = {
-                experiencelevel: $('.filterExperiencelevel:checked').map(function() {
-                    return $(this).val();
-                }).get(),
+        // function filterExperienceLevel() {
+        //     const filters = {
+        //         experiencelevel: $('.filterExperiencelevel:checked').map(function() {
+        //             return $(this).val();
+        //         }).get(),
 
-            };
-            $.ajax({
-                url: '/filter-experience-level-job', // Endpoint untuk pratinjau filter
-                method: 'GET',
-                data: filters,
-                success: function(response) {
-                    $('#filterexperiencelevel').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching filter preview:', error);
-                }
-            });
-        }
+        //     };
+        //     $.ajax({
+        //         url: '/filter-experience-level-job', // Endpoint untuk pratinjau filter
+        //         method: 'GET',
+        //         data: filters,
+        //         success: function(response) {
+        //             $('#filterexperiencelevel').html(response);
+        //         },
+        //         error: function(xhr, status, error) {
+        //             console.error('Error fetching filter preview:', error);
+        //         }
+        //     });
+        // }
 
         function filterEducation() {
             const filters = {

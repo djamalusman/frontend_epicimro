@@ -13,7 +13,7 @@ class ApplyJob extends Model
 
     // Menghilangkan 'id' dari $fillable karena auto-increment
     protected $fillable = [
-        'id_employee',
+        'idcompany',
         'idusers',
         'idjob',
         'status',

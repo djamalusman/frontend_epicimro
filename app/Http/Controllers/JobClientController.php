@@ -105,7 +105,7 @@ class JobClientController extends Controller
         $request->validate([
 
             'idjob' => 'required',
-            'idemployee' => 'required',
+            'idcompany' => 'required',
         ]); 
         
         
@@ -127,12 +127,12 @@ class JobClientController extends Controller
             
             $idjob=base64_decode($request->idjob);
            
-            $id_employee=base64_decode($request->idemployee);
+            $idcompany=base64_decode($request->idcompany);
             if($chekresume){
                 ApplyJob::create([
                     'idusers' => $UserCleint->id,
                     'idjob' => $idjob,
-                    'id_employee' => $id_employee,
+                    'idcompany' => $idcompany,
                     
                     'status' => 3,
                     'app_name' => "ApplyJob",
@@ -172,7 +172,7 @@ class JobClientController extends Controller
             if ($role == 'candidate') {
                 $query->where('role', $role);
                 
-            }elseif ($role == 'employee') {
+            }elseif ($role == 'company') {
                 $query->where('role', $role);
             } 
             else {
@@ -190,7 +190,11 @@ class JobClientController extends Controller
         $title = 'Jobs';
 
         $dataCount = JobVacancyDetailModel::where('status', 1)->get();
-        $CountJob = $dataCount->count();
+        $CountJob = DB::table('tr_applyjob')
+            ->Join('djv_job_vacancy_detail', 'djv_job_vacancy_detail.id', '=', 'tr_applyjob.idjob')
+            ->where('tr_applyjob.idusers', $user->id)
+            ->count();
+        //$CountJob = $dataCount->count();
         $filter = DB::table('m_employee_status')
             ->select(
                 'm_employee_status.nama as employees_status'
@@ -240,18 +244,18 @@ class JobClientController extends Controller
         }
 
         // filter Provinsi
-        if (!empty($filters['provinsi']) && is_array($filters['provinsi'])) {
-            $whereData->whereIn('m_provinsi.id', $filters['provinsi']);
-        } elseif (!empty($filters['provinsi']) && is_string($filters['provinsi'])) {
-            $whereData->where('m_provinsi.id', 'LIKE', '%' . $filters['provinsi'] . '%');
-        }
+        // if (!empty($filters['provinsi']) && is_array($filters['provinsi'])) {
+        //     $whereData->whereIn('m_provinsi.id', $filters['provinsi']);
+        // } elseif (!empty($filters['provinsi']) && is_string($filters['provinsi'])) {
+        //     $whereData->where('m_provinsi.id', 'LIKE', '%' . $filters['provinsi'] . '%');
+        // }
 
         // filter lokasi
-        if (!empty($filters['location']) && is_array($filters['location'])) {
-            $whereData->whereIn('djv_job_vacancy_detail.lokasi', $filters['location']);
-        } elseif (!empty($filters['location']) && is_string($filters['location'])) {
-            $whereData->where('djv_job_vacancy_detail.lokasi', 'LIKE', '%' . $filters['location'] . '%');
-        }
+        // if (!empty($filters['location']) && is_array($filters['location'])) {
+        //     $whereData->whereIn('djv_job_vacancy_detail.lokasi', $filters['location']);
+        // } elseif (!empty($filters['location']) && is_string($filters['location'])) {
+        //     $whereData->where('djv_job_vacancy_detail.lokasi', 'LIKE', '%' . $filters['location'] . '%');
+        // }
         // Filter Job type
         if (!empty($filters['employeeStatusSelect']) && is_array($filters['employeeStatusSelect'])) {
             $whereData->whereIn('m_employee_status.id', $filters['employeeStatusSelect']);
@@ -280,18 +284,18 @@ class JobClientController extends Controller
         }
 
         // Filter worklocation
-        if (!empty($filters['placement']) && is_array($filters['placement'])) {
-            $whereData->whereIn('m_work_location.nama', $filters['placement']);
-        } elseif (!empty($filters['placement']) && is_string($filters['placement'])) {
-            $whereData->where('m_work_location.nama', 'LIKE', '%' . $filters['placement'] . '%');
-        }
+        // if (!empty($filters['placement']) && is_array($filters['placement'])) {
+        //     $whereData->whereIn('m_work_location.nama', $filters['placement']);
+        // } elseif (!empty($filters['placement']) && is_string($filters['placement'])) {
+        //     $whereData->where('m_work_location.nama', 'LIKE', '%' . $filters['placement'] . '%');
+        // }
 
         // Filter experience level
-        if (!empty($filters['experiencelevel']) && is_array($filters['experiencelevel'])) {
-            $whereData->whereIn('m_experience_level.nama', $filters['experiencelevel']);
-        } elseif (!empty($filters['experiencelevel']) && is_string($filters['experiencelevel'])) {
-            $whereData->where('m_experience_level.nama', 'LIKE', '%' . $filters['experiencelevel'] . '%');
-        }
+        // if (!empty($filters['experiencelevel']) && is_array($filters['experiencelevel'])) {
+        //     $whereData->whereIn('m_experience_level.nama', $filters['experiencelevel']);
+        // } elseif (!empty($filters['experiencelevel']) && is_string($filters['experiencelevel'])) {
+        //     $whereData->where('m_experience_level.nama', 'LIKE', '%' . $filters['experiencelevel'] . '%');
+        // }
 
 
 
