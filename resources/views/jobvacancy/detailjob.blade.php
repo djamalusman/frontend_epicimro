@@ -182,7 +182,7 @@
                         <div class="text-start mt-20">
                             
                             <div class="button-group">
-                                @if (session('email') && $role !='employee')
+                                @if (session('email') && $role !='company')
                                     <input type="text" hidden id="textToCopy"
                                         value="https://trainingkerja.com/detail-job/{{ base64_encode($getdataDetail->id) }}"
                                         readonly>

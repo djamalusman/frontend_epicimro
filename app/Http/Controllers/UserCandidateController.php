@@ -91,7 +91,7 @@ class UserCandidateController extends Controller
              'username' => 'nullable|string',
              'email' => 'required|email',
              'password' => 'nullable|string',
-             'companyId' => 'nullable|string',
+             'employeeId' => 'nullable|string',
          ]);
         //  dd($request->all());
          // Jika validasi gagal

@@ -33,16 +33,24 @@ Route::get('/menu/{role}', [MenuManagementController::class, 'getMenuByRole']);
 Route::get('/menu/default', [MenuManagementController::class, 'getDefaultMenu']);
 
 // Route untuk candidate
-Route::middleware(['auth', 'role:candidate'])->group(function () {
-    Route::get('/candidate/profile', [UserCandidateController::class, 'profile']);
-    Route::get('/candidate/applications', [UserCandidateController::class, 'applications']);
-});
+// Route::middleware(['auth', 'role:candidate'])->group(function () {
+//     Route::get('/candidate/profile', [UserCandidateController::class, 'profile']);
+//     Route::get('/candidate/applications', [UserCandidateController::class, 'applications']);
+// });
 
 // Route untuk profile
 Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
     Route::get('/profiles', [UserCandidateController::class, 'profileCandidate'])->name('profiles');
-    Route::get('/applications', [JobClientController::class, 'JobList'])->name('applications');
+
+    Route::get('/applicationsjobs', [JobClientController::class, 'JobList'])->name('/applicationsjobs');
     Route::get('/get-content-job-list', [JobClientController::class, 'getContentJobList'])->name('get-content-job-list');
+    
+    Route::get('/applicationstraining', [TrainingClientController::class, 'CourseList'])->name('/applicationstraining');
+    Route::get('/get-content-training-list', [TrainingClientController::class, 'getContentTrainingList'])->name('get-content-training-list');
+
+    //php artisan make:controller TrainingClientController
+    //Route::get('/course-list', [TranningCourseController::class, 'CourseList'])->name('course-list');
+    
     // Personal routes
     Route::post('/save-personal', [UserCandidateController::class, 'saveSummaryPersonal'])->name('save.personal');
     Route::put('/save-personal/{id}', [UserCandidateController::class, 'saveSummaryPersonal'])->name('update.personal');
@@ -76,7 +84,7 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
 
 });
 // Route untuk employee
-Route::middleware(['auth', 'role:employee'])->group(function () {
+Route::middleware(['auth', 'role:company'])->group(function () {
 
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
     Route::get('/dashboard', [UserCompanyController::class, 'dashboard']);
