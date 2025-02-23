@@ -7,11 +7,14 @@ use App\Models\Dtc_Persyaratan_TrainingCourseModel;
 use App\Models\dtc_File_TrainingCourseModel;
 use App\Models\Dtc_Materi_TrainingCourseModel;
 use App\Models\Dtc_Fasilitas_TrainingCourseModel;
-// use App\Models\TrainingCourseDetailModel;
+use Illuminate\Support\Facades\Auth;    
 use App\Models\TraningCourseDetailsModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Menu_client;
+use App\Models\User;
+use App\Models\ApplyTraining;
 
 class TranningCourseController extends Controller
 {
@@ -30,26 +33,43 @@ class TranningCourseController extends Controller
 
     public function CourseGrid()
     {
-        $data['title'] = 'Training';
-
+        $title = 'Training';
+        $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+        $menus = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            }elseif ($role == 'company') {
+                $query->where('role', $role);
+            } 
+            else {
+                $query->where('role', ['guest']);
+            }
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
+        ->get();
         $dataCount = TraningCourseDetailsModel::where('status', 1)->get();
-        $data['Counttraining'] = $dataCount->count();
-        $data['filter'] = DB::table('m_employee_status')
+        $Counttraining = $dataCount->count();
+        $filter = DB::table('m_employee_status')
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-       return view('course.coursegrid', $data);
+        return view('course.coursegrid', compact('title','menus', 'Counttraining', 'filter'));       
+       
     }
 
     public function detailCourse($id, $slug, Request $request)
     {
-        $data['title'] = 'Details Training';
-
-        $data['listpersyaratan'] = Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
-        $data['listmateri'] = Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
-        $data['listfasilitas'] = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
-        $data['listfiles'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
-        $data['imagetraining'] = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
+        $title = 'Details Training';
+        
+        $listpersyaratan = Dtc_Persyaratan_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $listmateri = Dtc_Materi_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $listfasilitas = Dtc_Fasilitas_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $listfiles = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->get();
+        $imagetraining = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
 
         $detail = DB::table('dtc_training_course_detail')
             ->leftJoin('m_category_training_course', 'm_category_training_course.id', '=', 'dtc_training_course_detail.id_m_category_training_course')
@@ -67,6 +87,38 @@ class TranningCourseController extends Controller
             ->first();
 
         $imagemeta = dtc_File_TrainingCourseModel::where('id_training_course_dtl', base64_decode($id))->first();
+
+        $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+        $menus = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            }elseif ($role == 'company') {
+                $query->where('role', $role);
+            } 
+            else {
+                $query->where('role', ['guest']);
+            }
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
+        ->get();
+
+        $userEmail = session('email');
+        $UserCleint = User::where('email', $userEmail)->first();
+        $getdtApplyTraining= ApplyTraining::where('idtraining', base64_decode($id))->first();
+        
+        if ($getdtApplyTraining !=null || $getdtApplyTraining !="") {
+            $getdtApplyTraining = User::where('id', $getdtApplyTraining->idusers)->first();
+        }
+        else
+        {
+            $getdtApplyTraining=null;
+        }
+
+        
 
         $description = '';
         if ($detail->tab_active == 1 && $detail->abouttraining != "") {
@@ -90,11 +142,11 @@ class TranningCourseController extends Controller
             ->linkedin()
             ->whatsapp();
 
-        $data['meta'] = $meta;
-        $data['share_buttons'] = $share_buttons;
-        $data['getdataDetail'] = $detail;
-
-        return view('course.detailcourse', $data);
+        $meta = $meta;
+        $share_buttons = $share_buttons;
+        $getdataDetail   = $detail;
+         return view('course.detailcourse', compact('title','menus','getdtApplyTraining','meta','role','getdataDetail','share_buttons','listpersyaratan','listmateri','listfasilitas','listfiles','imagetraining'));       
+         //return view('course.detailcourse', $data);
     }
 
 

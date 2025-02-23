@@ -19,85 +19,8 @@ use Carbon\Carbon;
 class JobClientController extends Controller
 {
 
-    // public function indexJoblient(Request $request)
-    // {
-    //     $userEmail = session('email');
-    //     $getdtApplyJobs = User::where('email', $userEmail)->first();
-
-    //     // Pastikan user ditemukan
-    //     if (!$getdtApplyJobs) {
-    //         abort(404, 'User not found');
-    //     }
-
-    //     // Query untuk mengambil data pekerjaan yang dilamar
-    //     $getdtApplyJob = DB::table('tr_applyjob')
-    //         ->leftJoin('djv_job_vacancy_detail', 'tr_applyjob.idjob', '=', 'djv_job_vacancy_detail.id')
-    //         ->leftJoin('m_salary', 'm_salary.id', '=', 'tr_applyjob.idexpectedsalary')
-    //         ->leftJoin('m_education', 'm_education.id', '=', 'tr_applyjob.ideducation')
-    //         ->leftJoin('m_experience_level', 'm_experience_level.id', '=', 'tr_applyjob.idworkexperience')
-    //         ->select(
-    //             'tr_applyjob.*',
-    //             'djv_job_vacancy_detail.job_title',
-    //             'djv_job_vacancy_detail.companyName',
-    //             'm_salary.nama as salary',
-    //             'm_education.nama as education',
-    //             'm_experience_level.nama as name_experience_level',
-    //         )
-    //         ->where('tr_applyjob.idusers', $getdtApplyJobs->id)
-    //         ->get();
-
-    //     // Siapkan data yang akan dikirim ke view
-    //     $data = [
-    //         'user_name' => $userEmail,
-    //         'title' => 'Job',
-    //         'getdtApplyJob' => $getdtApplyJob,
-    //     ];
-
-    //     // Ambil menu client
-    //     $menus = Menu_client::whereNull('parent_id')
-    //         ->with('children')
-    //         ->orderBy('order')
-    //         ->get();
-
-    //     // URL saat ini
-    //     $currentUrl = url()->current();
-
-    //     // Kirim ke view
-    //     $response = response()->view('template2.jobclient.indexJoblient', compact('data', 'menus', 'currentUrl'));
-    //     $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    //     $response->headers->set('Pragma', 'no-cache');
-    //     $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
-
-    //     return $response;
-    // }
-
-
-    // public function ViewApplyJob($idjob)
-    // {
-        
-    //     $data = [
-    //         'user_name' => session('email'),
-    //         'title' => 'Job',
-    //     ];
-    //     $expectedsalary = DB::table('m_salary')->get();
-    //     $education = DB::table('m_education')->get();
-    //     $experiencelevel = DB::table('m_experience_level')->get();
-        
-    //     $jobid=$idjob;
-    //     $getdataDetail = JobVacancyDetailModel::where('id', base64_decode($idjob))->first();
-    //     //dd($getdataDetail);
-    //     $menus = Menu_client::whereNull('parent_id')->with('children')->orderBy('order')->get();
-    //     $currentUrl = url()->current();
-    //     $response = response()->view('template2.apply.jobapply', compact('data', 'menus','currentUrl','getdataDetail','jobid','expectedsalary','education','experiencelevel'));
-    //     $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate','menus');
-    //     $response->headers->set('Pragma', 'no-cache');
-    //     $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
-
-    //     return $response;
-    //     // php artisan migrate --path=/database/migrations/2025_01_09_174154_create_menus_client_table.php
-
-    // }
-
+    
+    
     public function StoreJobClient(Request $request)
     {
         
@@ -113,13 +36,7 @@ class JobClientController extends Controller
          //$appUrl = config('app.url');
         $appUrl = request()->url();
         try {
-            // Proses upload file CV
-            //$cvFileName = time() . '_' . $request->file('cv')->getClientOriginalName();
-            //$destinationPath = public_path('../public/storage');
-            //$request->file('cv')->move($destinationPath, $cvFileName);
-            
-            // URL file CV
-            //$cvUrl = 'https://admin.trainingkerja.com/public/storage/' . $cvFileName;
+           
             $userEmail = session('email');
             $UserCleint = User::where('email', $userEmail)->first();
             //dd($UserCleint);
