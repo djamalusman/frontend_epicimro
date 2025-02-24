@@ -16,7 +16,7 @@
         color: white;
         border: none;
         padding: 5px 10px;
-        cursor: pointer;
+        cursor: pointer;            
         margin-top: 5px;
         border-radius: 5px;
     }

@@ -52,17 +52,7 @@ class JobVacancyController extends Controller
 
     public function JobGrid(Request $request)
     {
-        // $data['title'] = 'Jobs';
-
-        // $dataCount = JobVacancyDetailModel::where('status', 1)->get();
-        // $data['CountJob'] = $dataCount->count();
-        // $data['filter'] = DB::table('m_employee_status')
-        //     ->select(
-        //         'm_employee_status.nama as employees_status'
-        //     )->get();
-        // // Get all courses
-
-        // return view('jobvacancy.jobgrid', $data);
+      
         $title = 'Jobs';
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest

@@ -107,7 +107,7 @@
                                                         Post</a></li>
                                             </ul>
                                         </div>
-                                        <div class="box-view-type">
+                                        <div class="box-view-type" hidden>
                                             <a href="{{ route('job-list') }}" class="view-type"><img
                                                     src="assets/imgs/theme/icons/icon-grid.svg" alt="jobhub" /></a>
                                             <a href="{{ route('job-grid') }}" class="view-type"><img

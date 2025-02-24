@@ -3,11 +3,16 @@
 
         <div class="card-job hover-up wow animate__animated animate__fadeIn">
             <div class="card-job-top">
-                <div class="card-job-top--image">
+                {{-- <div class="card-job-top--image">
                     <a href="/detail-job/{{base64_encode($value->id)}}/{{ Str::slug($value->job_title) }}">
                         <figure>
                             <img class="imgGrid" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
                         </figure>
+                    </a>
+                </div> --}}
+                <div class="heading-image-rd">
+                    <a href="#">
+                        <figure> <img class="imgGrid" style="height: 116px;width :120px;" src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" /></figure>
                     </a>
                 </div>
                 <div class="card-job-top--info">

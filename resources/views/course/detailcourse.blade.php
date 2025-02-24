@@ -271,6 +271,25 @@
             color: #000000
                 /* background-color: #ffffff; */
         }
+        .button-group {
+        display: flex;
+        gap: 10px; /* Memberikan jarak antar tombol */
+        align-items: center;
+    }
+
+    .btn-defaults {
+        background-color: #f05537;
+        border: none;
+        padding: 10px 15px;
+        color: white;
+        font-size: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-defaults:hover {
+        background-color: #f05537;
+    }
     </style>
 @section('Meta')
     <meta property="og:url" content="{{ url()->current() }}" />
@@ -346,18 +365,33 @@
                 <div class="sidebar-shadow">
 
                     <div class="text-start mt-20">
-                        @if (session('email'))
-                                <a href="{{ route('registertraining', ['id' => base64_encode($getdataDetail->id)]) }}"
-                                    target="_blank" class="btn btn-defaults mr-10"
-                                    style="font-size:15px;color:white">Register now</a>
-                        @else
-                            <a href="{{'/login'}}"
-                                class="btn btn-defaults mr-10"style="font-size:15px;color:white">Register now</a>
-                        @endif
-                        <a href ="#" class="btn btn-defaults mr-10" data-bs-toggle="modal"
-                            data-bs-target="#shareModal" style="font-size:15px;color:white">
-                            Share Link
-                        </a>
+                            <div class="button-group">
+                                    @if (session('email') && $role !='company')
+                                            {{-- <a href="{{ route('registertraining', ['id' => base64_encode($getdataDetail->id)]) }}"
+                                                target="_blank" class="btn btn-defaults mr-10"
+                                                style="font-size:15px;color:white">Register now</a> --}}
+                                                @if ($getdtApplyTraining != null || $getdtApplyTraining != "")
+                                                    <a href="#" class="btn btn-defaults">Success Register</a>
+                                                @else
+                                                    <form id="courseForm" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" value="{{ base64_encode($getdataDetail->idcompany) }}" name="idcompany" id="idcompany">
+                                                        <input type="hidden" value="{{ base64_encode($getdataDetail->id) }}" name="idtraining" id="idtraining">
+                                                        <button type="submit" class="btn btn-defaults">Register now</button>
+                                                    </form>
+                                                @endif
+                                    @else
+                                        <a href="{{'/login'}}"
+                                            class="btn btn-defaults mr-10"style="font-size:15px;color:white">Register now</a>
+                                    @endif
+                                    <button class="btn btn-defaults" data-bs-toggle="modal" data-bs-target="#shareModal">
+                                        Share Link
+                                    </button>
+                            </div>
+                            <div id="popup" class="popup">
+                                <p>Tautan telah disalin</p>
+                            </div>
+
 
                     </div>
 
@@ -469,6 +503,40 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script>
+    $(document).ready(function() {
+            $('#courseForm').on('submit', function(event) {
+                event.preventDefault(); // Mencegah reload halaman
+
+                let formData = new FormData(this); // Ambil data form
+
+                $.ajax({
+                    url: "{{ route('storeTrainingClient') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false, // Jangan ubah data
+                    contentType: false, // Jangan set contentType
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload(); // Refresh halaman jika berhasil
+                        } else {
+                            alert('Error: ' + response.error); // Tampilkan pesan error khusus
+                        }
+                    },
+                    error: function(xhr) {
+                        let response = xhr.responseJSON;
+                        if (response && response.message) {
+                            alert('Gagal: ' + response.message); // Menampilkan pesan error dari server
+                        } else {
+                            alert('Terjadi kesalahan saat mengirim data.');
+                        }
+                    }
+                });
+            });
+        });
     $(document).ready(function() {
         // Ambil courseId dari elemen atau backend (contoh, pastikan courseId benar)
         const courseId = '{{ base64_encode($getdataDetail->id) }}';

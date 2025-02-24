@@ -13,13 +13,10 @@ class ApplyTraining extends Model
 
     // Menghilangkan 'id' dari $fillable karena auto-increment
     protected $fillable = [
+       
+        'idcompany',
         'idusers',
-        'ideducation',
         'idtraining',
-        'positionWork',
-        'companyName',
-        'writeskill',
-        'trainingcourse',
         'status',
         'app_name',
         'server_type'
