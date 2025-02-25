@@ -10,5 +10,5 @@ class Sector extends Model
     use HasFactory;
 
     protected $table = 'm_sector';
-    protected $fillable = ['nama'];
+    protected $fillable = ['id','nama'];
 }

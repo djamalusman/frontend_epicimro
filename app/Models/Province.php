@@ -9,5 +9,5 @@ class Province extends Model
 {
     use HasFactory;
     protected $table = 'm_provinsi';
-    protected $fillable = ['nama'];
+    protected $fillable = ['id','nama'];
 }

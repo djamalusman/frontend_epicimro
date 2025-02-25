@@ -40,28 +40,41 @@ class UserCompanyController extends Controller
     {
         
         $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
         
         // Get menus for candidate
-        $menus = Menu_client::where(function($query) {
-            $query->where('role', 'candidate');
+        $menus = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            }elseif ($role == 'company') {
+                $query->where('role', $role);
+            } 
+            else {
+                $query->where('role', ['guest']);
+            }
         })
         ->where('is_active', true)
         ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
         ->get();
         $userEmail = session('email');
         $userData = User::where('email', $userEmail)->firstOrFail();
 
-        $companyprofile = CompanyProfile::with('province', 'sector')->where('user_id', $user->id)->get();
+        $companyprofiles = CompanyProfile::with('province', 'sector')->where('user_id', $user->id)->get();
         $provinces = Province::all();
         $sectors = Sector::all();
 
-        $personalsummarys = User::where('id', $user->id)
-                               ->orderBy('updated_at', 'desc')
-                               ->get();
+        
+        $personalsummarys = User::where('users_client.id', $user->id)
+        ->leftJoin('company_profiles', 'company_profiles.user_id', '=', 'users_client.id')
+        ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
+        ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
+        ->orderBy('users_client.updated_at', 'desc')
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->get();
 
-        $personalsummarys = User::where('id', $user->id)
-                               ->orderBy('updated_at', 'desc')
-                               ->get();
+    
 
         // Get experiences, educations, and certifications
         $experiences = Experience::where('user_id', $user->id)
@@ -78,50 +91,91 @@ class UserCompanyController extends Controller
 
         $skills = SkillCandidate::where('user_id', $user->id)->get();
 
-        return view('employee.profileemployee', compact('user', 'menus', 'companyprofile', 'provinces', 'sectors', 'personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
+        return view('company.profilecompany', compact('user', 'menus', 'companyprofiles', 'provinces', 'sectors', 'personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
     }
-
+    
     public function saveCompanyProfile(Request $request, $id = null)
     {
-        
         try {
-            $data = $request->validate([
-                'company_name' => 'nullable|string|max:100',
-                'company_address' => 'nullable|string|max:100',
-                'company_email' => 'nullable|string|max:100',
-                'phone_number' => 'nullable|regex:/^(\+62|62|0)[0-9]{9,12}$/|max:13',   // phone number validation
-                'company_overview' => 'nullable|string|max:65535',                      // description validation text
-                'province_id' => 'nullable|integer|exists:provinces,id',                // province_id validation
-                'sector_id' => 'nullable|integer|exists:sectors,id'                     // sector_id validation
+            // Validasi data
+            $validatedData = $request->validate([
+                'name' => 'nullable|string|max:255',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'password' => 'nullable',
+                'phone' => 'nullable|string|max:255',
+                'description' => 'nullable|string',
+                'descriptionaddress' => 'nullable|string',
+                'provinsi_id' => 'nullable',
+                'sector_id' => 'nullable'
             ]);
 
-            $data['user_id'] = auth()->id();
-            
-            if ($id) {
-                $companyprofile = CompanyProfile::findOrFail($id);
-                
-                // Check if the experience belongs to the authenticated user
-                if ($companyprofile->user_id !== auth()->id()) {
-                    return response()->json(['error' => 'Unauthorized'], 403);
+            // Ambil user berdasarkan email dari session
+            $userEmail = session('email');
+            $user = User::where('email', $userEmail)->firstOrFail();
+
+            // Ambil data CompanyProfile yang terkait dengan user
+            $companyProfile = CompanyProfile::where('user_id', $user->id)->first();
+
+            // Data yang akan diupdate di tabel users
+            $updateData = [];
+
+            // Cek perubahan di User (kecuali password & foto)
+            foreach ($validatedData as $key => $value) {
+                if ($value !== null && $key !== 'password' && $key !== 'photo' && $user->$key !== $value) {
+                    $updateData[$key] = $value;
                 }
-                
-                $companyprofile->update($data);
-            } else {
-                $companyprofile = CompanyProfile::create($data);
             }
 
-            // Reload the experience to get the formatted dates
-            $companyprofile = CompanyProfile::find($companyprofile->id);
+            // **Cek jika ada file foto diupload**
+            if ($request->hasFile('photo')) {
+                $fileName = time() . '_' . $request->file('photo')->getClientOriginalName();
+                $destinationPath = public_path('storage');
+                $request->file('photo')->move($destinationPath, $fileName);
+
+                if ($user->photo !== $fileName) {
+                    $user->photo = $fileName;
+                }
+            }
+
+            // Jika ada perubahan, update User
+            if (!empty($updateData) || $user->isDirty('photo')) {
+                $user->update($updateData);
+                $user->save();
+            }
+
+            // **Cek perubahan di CompanyProfile**
+            $companyProfileData = [
+                'user_id' => $user->id,
+                'provinsi_id' => $validatedData['provinsi_id'] ?? null,
+                'sector_id' => $validatedData['sector_id'] ?? null,
+                'company_address' => $validatedData['descriptionaddress'] ?? null
+            ];
+
+            if ($companyProfile) {
+                // **Update jika ada perubahan**
+                if (
+                    $companyProfile->provinsi_id !== $companyProfileData['provinsi_id'] ||
+                    $companyProfile->sector_id !== $companyProfileData['sector_id']
+                ) {
+                    $companyProfile->update($companyProfileData);
+                }
+            } else {
+                // **Buat baru jika belum ada**
+                CompanyProfile::create($companyProfileData);
+            }
 
             return response()->json([
-                'message' => $id ? 'Company profile updated successfully' : 'Company profile added successfully',
-                'data' => $companyprofile
+                'message' => 'Profile updated successfully',
+                'data' => $user
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $id ? 'Failed to update company profile' : 'Failed to add company profile',
+                'error' => 'Failed to update profile',
                 'details' => $e->getMessage()
             ], 500);
         }
     }
+
+
+    
 }

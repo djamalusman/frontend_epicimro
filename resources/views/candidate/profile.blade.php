@@ -55,7 +55,7 @@
                             data-name="{{ $personalsummary->name }}"
                             data-lastname="{{ $personalsummary->lastname }}"
                             data-email="{{ $personalsummary->email }}"
-                            data-password="{{ $personalsummary->password }}"
+                            data-password="{{ null }}"
                             data-phone="{{ $personalsummary->phone }}"
                             data-description="{{ $personalsummary->description }}" 
                             style="border: 0px; background-color:white;">
@@ -71,15 +71,7 @@
                         <span class="text-small"><i class="fi-rr-phone-call text-mutted"></i> {{ $personalsummary->phone }}</span>
                         
                     </div>
-                    {{-- <div class="row align-items-end">
-                        <div class="col-lg-6">
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Figma</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Adobe XD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">PSD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">App</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Digital</a>
-                        </div>
-                    </div> --}}
+                   
                 </div>
             @endforeach
         </div>
