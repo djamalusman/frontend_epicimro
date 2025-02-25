@@ -13,13 +13,10 @@ class CompanyProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'company_name',
         'company_address',
         'provinsi_id',
         'sector_id',
         'company_email',
-        'phone_number',
-        'company_overview'
     ];
 
     public function user()

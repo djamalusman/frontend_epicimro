@@ -21,6 +21,7 @@ use App\Http\Controllers\EducationController;
 use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ResumeCandidateController;
+use App\Http\Controllers\PosttrainingController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
@@ -84,10 +85,44 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
 
 });
 // Route untuk employee
-Route::middleware(['auth', 'role:company'])->group(function () {
+Route::middleware(['auth', 'checkRole:company'])->group(function () {
 
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
-    Route::get('/dashboard', [UserCompanyController::class, 'dashboard']);
+    Route::get('/postjobs', [UserCompanyController::class, 'postjobs']);
+
+    Route::get('/posttraining', [PosttrainingController::class, 'posttraining']);
+
+    Route::get('/get-datacourse-filters', [PosttrainingController::class, 'getFilters'])->name('get-datacourse-filters');
+    
+    Route::get('/get-data-course', [PosttrainingController::class, 'getDataCourses'])->name('get-data-course');
+
+    Route::get('/get-view-store-traningcourse/{id}', [PosttrainingController::class, 'ViewsStoretraningcourse'])->name('get-view-store-traningcourse');
+
+    Route::post('/store-course-endpoint', [PosttrainingController::class, 'storeCourseEndpoint'])->name('store-course-endpoint');
+
+    Route::get('/edit-traningcourse/{id}', [PosttrainingController::class, 'editTraningCourse'])->name('edit-traningcourse');
+
+    Route::post('/update-course-endpoint', [PosttrainingController::class, 'updateCourseEndpoint'])->name('update-course-endpoint');
+
+    Route::get('/remove-persyaratan-endpoint/{id}', [PosttrainingController::class, 'removePersyaratanEndpoint'])->name('remove-persyaratan-endpoint');
+
+    Route::get('/remove-materitraining-endpoint/{id}', [PosttrainingController::class, 'removeMateriTrainingEndpoint'])->name('remove-materitraining-endpoint');
+
+    Route::get('/remove-fasilitas-endpoint/{id}', [PosttrainingController::class, 'removeFasilitasEndpoint'])->name('remove-fasilitas-endpoint');
+
+    Route::get('/remove-photo-endpoint/{id}', [PosttrainingController::class, 'removePhotoEndpoint'])->name('remove-photo-endpoint');
+
+    Route::get('/remove-trainingcourse/{id}', [PosttrainingController::class, 'removePTrainingCourse'])->name('remove-trainingcourse');
+
+    Route::get('/stop-data-course/{id}', [PosttrainingController::class, 'stopTrainingCourse'])->name('stop-data-course');
+
+    Route::get('/copy-training-course-list/{id}', [PosttrainingController::class, 'copyTrainingCourseList'])->name('copy-training-course-list');
+
+    Route::put('/update-copy-training-course', [PosttrainingController::class, 'updateCopyTrainingCourseList'])->name('update-copy-training-course');
+
+    Route::get('/delete-data-course/{id}', [PosttrainingController::class, 'removePTrainingCourse'])->name('delete-data-course');
+
+    Route::get('/edit-traningcourse-detail/{id}', [PosttrainingController::class, 'editTraningCourseDetail'])->name('edit-traningcourse-detail');
 
     Route::post('/save-company-profile', [UserCompanyController::class, 'saveCompanyProfile'])->name('save.company.profile');
     Route::put('/save-company-profile/{id}', [UserCompanyController::class, 'saveCompanyProfile'])->name('update.company.profile');

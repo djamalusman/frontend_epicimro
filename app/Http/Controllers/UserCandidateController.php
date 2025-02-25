@@ -93,6 +93,7 @@ class UserCandidateController extends Controller
              'password' => 'nullable|string',
              'employeeId' => 'nullable|string',
          ]);
+
         //  dd($request->all());
          // Jika validasi gagal
          if ($validator->fails()) {
@@ -111,7 +112,7 @@ class UserCandidateController extends Controller
          // Generate ID user
          $no = User::count() + 1;
          
-         $role = $request->companyId ? 'company' : 'candidate';
+         $role = $request->employeeId ? 'company' : 'candidate';
 
          // Buat user baru
          User::create([

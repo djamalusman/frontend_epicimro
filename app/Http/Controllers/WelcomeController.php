@@ -58,7 +58,7 @@ class WelcomeController extends Controller
         ->orderBy('order')
         ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
         ->get();
-
+       
         // Ambil data provinsi
         $getDtProvinsi = DB::table('m_provinsi')
             ->select('m_provinsi.nama as namaprovinsi', 'm_provinsi.id as idprovinsi')
