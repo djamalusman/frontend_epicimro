@@ -26,73 +26,6 @@ $userRole = Auth::check() ? Auth::user()->role : 'guest';
                  </div>
                  <div class="header-nav">
                      <nav class="nav-main-menu d-none d-xl-block">
-                        {{-- <ul class="main-menu">
-                            @foreach($menus as $menu)
-                                <li class="has">
-                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
-                                       {{ $menu->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                            
-                            @if(Auth::check())
-                                <li class="nav-item dropdown">
-                                    <form action="{{ route('logout') }}" method="POST" class="d-inline ">
-                                        @csrf
-                                        <button type="submit" style="background-color:#f05537px!mportant; " class="btn btn-border float-right">Logout</button>
-                                    </form>
-                                    
-                                </li>
-                                
-                            @else
-                                <li class="has">
-                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
-                                </li>
-                            @endif
-                        </ul> --}}
-                        {{-- <ul class="main-menu">
-                            @foreach($menus->where('is_header', 0)->where('role', $userRole) as $menu)
-                                @php
-                                    // Ambil submenu berdasarkan is_header dan role
-                                    $submenus = $menus->where('is_header', $menu->id)->where('role', $userRole);
-                                @endphp
-                        
-                                <li class="has-children {{ $submenus->isNotEmpty() ? 'menu-item-has-children' : '' }}">
-                                    <a href="{{ $menu->url }}" class="{{ Request::is(trim($menu->url, '/')) ? 'active' : '' }}">
-                                        {{ $menu->name }}
-                                    </a>
-                        
-                                    @if($submenus->isNotEmpty())
-                                        <ul class="sub-menu">
-                                            @foreach($submenus as $submenu)
-                                                <li>
-                                                    <a href="{{ $submenu->url }}" class="{{ Request::is(trim($submenu->url, '/')) ? 'active' : '' }}">
-                                                        {{ $submenu->name }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </li>
-                            @endforeach
-                    
-                
-                            
-                            @if(Auth::check())
-                                <li class="nav-item dropdown">
-                                    <form action="{{ route('logout') }}" method="POST" class="d-inline ">
-                                        @csrf
-                                        <button type="submit" style="background-color:#f05537px!mportant; " class="btn btn-border float-right">Logout</button>
-                                    </form>
-                                    
-                                </li>
-                                
-                            @else
-                                <li class="has">
-                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
-                                </li>
-                            @endif
-                        </ul> --}}
                         <ul class="main-menu">
                             @foreach($menus->where('is_header', 0)->where('role', $userRole) as $menu)
                                 @php
@@ -116,18 +49,7 @@ $userRole = Auth::check() ? Auth::user()->role : 'guest';
                                     @endif
                                 </li>
                             @endforeach
-                            @if(Auth::check())
-                                <li class="nav-item dropdown">
-                                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn btn-border float-right" style="background-color:#f05537!important;">Logout</button>
-                                    </form>
-                                </li>
-                            @else
-                                <li>
-                                    <a href="{{ route('login') }}" class="btn btn-border float-right" style="color: white;">Sign in</a>
-                                </li>
-                            @endif
+                            
                         </ul>
                         
                      </nav>
@@ -137,8 +59,23 @@ $userRole = Auth::check() ? Auth::user()->role : 'guest';
                          <span class="burger-icon-bottom"></span>
                      </div>
                  </div>
-
              </div>
+             <div class="header-right">
+                <div class="block-signin">
+                    @if(Auth::check())
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-border float-right" style="background-color:#f05537!important;">Logout</button>
+                        </form>
+                    @else
+                        
+                            <a href="{{ route('login') }}" class="btn btn-default btn-shadow ml-40 hover-up">Masuk</a>
+                      
+                            <a href="{{ route('logincompany') }}" class="btn btn-default btn-shadow ml-40 hover-up" style="color: white;">untuk perusahaan</a>
+                        
+                    @endif
+                </div>
+            </div>
          </div>
 
 

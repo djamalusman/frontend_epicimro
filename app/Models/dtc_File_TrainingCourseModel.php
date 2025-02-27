@@ -16,5 +16,5 @@ class dtc_File_TrainingCourseModel extends Model
     //set auto incrementing for PK
     public $incrementing = true;
 
-    protected $fillable = ['id_training_course_dtl', 'nama','fileold','traning_name','training_duration','insert_by', 'updated_by','updated_by_ip'];
+    protected $fillable = ['id_training_course_dtl', 'nama','fileold','insert_by', 'updated_by','updated_by_ip'];
 }

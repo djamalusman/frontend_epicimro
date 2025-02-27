@@ -188,9 +188,11 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 
 
 Route::get('/login', [UserCandidateController::class, 'showLoginForm'])->name('login');
+Route::get('/logincompany', [UserCompanyController::class, 'showLoginForm'])->name('logincompany');
 Route::post('/signIn', [UserCandidateController::class, 'login'])->name('signIn');
 Route::get('/redirectToLogin', [UserCandidateController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserCandidateController::class, 'signup'])->name('signup');
+Route::post('/signupcompany', [UserCompanyController::class, 'signup'])->name('signupcompany');
 Route::post('/logout', [UserCandidateController::class, 'logout'])->name('logout');
 Route::get('/profleclientindex', [UserCandidateController::class, 'profleclientindex'])->name('profleclientindex');
 Route::post('/updatedtuser', [UserCandidateController::class, 'updtaeUserClient'])->name('updatedtuser');

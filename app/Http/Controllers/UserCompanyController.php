@@ -36,6 +36,98 @@ use App\Models\Sector;
 
 class UserCompanyController extends Controller
 {
+
+    public function showLoginForm()
+    {
+       if (Auth::check()) {
+           // Pengguna sudah login
+           $user = Auth::user();
+           
+           // Redirect berdasarkan role
+           switch($user->role) {
+               case 'candidate':
+                   return redirect()->route('welcome');
+               case 'company':
+                   return redirect()->route('welcome');
+               default:
+                   return redirect()->route('welcome'); // Redirect ke welcome page
+           }
+       }
+
+       // Ambil menu untuk guest
+       $menus = Menu_client::where(function($query) {
+           $query->where('role', 'guest');
+       })
+       ->where('is_active', true)
+       ->orderBy('order')
+       ->get();
+
+       return view('formlogincompany', compact('menus'));
+    }
+
+    public function signUp(Request $request)
+    {
+         // Validasi data form registrasi
+         $validator = Validator::make($request->all(), [
+             'username' => 'nullable|string',
+             'email' => 'required|email',
+             'password' => 'nullable|string',
+             'employeeId' => 'nullable|string',
+             'privacypolicy' => 'required',
+         ]);
+
+        //  dd($request->all());
+         // Jika validasi gagal
+         if ($validator->fails()) {
+             return response()->json([
+                 'error' => $validator->errors()->first(),
+             ]);
+         }
+
+         // Periksa apakah email sudah terdaftar
+         if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
+             return response()->json([
+                 'error' => 'Email sudah terdaftar!',
+             ]);
+         }
+
+         // Generate ID user
+         $no = User::count() + 1;
+         
+         $role = 'company';
+
+         // Buat user baru
+         User::create([
+             'name' => $request->username,
+             'email' => $request->email,
+             'password' => Hash::make($request->password),
+             'role' => $role,
+             'privacypolicy'=> true
+         ]);
+         $user = User::where('email', $request->email)->first();
+         //dd($user);
+         if ($user) {
+            try {
+                Mail::to($user->email)->send(new RegistrationSuccessMail($user,$request->password));
+    
+                return response()->json([
+                    'message' => 'Registration successful! Email sent.',
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message' => 'Registration successful! But failed to send email.',
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+         // Berikan respons sukses
+         return response()->json([
+             'message' => 'Registration successful!',
+         ]);
+    }
+
+
     public function profileEmployee()
     {
         
@@ -104,7 +196,7 @@ class UserCompanyController extends Controller
                 'password' => 'nullable',
                 'phone' => 'nullable|string|max:255',
                 'description' => 'nullable|string',
-                'descriptionaddress' => 'nullable|string',
+                'company_address' => 'nullable|string',
                 'provinsi_id' => 'nullable',
                 'sector_id' => 'nullable'
             ]);
@@ -148,7 +240,7 @@ class UserCompanyController extends Controller
                 'user_id' => $user->id,
                 'provinsi_id' => $validatedData['provinsi_id'] ?? null,
                 'sector_id' => $validatedData['sector_id'] ?? null,
-                'company_address' => $validatedData['descriptionaddress'] ?? null
+                'company_address' => $validatedData['company_address'] ?? null
             ];
 
             if ($companyProfile) {

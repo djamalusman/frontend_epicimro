@@ -71,12 +71,12 @@
                         <div class="card-body">
                             <div class="row d-flex align-items-center">
                                 <div class="col-auto">
-                                    <a href="{{ route('get-view-store-traningcourse',  ['id' => base64_encode($id)])}}" class="btn btn-primary">
+                                    <a href="{{ route('get-view-store-traningcourse',  ['id' => base64_encode($id)])}}" class="btn btn-default">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
                                 </div>
                                 <div class="col-auto">
-                                    <a id="filterButton" class="btn btn-primary">
+                                    <a id="filterButton" class="btn btn-default">
                                         <i class="fa fa-filter" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -106,7 +106,7 @@
                 </div>
                 <br>
                 <div class="single-recent-jobs">
-                    <h4 class="heading-border"><span>Completed Jobs</span></h4>
+                    <h4 class="heading-border"><span>Completed Training</span></h4>
                     <div class="list-recent-jobs">
                         <div class="card-job hover-up wow animate__animated animate__fadeInUp">
                             <div class="card-job-top">
@@ -150,139 +150,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5  text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-20">
+                            <a href="job-grid.html" class="btn btn-default">Explore more</a>
                         </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital2.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5 text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/digital.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5 text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
@@ -290,7 +160,7 @@
             <!-- Sidebar -->
             
         </div>
-    </div>assets
+    </div>
 </section>
 
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">

@@ -190,7 +190,7 @@ Sign In & Sign Up
                 <form id="signUpForm" class="hidden">
                      <!-- Checkbox untuk memilih Employee -->
                      <!-- Checkbox untuk memilih Employee -->
-                    <div class="form-check mt-3">
+                    <div class="form-check mt-3 hidden" >
                         <input type="checkbox" class="form-check-input" id="isEmployee">
                         <label class="form-check-label" for="isEmployee">Sign up as Employee</label>
                     </div>
