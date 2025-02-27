@@ -11,9 +11,12 @@ class TraningCourseDetailsModel extends Model
      //table name
      protected $table = 'dtc_training_course_detail';
 
-
-     protected $fillable = ['idtraining','id_m_category_training_course', 'id_m_jenis_sertifikasi_training_course','company_name','traning_name','training_duration',
+     protected $primaryKey = 'id';
+     //set auto incrementing for PK
+     public $incrementing = true;
+ 
+     protected $fillable = ['id_m_category_training_course', 'id_m_jenis_sertifikasi_training_course','company_name','traning_name','training_duration',
      'startdate','enddate','registrationfee',
      'typeonlineoffile','file','status','generatenumber','lokasi','yotube','abouttraining','abouttrainer','aboutcareer','tab_active',
-     'link_pendaftaran','insert_by', 'updated_by','updated_by_ip','id_provinsi'];
+     'link_pendaftaran','insert_by', 'updated_by','updated_by_ip','id_provinsi','idcompany'];
 }

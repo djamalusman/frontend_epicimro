@@ -3,13 +3,14 @@
 @section('title', 'Profile Company')
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
 <!-- Select2 Bootstrap Theme -->
 <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="{{ asset('/') }}plugins/summernote/summernote-bs4.min.css">
 
 <style>
     .truncate {
@@ -43,6 +44,48 @@
         font-weight: bold;
         cursor: pointer;
     }
+    /* Tambahkan efek bayangan dan border radius */
+    .custom-modal .modal-content {
+        border-radius: 12px;
+        box-shadow: 0px 10px 30px rgba(71, 65, 65, 0.2);
+        border: none;
+    }
+
+    /* Header dengan background gradient */
+    .custom-modal .modal-header {
+        background: linear-gradient(135deg, #f05537, #f05537);
+        color: white;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    /* Form styling */
+    .custom-modal .form-control {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    /* Button styling */
+    .custom-modal .btn-primary {
+        background: #007bff;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .custom-modal .btn-primary:hover {
+        background: #0056b3;
+        transform: scale(1.05);
+    }
+    .modal-title
+    {
+        color: #ffffff;
+    }
+
+   
+    .custom-modal .btn-secondary {
+        border-radius: 8px;
+    }
 </style>
 <section class="section-box">
     <div class="box-head-single box-head-single-candidate">
@@ -65,7 +108,7 @@
                             data-password="{{ null}}"
                             data-phone="{{ $personalsummary->phone }}"
                             data-description="{{ $personalsummary->description }}" 
-                            data-descriptionaddress="{{ $personalsummary->company_address }}"
+                            data-company_address="{{ $personalsummary->company_address }}"
                             data-provinsi-id="{{ $personalsummary->provinsi_id }}" 
                             data-sector-id="{{ $personalsummary->sector_id }}"
                             style="border: 0px; background-color:white;">
@@ -80,11 +123,7 @@
                     </div>
                     <div class="row align-items-end">
                         <div class="col-lg-6">
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Figma</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Adobe XD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">PSD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">App</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Digital</a>
+                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">{{$personalsummary->sector_name}}</a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +136,7 @@
     <div class="container">
         <div class="row">
             <div class="divider"></div>
-            <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="content-single">
 
                         <div class="row align-items-end">
@@ -106,14 +145,14 @@
                             </div>
                         </div>
                         <p>
-                            {{$userData->description}}
+                            <?php echo $userData->description ?>
                         </p>
 
                         
                 </div>
                 
                 <div class="single-recent-jobs">
-                    <h4 class="heading-border"><span>News</span></h4>
+                    <h4 class="heading-border"><span>Training</span></h4>
                     <div class="list-recent-jobs">
                         <div class="card-job hover-up wow animate__ animate__fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
                             <div class="card-job-top">
@@ -159,54 +198,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="mb-20">
+                            <a href="job-grid.html" class="btn btn-default">Explore more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-recent-jobs">
+                    <h4 class="heading-border"><span>Job</span></h4>
+                    <div class="list-recent-jobs">
                         <div class="card-job hover-up wow animate__ animate__fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
                             <div class="card-job-top">
                                 <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital.png"></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5  text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub"></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp" style="visibility: hidden; animation-name: none;">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital2.png"></figure>
+                                    <figure><img alt="jobhub" src="assets/imgs/page/job/digital.png"></figure>
                                 </div>
                                 <div class="card-job-top--info">
                                     <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
@@ -247,7 +250,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp" style="visibility: hidden; animation-name: none;">
+                        <div class="mb-20">
+                            <a href="job-grid.html" class="btn btn-default">Explore more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-recent-jobs">
+                    <h4 class="heading-border"><span>News</span></h4>
+                    <div class="list-recent-jobs">
+                        <div class="card-job hover-up wow animate__ animate__fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
                             <div class="card-job-top">
                                 <div class="card-job-top--image">
                                     <figure><img alt="jobhub" src="assets/imgs/page/job/digital.png"></figure>
@@ -298,237 +309,58 @@
                 </div>
             </div>
             
-            <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
-                <div class="sidebar-shadow sidebar-news-small">
-                    <h5 class="sidebar-title">Posting Training</h5>
-                    <div class="post-list-small">
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-1.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>You Should Have This Info Before Job Interview</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_1.png">
-                                        <span>Sarah</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>02 Oct</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-2.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How To Create a Resume for a Job in Social</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_3.png">
-                                        <span>Harding</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>17 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-3.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>10 Ways to Avoid a Referee Disaster Zone</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_5.png">
-                                        <span>Steven</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>23 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-4.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How To Set Work-Life Boundaries From Any Location</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_6.png">
-                                        <span>Merias</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>14 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-5.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How to Land Your Dream Marketing Job</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_7.png">
-                                        <span>Rosie</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>12 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar-shadow sidebar-news-small">
-                    <h5 class="sidebar-title"> Posting Job</h5>
-                    <div class="post-list-small">
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-1.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>You Should Have This Info Before Job Interview</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_1.png">
-                                        <span>Sarah</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>02 Oct</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-2.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How To Create a Resume for a Job in Social</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_3.png">
-                                        <span>Harding</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>17 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-3.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>10 Ways to Avoid a Referee Disaster Zone</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_5.png">
-                                        <span>Steven</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>23 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-4.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How To Set Work-Life Boundaries From Any Location</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_6.png">
-                                        <span>Merias</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>14 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-list-small-item d-flex align-items-center">
-                            <figure class="thumb mr-15">
-                                <img src="assets/imgs/blog/thumb-5.png" alt="">
-                            </figure>
-                            <div class="content">
-                                <h5>How to Land Your Dream Marketing Job</h5>
-                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                    <div class="author d-flex align-items-center mr-20">
-                                        <img alt="jobhub" src="assets/imgs/avatar/ava_7.png">
-                                        <span>Rosie</span>
-                                    </div>
-                                    <div class="date">
-                                        <span>12 Sep</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
 </section>
 
-<div class="modal fade" id="addPersonalModal" tabindex="-1" aria-labelledby="addPersonalModalLabel" aria-hidden="true">
+<div class="modal fade custom-modal" id="addPersonalModal" tabindex="-1" aria-labelledby="addPersonalModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addPersonalModalLabel">Ubah informasi pribadi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="addPersonalModalLabel">Ubah informasi perusahan </h5>
+                <button type="button" class="btn-close" style="color: white;!important" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="personalForm" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="personal_id" id="personal_id">
+                    
                     <div class="mb-3">
                         <label>First Name</label>
-                        <input type="text" class="form-control" id="name"  name="name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama Anda">
                     </div>
+                    
                     <div class="mb-3">
-                        <label>Alamat perusahan</label>
-                        <textarea name="descriptionaddress"  class="form-control" rows="3"></textarea>
+                        <label>Alamat Perusahaan</label>
+                        <textarea name="company_address" class="form-control" rows="3" placeholder="Masukkan alamat"></textarea>
                     </div>
+                    
                     <div class="mb-3">
                         <label>Password</label>
-                        <input type="password" class="form-control"  id="password" name="password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password">
                     </div>
+                    
                     <div class="mb-3">
                         <label>Upload Foto</label>
                         <input type="file" name="photo" class="form-control">
                     </div>
+                    
                     <div class="mb-3">
                         <label>Email</label>
-                        <input readonly type="email" disabled class="form-control"  id="email" name="email">
+                        <input readonly type="email" disabled class="form-control" id="email" name="email">
                     </div>
+                    
                     <div class="mb-3">
                         <label>Phone</label>
-                        <input type="tel" class="form-control" id="phone" name="phone">
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Masukkan nomor telepon">
                     </div>
+                    
                     <div class="form-group mb-3">
                         <label for="provinsi">Provinsi</label>
                         <select id="provinsi" name="provinsi_id" class="form-control select2">
-                            <option value="" disabled {{ old('provinsi_id', $selectedProvinceId ?? '') == '' ? 'selected' : '' }}>Pilih Provinsi</option>
+                            <option value="" disabled selected>Pilih Provinsi</option>
                             @foreach($provinces as $provinsi)
-                                <option value="{{ $provinsi->id }}" {{ old('provinsi_id', $selectedProvinceId ?? '') == $provinsi->id ? 'selected' : '' }}>
-                                    {{ $provinsi->nama }}
-                                </option>
+                                <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -536,23 +368,21 @@
                     <div class="form-group mb-3">
                         <label for="sector">Sektor</label>
                         <select id="sector" name="sector_id" class="form-control select2">
-                            <option value="" disabled {{ old('sector_id', $selectedSectorId ?? '') == '' ? 'selected' : '' }}>Pilih Sektor</option>
+                            <option value="" disabled selected>Pilih Sektor</option>
                             @foreach($sectors as $sector)
-                                <option value="{{ $sector->id }}" {{ old('sector_id', $selectedSectorId ?? '') == $sector->id ? 'selected' : '' }}>
-                                    {{ $sector->nama }}
-                                </option>
+                                <option value="{{ $sector->id }}">{{ $sector->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                     
                     <div class="mb-3">
-                        <label>Tentang perusahan</label>
-                        <textarea name="description"  class="form-control" rows="3"></textarea>
+                        <label>Tentang Perusahaan</label>
+                        <textarea name="description" class="form-control about" rows="3" placeholder="Deskripsikan perusahaan">{{$personalsummary->description}}</textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
                 <button type="button" class="btn btn-default" id="saveSummary">Simpan</button>
             </div>
         </div>
@@ -564,9 +394,38 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('/') }}dist/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="{{ asset('/') }}plugins/summernote/summernote-bs4.min.js"></script>
 
 <script>
+
+    $(".about").summernote({
+        height: 100,
+            toolbar: [
+                ['font', [ 'fontsize', 'clear']], // Menampilkan opsi style font dan ukuran font
+                //['font', ['fontname', 'fontsize', 'clear']],
+                ['color', ['color']], // Tombol warna ditampilkan
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['picture']], // Menambahkan tombol untuk menyisipkan gambar
+            ],
+            //fontNames: ['Arial', 'Courier New', 'Helvetica', 'Times New Roman'], // Daftar font yang tersedia
+            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36', '48', '64'], // Daftar ukuran font
+            buttons: {
+                recentColor: function() {
+                    return $.summernote.ui.button({
+                        contents: '<i class="note-icon-note"></i> Recent Color',
+                        tooltip: 'Recent Color',
+                        click: function() {
+                            // Fungsi untuk recent color
+                        }
+                    }).render();
+                }
+            },
+            disableDragAndDrop: true
+    });
     document.addEventListener("DOMContentLoaded", function () {
 
         document.querySelectorAll("[id^='description-']").forEach(function (desc) {
@@ -612,7 +471,7 @@
         // Set form values
         modal.find('#personal_id').val(btn.data('id') || '');
         modal.find('input[name="name"]').val(btn.data('name') || '');
-        modal.find('textarea[name="descriptionaddress"]').val(btn.data('descriptionaddress') || '');
+        modal.find('textarea[name="company_address"]').val(btn.data('company_address') || '');
         modal.find('input[name="password"]').val(btn.data('password') || '');
         modal.find('input[name="email"]').val(btn.data('email') || '');
         modal.find('input[name="phone"]').val(btn.data('phone') || '');

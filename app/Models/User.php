@@ -35,7 +35,8 @@ class User extends Authenticatable
         'lokasi',
         'remember_token',
         'email_verified_at',
-        'role'  // Menambahkan field role
+        'role',
+        'privacypolicy'
     ];
     public $incrementing = true;
     /**

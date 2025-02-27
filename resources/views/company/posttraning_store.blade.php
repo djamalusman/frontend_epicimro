@@ -1,20 +1,71 @@
 @extends('layouts.app')
 @section('title', 'Posting Training')
 
-@push('css')
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<link href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-@endpush
 
 @section('content')
-<br>
-<br>
-<br>
-<br>
-<br>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('/') }}plugins/summernote/summernote-bs4.min.css">
+<style>
+
+   
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1050; /* Make sure it's above other elements */
+  }
+  .spinner-border.medium {
+      width: 5rem; /* Atur lebar spinner */
+      height: 5rem; /* Atur tinggi spinner */
+      border-width: .55em; /* Atur ketebalan border spinner */
+  }
+  .new-input-group {
+      margin-top: 10px; /* Adjust the margin as needed */
+  }
+  /* Efek zoom pada gambar thumbnail */
+  .img-thumbnail {
+      transition: transform 0.3s ease; /* Animasi zoom */
+      cursor: pointer; /* Kursor pointer untuk menunjukkan gambar dapat diklik */
+  }
+  
+  .img-thumbnail:hover {
+      transform: scale(1.6); /* Memperbesar gambar saat di-hover, gunakan nilai yang lebih tinggi untuk zoom lebih besar */
+  }
+  @keyframes checkAnimation {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+  
+      .modal-content {
+        text-align: center;
+        padding: 20px;
+      }
+  
+      .check-icon {
+        font-size: 5em;
+        color: green;
+        animation: checkAnimation 1s;
+      }
+  
+      .error-icon {
+      font-size: 5em;
+      color: red;
+      animation: checkAnimation 1s;
+  }
+  
+      .btn-ok {
+        background-color: green;
+        color: white;
+      }
+  </style>
 <section class="section-box">
     <div class="box-head-single box-head-single-candidate">
         <div class="container">
@@ -38,11 +89,7 @@
                     </div>
                     <div class="row align-items-end">
                         <div class="col-lg-6">
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Figma</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Adobe XD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">PSD</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">App</a>
-                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">Digital</a>
+                            <a href="#" class="btn btn-tags-sm mb-10 mr-5">{{$personalsummary->sector_name}}</a>
                         </div>
                     </div>
                 </div>
@@ -239,7 +286,7 @@
                                         <strong class="text-md-bold">Photo</strong>
                                         <div id="photo-container">
                                             <div class="input-group mb-2">
-                                                <input type="file" class="form-control photo" name="photo[]">
+                                                <input type="file" class="form-control photo" id="photo" name="photo[]">
                                             </div>
                                         </div>
                                     </div>
@@ -266,253 +313,113 @@
                             </form>
                         </div>
                 <br>
-                <div class="single-recent-jobs">
-                    <h4 class="heading-border"><span>News</span></h4>
-                    <div class="list-recent-jobs">
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/digital.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top" </span>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end"><div class="mb-20">
-                                    </div>
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5  text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/n-digital2.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5 text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-job hover-up wow animate__animated animate__fadeInUp">
-                            <div class="card-job-top">
-                                <div class="card-job-top--image">
-                                    <figure><img alt="jobhub" src="assets/imgs/page/job/digital.png" /></figure>
-                                </div>
-                                <div class="card-job-top--info">
-                                    <h6 class="card-job-top--info-heading"><a href="job-single.html">Digital Experience Designer</a></h6>
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <span class="card-job-top--company">AliStudio, Inc</span>
-                                            <span class="card-job-top--location text-sm"><i class="fi-rr-marker"></i>
-                                                New York, NY</span>
-                                            <span class="card-job-top--type-job text-sm"><i class="fi-rr-briefcase"></i>
-                                                Full time</span>
-                                            <span class="card-job-top--post-time text-sm"><i class="fi-rr-clock"></i> 3
-                                                mins ago</span>
-                                        </div>
-                                        <div class="col-lg-5 text-lg-end">
-                                            <span class="card-job-top--price">$500<span>/Hour</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-job-description mt-20">
-                                We want someone who has been doing this for a solid 2-3 years. We want someone
-                                who can
-                                demonstrate an extremely strong portfolio. Create deliverables for your product
-                                area
-                                (for example competitive analyses, user flows.
-                            </div>
-                            <div class="card-job-bottom mt-25">
-                                <div class="row">
-                                    <div class="col-lg-9 col-sm-8 col-12">
-                                        <a href="job-grid.html" class="btn btn-small background-urgent btn-pink mr-5">Urgent</a>
-                                        <a href="job-grid-2.html" class="btn btn-small background-blue-light mr-5">Senior</a>
-                                        <a href="job-grid.html" class="btn btn-small background-6 disc-btn">Full time</a>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-end">
-                                        <span><img src="assets/imgs/theme/icons/shield-check.svg" alt="jobhub" /></span>
-                                        <span class="ml-5"><img src="assets/imgs/theme/icons/bookmark.svg" alt="jobhub" /></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
             </div>
 
             <!-- Sidebar -->
             
         </div>
-    </div>assets
+    </div>
+    <div class="modal fade custom-modal" id="previewModal" tabindex="-1" aria-labelledby="addPersonalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Priview</h5>
+                    <button type="button" class="btn-close" style="color: white;!important" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content">
+
+                        <!-- Dynamically filled by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{{--     
+    <div class="modal fade" id="previewModal">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Modal Heading</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- Content will be inserted here -->
+                <div class="card">
+                    <div class="card-body">
+                        <div id="modal-content">
+
+                            <!-- Dynamically filled by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+        </div>
+    </div> --}}
+   <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+            <i class="fas fa-check-circle check-icon"></i>
+            <h4 class="mt-4">Oh Yeah!</h4>
+            <p>Data berhasil disimpan</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- Failed Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <i class="fas fa-exclamation-circle error-icon"></i>
+                <br>
+                <p id="error-message"></p>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner-border medium custom-color" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 </section>
 
-@push('scripts')
-<!-- Core JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap (jika diperlukan oleh Summernote) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Summernote -->
+
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-<!-- Other plugins -->
-<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<!-- Plugin lainnya -->
 <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<script>
-jQuery(function($) {
-    console.log('jQuery version:', $.fn.jquery);
-    console.log('Summernote loaded:', typeof $.fn.summernote !== 'undefined');
-    
-    try {
-        $('#abouttraining').summernote({
-            height: 100,
-            toolbar: [
-                ['font', ['fontsize', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['picture']]
-            ],
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36']
-        });
-        
-        $('#abouttrainer').summernote({
-            height: 100,
-            toolbar: [
-                ['font', ['fontsize', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['picture']]
-            ],
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36']
-        });
-        
-        $('#aboutcareer').summernote({
-            height: 100,
-            toolbar: [
-                ['font', ['fontsize', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['picture']]
-            ],
-            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '24', '36']
-        });
-        
-        console.log('Summernote initialized successfully');
-    } catch (error) {
-        console.error('Error initializing Summernote:', error);
-    }
-});
-</script>
+<script src="{{ asset('/') }}dist/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="{{ asset('/') }}plugins/summernote/summernote-bs4.min.js"></script>
 
 
 <script>
@@ -531,42 +438,35 @@ jQuery(function($) {
         return prefix === undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
     }
 
-    $(document).ready(function(){
-        // Manually initialize Bootstrap tooltip
-        $('[data-toggle="tooltip"]').tooltip();
-        
-        // Initialize Summernote with basic configuration
-        if ($.fn.summernote) {
-            $('#abouttraining').summernote({
-                height: 200,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['para', ['ul', 'ol']]
-                ]
-            });
-            
-            $('#abouttrainer').summernote({
-                height: 200,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['para', ['ul', 'ol']]
-                ]
-            });
-            
-            $('#aboutcareer').summernote({
-                height: 200,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['para', ['ul', 'ol']]
-                ]
-            });
-        } else {
-            console.error('Summernote is not loaded properly');
+    $(document).ready(function () {
+        // Inisialisasi Summernote
+        $('#abouttraining, #abouttrainer, #aboutcareer').summernote({
+            height: 100,
+            toolbar: [
+                ['font', ['fontsize', 'clear']], 
+                ['color', ['color']], 
+                ['para', ['ul', 'ol', 'paragraph']], 
+                ['insert', ['picture']], 
+            ],
+            disableDragAndDrop: true
+        });
+
+        // Fungsi untuk menambah input baru
+        window.addInput = function (button) {
+            var inputGroup = $(button).closest('.input-group');
+            var newInputGroup = inputGroup.clone();
+            newInputGroup.find('input').val('');
+            newInputGroup.find('.btn-add').remove(); 
+            newInputGroup.append('<button type="button" class="btn btn-danger btn-remove" onclick="removeInput(this)">-</button>');
+            inputGroup.after(newInputGroup);
+        }
+
+        // Fungsi untuk menghapus input yang ditambahkan
+        window.removeInput = function (button) {
+            $(button).closest('.input-group').remove();
         }
     });
+
     document.addEventListener('DOMContentLoaded', function() {
         var registrationFeeInput = document.getElementById('registrationfee');
 
@@ -610,7 +510,7 @@ jQuery(function($) {
 
 
         var formData = {
-            companyname: $('#company_name').val(),
+            
             title: $('#nama_training').val(),
             yotube: $('#yotube').val(),
             category: categoryText,
@@ -644,71 +544,68 @@ jQuery(function($) {
         });
 
         $('#modal-content').html(`
-            <div class="form-group row">
-                <label>Nama Perusahaan</label>
-                <input type="text" class="form-control" value="${formData.companyname}" readonly>
-            </div>
-            <div class="form-group row">
+            
+            <div class="mb-3">
                 <label>Nama Training</label>
                 <input type="text" class="form-control" value="${formData.title}" readonly>
             </div>
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Yotube</label>
                 <input type="text" class="form-control" value="${formData.yotube}" readonly>
             </div>
-             <div class="form-group row">
+             <div class="mb-3">
                 <label>Category</label>
                 <input type="text" class="form-control" value="${formData.category}" readonly>
             </div>
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Jenis Sertifikasi</label>
                 <input type="text" class="form-control" value="${formData.jenis_sertifikasi}" readonly>
             </div>
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Durasi Training</label>
                 <input type="text" class="form-control" value="${formData.training_duration}" readonly>
             </div>
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Persyaratan</label>
                 ${formData.persyaratan.map(p => `<input type="text" class="form-control" value="${p}" readonly>`).join('')}
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Tanggal Mulai Training</label>
                 <input type="text" class="form-control" value="${formData.jadwal_mulai_tanggal}" readonly>
             </div>
 
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Tanggal Selesai Training</label>
                 <input type="text" class="form-control" value="${formData.jadwal_selesai_tanggal}" readonly>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Materi Training</label>
                 ${formData.materi_training.map(m => `<input type="text" class="form-control" value="${m}" readonly>`).join('')}
             </div>
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Fasilitas</label>
                 ${formData.fasilitas.map(f => `<input type="text" class="form-control" value="${f}" readonly>`).join('')}
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Type</label>
                 <input type="text" class="form-control" value="${formData.type}" readonly>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Provinsi</label>
                 <input type="text" class="form-control" value="${formData.provinsi}" readonly>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Lokasi</label>
                 <input type="text" class="form-control" value="${formData.lokasi}" readonly>
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3">
                 <label>Link Pendaftaran</label>
                 <input type="text" class="form-control" value="${formData.link_pendaftaran}" readonly>
             </div>
@@ -730,10 +627,10 @@ jQuery(function($) {
                                 filesLoaded++;
                                 if (filesLoaded === fileInput.length) {
                                     var imagesHtml = imageUrls.map((url, index) => `
-                                        <div class="form-group row" style=" text-align: left;">
+                                        <div class="mb-3" style=" text-align: left;">
                                             <label for="picture">Photo ${index + 1}</label>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="mb-3">
                                             <img src="${url}" alt="Preview Image ${index + 1}" class="img-thumbnail" width="250px">
                                         </div>
                                     `).join('');
@@ -821,7 +718,7 @@ jQuery(function($) {
             showLoading(); // Show loading indicator
 
             $.ajax({
-                url: '/public/store-course-endpoint',
+                url: '/store-course-endpoint',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -931,6 +828,3 @@ jQuery(function($) {
 </script>
 
 @endsection
-
-@push('scripts')
-@endpush
