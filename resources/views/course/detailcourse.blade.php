@@ -328,9 +328,20 @@
                 <div class="course-detail-container">
                     <!-- Gambar di atas -->
                     <div class="course-image">
-                        <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}"
-                            alt="Course Image">
-
+                        {{-- <img src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}"
+                            alt="Course Image"> --}}
+                            @if ( $imagetraining->fileold !="frontend")
+                                
+                                    <img class="imgGrid"
+                                    src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($imagetraining->nama ?? '')) }}" />
+                            
+                            @else
+                            
+                            
+                                <img src="{{ asset('/storage/' . ($imagetraining->nama ?? '')) }}">
+                        
+                            
+                            @endif
                     </div>
                     <div class="course-image">
                         <br>
@@ -381,8 +392,14 @@
                                                     </form>
                                                 @endif
                                     @else
-                                        <a href="{{'/login'}}"
-                                            class="btn btn-defaults mr-10"style="font-size:15px;color:white">Register now</a>
+                                        @if ($role == 'company')
+                                            <a href="#" class="btn btn-defaults mr-10"
+                                                style="font-size:15px;color:white">Register now</a>
+                                        @else
+                                            <a href="{{ route('login') }}" class="btn btn-defaults mr-10"
+                                                style="font-size:15px;color:white">Register now</a> 
+                                        @endif       
+                                        
                                     @endif
                                     <button class="btn btn-defaults" data-bs-toggle="modal" data-bs-target="#shareModal">
                                         Share Link

@@ -32,6 +32,7 @@ class GeneralController extends Controller
             'm_jenis_sertifikasi_training_course.nama as cetificate_type',
             'm_provinsi.nama as nama_provinsi',
             'm_type_training_course.nama as namaonlineofline',
+            'dtc_file_training_course.fileold as fileold',
             'dtc_file_training_course.nama as image_path'
         );
 

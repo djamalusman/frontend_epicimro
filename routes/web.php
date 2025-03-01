@@ -90,6 +90,9 @@ Route::middleware(['auth', 'checkRole:company'])->group(function () {
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
     Route::get('/postjobs', [UserCompanyController::class, 'postjobs']);
 
+    Route::get('/course-grid-company', [UserCompanyController::class, 'CourseGrid'])->name('course-grid-company');
+    Route::get('/get-content-grid-course-company', [UserCompanyController::class, 'getContentGridCourse'])->name('get-content-grid-course-company');
+
     Route::get('/posttraining', [PosttrainingController::class, 'posttraining']);
 
     Route::get('/get-datacourse-filters', [PosttrainingController::class, 'getFilters'])->name('get-datacourse-filters');
