@@ -99,12 +99,11 @@
 </section>
 
 <section class="section-box mt-1">
-
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="content-single">
-                        <div class="divider"></div>
+                    <div class="divider"></div>
                             <h4 class="mb-20 mt-25">Tambah Training</h4>
                             <form id="training-form" enctype="multipart/form-data">
                                 <div class="row">
@@ -120,14 +119,12 @@
                                                 <textarea class="form-control abouttraining" id="abouttraining" name="abouttraining"></textarea>
                                         </span>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Youtube</strong>
                                         <span class="dis-block text-muted text-md-lh24">
                                                 <input type="text" class="form-control" id="yotube" name="yotube">
                                         </span>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Category</strong>
                                             <select class="form-control dis-block text-muted text-md-lh24" style="height:44px;" id="category" name="category">
@@ -157,7 +154,6 @@
                                     <div class="col-md-6 col-sm-6 col-12 mb-20 mt-25">
                                         <span class="btn btn-tags-sm mb-10 mr-5" id="basic-addon2">Hari</span>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Persyaratan</strong>
                                         <div id="persyaratan-container">
@@ -169,7 +165,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-4 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Jadwal mulai training</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -178,7 +173,6 @@
                                             </select>
                                         </span>
                                     </div>
-                                    
                                     <div class="col-md-4 col-sm-6 col-12 mb-20 mt-25">
                                         <span class="dis-block text-muted text-md-lh24">
                                             <select class="form-control" style="height:45px;" id="jadwal_mulai_bulan" name="jadwal_mulai_bulan">
@@ -193,7 +187,6 @@
                                             </select>
                                         </span>
                                     </div>
-
                                     <div class="col-md-4 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Jadwal selesai training</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -202,7 +195,6 @@
                                             </select>
                                         </span>
                                     </div>
-                                    
                                     <div class="col-md-4 col-sm-6 col-12 mb-20 mt-25">
                                         <span class="dis-block text-muted text-md-lh24">
                                             <select class="form-control" style="height:45px;"  id="jadwal_selesai_bulan" name="jadwal_selesai_bulan">
@@ -217,7 +209,6 @@
                                             </select>
                                         </span>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Materi Training</strong>
                                         <div id="materi-container">
@@ -229,7 +220,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Fasilitas</strong>
                                         <div id="fasilitas-container">
@@ -241,7 +231,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-12 col-sm-6 col-12 mb-10">
                                         <strong class="text-md-bold">Biaya Pendaftaran</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -251,7 +240,7 @@
                                     <div class="col-md-12 col-sm-6 col-12 mb-10">
                                         <strong class="text-md-bold">Type</strong>
                                         <span class="dis-block text-muted text-md-lh24">
-                                                <select class="form-control dis-block text-muted text-md-lh24" style="height:44px;" id="jenis_sertifikasi" name="jenis_sertifikasi">
+                                                <select class="form-control dis-block text-muted text-md-lh24" style="height:44px;" id="type" name="type">
                                                     <option value="">Pilih Type</option>
                                                         @foreach($listtype as $value)
                                                             <option value="{{$value->id}}">{{$value->nama}}</option>
@@ -268,7 +257,7 @@
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Provinsi</strong>
                                         <span class="dis-block text-muted text-md-lh24">
-                                            <select class="form-control dis-block text-muted text-md-lh24" style="height:44px;" id="jenis_sertifikasi" name="jenis_sertifikasi">
+                                            <select class="form-control dis-block text-muted text-md-lh24" style="height:44px;" id="provinsi" name="provinsi">
                                                 <option value="">Pilih Provinsi</option>
                                                 @foreach($listprovinsi as $value)
                                                     <option value="{{$value->id}}">{{$value->nama}}</option>
@@ -311,8 +300,7 @@
                                         </div>
                                 </div>
                             </form>
-                        </div>
-                <br>
+                </div>
             </div>
 
             <!-- Sidebar -->
@@ -339,40 +327,7 @@
         </div>
     </div>
     
-{{--     
-    <div class="modal fade" id="previewModal">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <!-- Content will be inserted here -->
-                <div class="card">
-                    <div class="card-body">
-                        <div id="modal-content">
-
-                            <!-- Dynamically filled by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-        </div>
-    </div> --}}
    <!-- Success Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -729,7 +684,7 @@
 
                     setTimeout(function() {
                         $('#successModal').modal('hide');
-                        location.reload();
+                        window.location.href = '/posttraining';
                     }, 2000);
 
                     $('#previewModal').modal('hide');

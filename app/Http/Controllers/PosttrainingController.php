@@ -90,7 +90,8 @@ class PosttrainingController extends Controller
         ->orderBy('users_client.updated_at', 'desc')
         ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
         ->get();
-        return view('company.posttraning', compact('user', 'menus','title_page','id','personalsummarys'));
+        
+        return view('company.traningcourse', compact('user', 'menus','title_page','id','personalsummarys'));
     }
 
     public function getFilters() {
@@ -205,198 +206,219 @@ class PosttrainingController extends Controller
         ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
         ->get();
         
-        return view('company.posttraning_store', compact('personalsummarys','content','user', 'menus','id','liscategory','listsertifikasi','listprovinsi','listtype','title_page'));
+        return view('company.traningcourse_store', compact('personalsummarys','content','user', 'menus','id','liscategory','listsertifikasi','listprovinsi','listtype','title_page'));
     }
 
 
     public function storeCourseEndpoint(Request $req)
-{
-    try {
-        $user = Auth::user();
+    {
+        //dd($req->all());
+        try {
+            $user = Auth::user();
 
-        // Konversi tanggal
-        $jadwalMulai = Carbon::createFromDate(
-            $req->jadwal_mulai_tahun,
-            $req->jadwal_mulai_bulan,
-            $req->jadwal_mulai_tanggal
-        )->toDateString();
+            // Konversi tanggal
+            $jadwalMulai = Carbon::createFromDate(
+                $req->jadwal_mulai_tahun,
+                $req->jadwal_mulai_bulan,
+                $req->jadwal_mulai_tanggal
+            )->toDateString();
 
-        $jadwalSelesai = Carbon::createFromDate(
-            $req->jadwal_selesai_tahun,
-            $req->jadwal_selesai_bulan,
-            $req->jadwal_selesai_tanggal
-        )->toDateString();
+            $jadwalSelesai = Carbon::createFromDate(
+                $req->jadwal_selesai_tahun,
+                $req->jadwal_selesai_bulan,
+                $req->jadwal_selesai_tanggal
+            )->toDateString();
 
-        $idProvinsi = $req->provinsi === 'Pilih Provinsi' ? 0 : $req->provinsi;
-        $type = $req->type === 'Pilih Type' ? 0 : $req->type;
+            $idProvinsi = $req->provinsi === 'Pilih Provinsi' ? 0 : $req->provinsi;
+            $type = $req->type === 'Pilih Type' ? 0 : $req->type;
+              
+            // Tentukan tab aktif
+            $tab_active = null;
+            if (!empty($req->abouttraining)) $tab_active = 1;
+            if (!empty($req->abouttrainer)) $tab_active = 2;
+            if (!empty($req->aboutcareer)) $tab_active = 3;
 
-        // Tentukan tab aktif
-        $tab_active = null;
-        if (!empty($req->abouttraining)) $tab_active = 1;
-        if (!empty($req->abouttrainer)) $tab_active = 2;
-        if (!empty($req->aboutcareer)) $tab_active = 3;
+            // Simpan data training course
+            $listItem = new TraningCourseDetailsModel();
+            $listItem->traning_name = $req->nama_training;
+            $listItem->abouttraining = $req->abouttraining;
+            $listItem->yotube = $req->yotube;
+            $listItem->id_m_category_training_course = $req->category;
+            $listItem->id_m_jenis_sertifikasi_training_course = $req->jenis_sertifikasi;
+            $listItem->training_duration = $req->training_duration;
+            $listItem->startdate = $jadwalMulai;
+            $listItem->enddate = $jadwalSelesai;
+            $listItem->registrationfee = $req->registrationfee;
+            $listItem->typeonlineoffile = $type;
+            $listItem->abouttrainer = $req->abouttrainer;
+            $listItem->id_provinsi = $idProvinsi;
+            $listItem->lokasi = $req->lokasi;
+            $listItem->link_pendaftaran = $req->link_pendaftaran;
+            $listItem->aboutcareer = $req->aboutcareer;
+            $listItem->tab_active = $tab_active;
+            $listItem->company_name = $user->name;
+            
+            $listItem->status = $req->status;
+            $listItem->idcompany = $user->id;
+            $listItem->generatenumber = $this->generateNumber();
+            $listItem->insert_by = session()->get('id');
+            $listItem->updated_by = session()->get('id');
+            $listItem->updated_by_ip = $req->ip();
+            $listItem->save();
 
-        // Simpan data training course
-        $listItem = new TraningCourseDetailsModel();
-        $listItem->abouttraining = $req->abouttraining;
-        $listItem->abouttrainer = $req->abouttrainer;
-        $listItem->aboutcareer = $req->aboutcareer;
-        $listItem->tab_active = $tab_active;
-        $listItem->company_name = $user->name;
-        $listItem->traning_name = $req->nama_training;
-        $listItem->id_m_category_training_course = $req->category;
-        $listItem->id_m_jenis_sertifikasi_training_course = $req->jenis_sertifikasi;
-        $listItem->training_duration = $req->training_duration;
-        $listItem->startdate = $jadwalMulai;
-        $listItem->enddate = $jadwalSelesai;
-        $listItem->typeonlineoffile = $type;
-        $listItem->registrationfee = $req->registrationfee;
-        $listItem->id_provinsi = $idProvinsi;
-        $listItem->lokasi = $req->lokasi;
-        $listItem->yotube = $req->yotube;
-        $listItem->link_pendaftaran = $req->link_pendaftaran;
-        $listItem->status = $req->status;
-        $listItem->idcompany = $user->id;
-        $listItem->generatenumber = $this->generateNumber();
-        $listItem->insert_by = session()->get('id');
-        $listItem->updated_by = session()->get('id');
-        $listItem->updated_by_ip = $req->ip();
-        $listItem->save();
-
-        // Simpan persyaratan
-        if (!is_null($req->persyaratan)) {
-            foreach ($req->persyaratan as $persyaratan) {
-                $datapersyaratan = new Dtc_Persyaratan_TrainingCourseModel();
-                $datapersyaratan->id_training_course_dtl = $listItem->id;
-                $datapersyaratan->nama = $persyaratan;
-                $datapersyaratan->insert_by = session()->get('id');
-                $datapersyaratan->updated_by = session()->get('id');
-                $datapersyaratan->updated_by_ip = $req->ip();
-                $datapersyaratan->save();
+            // Simpan persyaratan
+            if (!is_null($req->persyaratan)) {
+                foreach ($req->persyaratan as $persyaratan) {
+                    $datapersyaratan = new Dtc_Persyaratan_TrainingCourseModel();
+                    $datapersyaratan->id_training_course_dtl = $listItem->id;
+                    $datapersyaratan->nama = $persyaratan;
+                    $datapersyaratan->insert_by = session()->get('id');
+                    $datapersyaratan->updated_by = session()->get('id');
+                    $datapersyaratan->updated_by_ip = $req->ip();
+                    $datapersyaratan->save();
+                }
             }
-        }
 
-        // Simpan materi training
-        if (!is_null($req->materi_training)) {
-            foreach ($req->materi_training as $materi_training) {
-                $datamateri_training = new Dtc_Materi_TrainingCourseModel();
-                $datamateri_training->id_training_course_dtl = $listItem->id;
-                $datamateri_training->nama = $materi_training;
-                $datamateri_training->insert_by = session()->get('id');
-                $datamateri_training->updated_by = session()->get('id');
-                $datamateri_training->updated_by_ip = $req->ip();
-                $datamateri_training->save();
+            // Simpan materi training
+            if (!is_null($req->materi_training)) {
+                foreach ($req->materi_training as $materi_training) {
+                    $datamateri_training = new Dtc_Materi_TrainingCourseModel();
+                    $datamateri_training->id_training_course_dtl = $listItem->id;
+                    $datamateri_training->nama = $materi_training;
+                    $datamateri_training->insert_by = session()->get('id');
+                    $datamateri_training->updated_by = session()->get('id');
+                    $datamateri_training->updated_by_ip = $req->ip();
+                    $datamateri_training->save();
+                }
             }
-        }
 
-        // Simpan fasilitas
-        if (!is_null($req->fasilitas)) {
-            foreach ($req->fasilitas as $fasilitas) {
-                $datafasilitas = new Dtc_Fasilitas_TrainingCourseModel();
-                $datafasilitas->id_training_course_dtl = $listItem->id;
-                $datafasilitas->nama = $fasilitas;
-                $datafasilitas->insert_by = session()->get('id');
-                $datafasilitas->updated_by = session()->get('id');
-                $datafasilitas->updated_by_ip = $req->ip();
-                $datafasilitas->save();
+            // Simpan fasilitas
+            if (!is_null($req->fasilitas)) {
+                foreach ($req->fasilitas as $fasilitas) {
+                    $datafasilitas = new Dtc_Fasilitas_TrainingCourseModel();
+                    $datafasilitas->id_training_course_dtl = $listItem->id;
+                    $datafasilitas->nama = $fasilitas;
+                    $datafasilitas->insert_by = session()->get('id');
+                    $datafasilitas->updated_by = session()->get('id');
+                    $datafasilitas->updated_by_ip = $req->ip();
+                    $datafasilitas->save();
+                }
             }
-        }
 
-        // Simpan file gambar
-        if (!$req->hasFile('photo')) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Tidak ada file yang diunggah'
+            // Simpan file gambar
+            if (!$req->hasFile('photo')) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Tidak ada file yang diunggah'
+                ]);
+            }
+        
+            $files = $req->file('photo');
+        
+            // Jika hanya satu file, langsung proses tanpa looping
+            if (!is_array($files)) {
+                $files = [$files]; // Ubah menjadi array untuk menyamakan proses
+            }
+        
+            $file = $files[0]; // Ambil hanya satu file pertama
+        
+            if (!$file->isValid()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'File tidak valid'
+                ]);
+            }
+        
+            // Generate nama unik untuk file
+            $filePhoto = uniqid() . '.webp';
+        
+            // Konversi gambar ke WebP
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
+        
+            // Simpan gambar ke storage/public/
+            Storage::disk('public')->put($filePhoto, (string) $img);
+        
+            //$filePath = public_path('storage/' . $filePhoto);
+            $filePath = public_path('storage/' . $filePhoto);
+            file_put_contents($filePath, (string) $img);
+            // URL file yang diunggah
+            $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
+        
+            Log::info('File berhasil diunggah', [
+                'file_name' => $filePhoto,
+                'file_url' => $fileUrl
             ]);
-        }
-    
-        $files = $req->file('photo');
-    
-        // Jika hanya satu file, langsung proses tanpa looping
-        if (!is_array($files)) {
-            $files = [$files]; // Ubah menjadi array untuk menyamakan proses
-        }
-    
-        $file = $files[0]; // Ambil hanya satu file pertama
-    
-        if (!$file->isValid()) {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'File tidak valid'
-            ]);
-        }
-    
-        // Generate nama unik untuk file
-        $filePhoto = uniqid() . '.webp';
-    
-        // Konversi gambar ke WebP
-        $manager = new ImageManager(new Driver());
-        $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
-    
-        // Simpan gambar ke storage/public/
-        Storage::disk('public')->put($filePhoto, (string) $img);
-    
-        // URL file yang diunggah
-        $fileUrl = 'https://admin.trainingkerja.com/storage/' . $filePhoto;
-    
-        Log::info('File berhasil diunggah', [
-            'file_name' => $filePhoto,
-            'file_url' => $fileUrl
-        ]);
-    
-        // Pastikan $listItem tersedia sebelum menyimpan ke database
-        if (!isset($listItem) || !$listItem->id) {
-            Log::error('ID training course tidak ditemukan');
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'ID training course tidak ditemukan'
-            ]);
-        }
-    
-        // **Cek database sebelum insert**
-        $existingFile = dtc_File_TrainingCourseModel::where('fileold', $fileUrl)
-            ->where('id_training_course_dtl', $listItem->id)
-            ->first();
-    
-        if ($existingFile) {
-            Log::warning('File sudah ada di database, tidak disimpan ulang', [
+        
+            // Pastikan $listItem tersedia sebelum menyimpan ke database
+            if (!isset($listItem) || !$listItem->id) {
+                Log::error('ID training course tidak ditemukan');
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'ID training course tidak ditemukan'
+                ]);
+            }
+        
+            // **Cek database sebelum insert**
+            $existingFile = dtc_File_TrainingCourseModel::where('fileold', $fileUrl)
+                ->where('id_training_course_dtl', $listItem->id)
+                ->first();
+        
+            if ($existingFile) {
+                Log::warning('File sudah ada di database, tidak disimpan ulang', [
+                    'file_name' => $filePhoto,
+                    'id_training_course_dtl' => $listItem->id
+                ]);
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'File sudah ada di database'
+                ]);
+            }
+            
+            // Simpan informasi file ke database
+            $datapenulis = new dtc_File_TrainingCourseModel();
+            $datapenulis->id_training_course_dtl = $listItem->id;
+            $datapenulis->nama = $filePhoto;
+            $datapenulis->fileold = "frontend";
+            $datapenulis->save();
+        
+            Log::info('Data berhasil disimpan ke database', [
                 'file_name' => $filePhoto,
                 'id_training_course_dtl' => $listItem->id
             ]);
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'File sudah ada di database'
-            ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Data berhasil disimpan']);
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'failed', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-        
-        // Simpan informasi file ke database
-        $datapenulis = new dtc_File_TrainingCourseModel();
-        $datapenulis->id_training_course_dtl = $listItem->id;
-        $datapenulis->nama = $filePhoto;
-        $datapenulis->fileold = $fileUrl;
-        $datapenulis->save();
-    
-        Log::info('Data berhasil disimpan ke database', [
-            'file_name' => $filePhoto,
-            'id_training_course_dtl' => $listItem->id
-        ]);
-
-        return response()->json(['status' => 'success', 'message' => 'Data berhasil disimpan']);
-
-    } catch (\Exception $e) {
-        return response()->json(['status' => 'failed', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
-}
 
     public function editTraningCourse($id)
     {
         $user = Auth::user();
-        //dd(base64_decode($id));
-        $data['menus'] = MenuModel::find(15);
         $data['title']      = 'Traning Kerja | Pages';
-        $data['title_page'] = 'Pelatihan / Kursus | ' . $data['menus']->menu_name;
+        $data['title_page']= 'Edit Traning Course';
         $data['content'] = base64_decode($id);
-        $data['menu']       = MenuModel::all();
+        $user = Auth::user();
+        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
+       
+        // Get menus for candidate
+        $data ['menus'] = Menu_client::where(function($query) use ($role) {
+            if ($role == 'candidate') {
+                $query->where('role', $role);
+                
+            }elseif ($role == 'company') {
+                $query->where('role', $role);
+            } 
+            else {
+                $query->where('role', ['guest']);
+            }
+        })
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
+        ->get();
 
         $data['liscategory'] = M_Category_TrainingCourseModel::all();
         $data['listsertifikasi'] = M_Jenis_Sertifikasi_TrainingCourseModel::all();
@@ -421,10 +443,16 @@ class PosttrainingController extends Controller
         $data['enddate']  = Carbon::parse($dt_list_item->enddate)->format('Y-m-d');
 
         $data['iddtl']=base64_decode($id);
+        $data['personalsummarys'] = User::where('users_client.id', $user->id)
+        ->leftJoin('company_profiles', 'company_profiles.user_id', '=', 'users_client.id')
+        ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
+        ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
+        ->orderBy('users_client.updated_at', 'desc')
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->get();
+        
 
-
-
-        return view('pages.traningcourse_edit', $data);
+        return view('company.traningcourse_edit', $data);
     }
 
 
@@ -565,7 +593,11 @@ class PosttrainingController extends Controller
                         $datafasilitas = new Dtc_Fasilitas_TrainingCourseModel();
                         $datafasilitas->id_training_course_dtl =  $req->iddtl;
                         $datafasilitas->nama = $fasilitas;
-                        $datafasilitas->insert_by = session()->get('id');
+                        $datafasilitas->insert_by = session()->$datapenulis = new dtc_File_TrainingCourseModel();
+                        $datapenulis->id_training_course_dtl = $listItem->id;
+                        $datapenulis->nama = $filePhoto;
+                        $datapenulis->fileold = "frontend";
+                        $datapenulis->save();get('id');
                         $datafasilitas->updated_by = session()->get('id');
                         $datafasilitas->updated_by_ip = $req->ip();
                         $datafasilitas->save();
@@ -586,44 +618,88 @@ class PosttrainingController extends Controller
                 }
             }
 
-            // ini file
-            if (!is_null($req->photo)) {
-                for ($index = 0; $index < count($req->photo); $index++) {
-                    $filePhoto = null;
-
-                    if (isset($req->photo[$index])) {
-                        $file = $req->file('photo')[$index];
-                        $ext = $file->extension();
-                        $filePhoto = uniqid() . '.' . $file->getClientOriginalExtension();
-
-
-                            $manager = new ImageManager();
-                            $img = $manager->make($file->getPathname());
-
-                            if ($ext == 'png' || $ext == 'PNG') {
-                                $filePhoto = uniqid() . '.webp';
-                            }
-                            $img->save(public_path('storage') . '/'  . $filePhoto, 80);
-
-                            if (env('PLATFORM_NAME') !== 'windows') {
-                                // SFTP
-                                Storage::disk('sftp')->put('/' . $filePhoto, $img->encode());
-                            } else {
-                                Storage::disk('windows_uploads')->put('/' . $filePhoto, $img->encode());
-                            }
-                        }
-                        dtc_File_TrainingCourseModel::where('id_training_course_dtl', $req->iddtl)->delete();
-                        $datapenulis = new dtc_File_TrainingCourseModel();
-                        $datapenulis->id_training_course_dtl =  $req->iddtl;
-                        $datapenulis->nama = $filePhoto;
-                        $datapenulis->fileold = $file;
-                        $datapenulis->insert_by = session()->get('id');
-                        $datapenulis->updated_by = session()->get('id');
-                        $datapenulis->updated_by_ip = $req->ip();
-                        $datapenulis->save();
-
-                }
+             // Simpan file gambar
+             if (!$req->hasFile('photo')) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Tidak ada file yang diunggah'
+                ]);
             }
+        
+            $files = $req->file('photo');
+        
+            // Jika hanya satu file, langsung proses tanpa looping
+            if (!is_array($files)) {
+                $files = [$files]; // Ubah menjadi array untuk menyamakan proses
+            }
+        
+            $file = $files[0]; // Ambil hanya satu file pertama
+        
+            if (!$file->isValid()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'File tidak valid'
+                ]);
+            }
+        
+            // Generate nama unik untuk file
+            $filePhoto = uniqid() . '.webp';
+        
+            // Konversi gambar ke WebP
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
+        
+            // Simpan gambar ke storage/public/
+            Storage::disk('public')->put($filePhoto, (string) $img);
+        
+            //$filePath = public_path('storage/' . $filePhoto);
+            $filePath = public_path('storage/' . $filePhoto);
+            file_put_contents($filePath, (string) $img);
+            // URL file yang diunggah
+            $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
+        
+            Log::info('File berhasil diunggah', [
+                'file_name' => $filePhoto,
+                'file_url' => $fileUrl
+            ]);
+        
+            // Pastikan $listItem tersedia sebelum menyimpan ke database
+            if (!isset($listItem) || !$listItem->id) {
+                Log::error('ID training course tidak ditemukan');
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'ID training course tidak ditemukan'
+                ]);
+            }
+        
+            // **Cek database sebelum insert**
+            $existingFile = dtc_File_TrainingCourseModel::where('fileold', $fileUrl)
+                ->where('id_training_course_dtl', $listItem->id)
+                ->first();
+        
+            if ($existingFile) {
+                Log::warning('File sudah ada di database, tidak disimpan ulang', [
+                    'file_name' => $filePhoto,
+                    'id_training_course_dtl' => $listItem->id
+                ]);
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'File sudah ada di database'
+                ]);
+            }
+
+            dtc_File_TrainingCourseModel::where('id_training_course_dtl', $req->iddtl)->delete();
+            $datapenulis = new dtc_File_TrainingCourseModel();
+            $datapenulis->id_training_course_dtl = $listItem->id;
+            $datapenulis->nama = $filePhoto;
+            $datapenulis->fileold = "frontend";
+            $datapenulis->save();
+        
+            Log::info('Data berhasil disimpan ke database', [
+                'file_name' => $filePhoto,
+                'id_training_course_dtl' => $listItem->id
+            ]);
+
 
             $response = [
                 'status' => 'success',

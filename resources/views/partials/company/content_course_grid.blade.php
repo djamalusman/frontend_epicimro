@@ -23,7 +23,7 @@
         align-items: baseline;
         font-family: 'Open Sans';
         font-weight: bold;
-        font-size: 22px;
+        font-size: 20px;
         line-height: 1.2;
         /* Line height to control spacing between lines */
         max-height: 2.4em;
@@ -44,37 +44,29 @@
         padding: 20px;
     }
 
-    .btn-default {
-        background-color: #8e7dff;
-        /* Similar to your button color */
-        color: white;
-
-        line-height: 1px;
-    }
-
-
 
     .card-title-certificate {
         min-height: 30px;
         display: flex;
         align-items: baseline;
     }
+
+    /* .btn-default {
+        background-color: #8e7dff;
+
+        color: white;
+
+        line-height: 1px;
+    } */
 </style>
 
 <div class="card-grid-container">
-    @foreach ($trainings as $value)
+    @foreach ($data as $value)
         <div class="card-grid-2 hover-up">
             <div class="text-center card-grid-2-image">
-                <a href="/detail-course/{{ $value->id }}">
+                <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
                     <div class="imgGrid-container">
-
                         <figure>
-
-                            {{-- <a
-                                href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
-                                <img class="imgGrid"
-                                    src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->image_path ?? '')) }}" />
-                            </a> --}}
                             @if ( $value->fileold !="frontend")
                                 <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
                                     <img class="imgGrid"
@@ -83,12 +75,13 @@
                                 </a>
                             @else
                             <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
-                            
+                              
                                 <img src="{{ asset('/storage/' . ($value->image_path ?? '')) }}">
                         
                             </a>
                             
                             @endif
+                            
                         </figure>
                     </div>
                 </a>
@@ -112,13 +105,12 @@
 
                 <div class="mt-10">
                     <h6 class="mt-5" style="color:black;font-family: 'Open Sans';font-weight;font-size: 16px;">
-                        <span class="fi-rr-briefcase" style="color:black">&nbsp; {{ $value->category }}</span>
-                    </h6>
+                        {{ $value->category }}</h6>
 
                 </div>
 
                 {{-- <div class="mt-10" style="color:black;font-family: 'Open Sans'; font-weight; font-size: 16px;">
-                    <span class="fi-rr-marker"> &nbsp;&nbsp;{{ $value->nama_provinsi }}</span> <span class="fi-rr-briefcase" style="color:black"></span>
+                    <span class="fi-rr-marker"> &nbsp;&nbsp;{{ $value->nama_provinsi }}</span>
                 </div> --}}
                 <div class="mt-10">
                     <span class="fi-rr-marker" style="color:rgb(0, 0, 0);">
