@@ -22,6 +22,7 @@ use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ResumeCandidateController;
 use App\Http\Controllers\PosttrainingController;
+use App\Http\Controllers\PostjobController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
@@ -88,9 +89,11 @@ Route::middleware(['auth', 'checkRole:candidate'])->group(function () {
 Route::middleware(['auth', 'checkRole:company'])->group(function () {
 
     Route::get('/profile', [UserCompanyController::class, 'profileEmployee']);
-    Route::get('/postjobs', [UserCompanyController::class, 'postjobs']);
+    //Route::get('/postjobs', [UserCompanyController::class, 'postjobs']);
 
     Route::get('/course-grid-company', [UserCompanyController::class, 'CourseGrid'])->name('course-grid-company');
+    Route::get('/get-content-job-grid-company', [UserCompanyController::class, 'getContentJobGrid'])->name('get-content-job-grid-company');
+    Route::get('/job-grid-company', [UserCompanyController::class, 'JobGrid'])->name('job-grid-company');
     Route::get('/get-content-grid-course-company', [UserCompanyController::class, 'getContentGridCourse'])->name('get-content-grid-course-company');
 
     Route::get('/posttraining', [PosttrainingController::class, 'posttraining']);
@@ -126,6 +129,33 @@ Route::middleware(['auth', 'checkRole:company'])->group(function () {
     Route::get('/delete-data-course/{id}', [PosttrainingController::class, 'removePTrainingCourse'])->name('delete-data-course');
 
     Route::get('/edit-traningcourse-detail/{id}', [PosttrainingController::class, 'editTraningCourseDetail'])->name('edit-traningcourse-detail');
+
+    
+    
+    
+
+    Route::get('/postjobs', [PostjobController::class, 'postjob'])->name('postjobs');
+
+    Route::get('/get-data-job', [PostjobController::class, 'getDataJobFilter'])->name('get-data-job');
+
+    Route::get('/get-filters-job', [PostjobController::class, 'getDropdownJob'])->name('get-filters-job');
+
+    Route::get('/get-view-store-jobvacancy/{id}', [PostjobController::class, 'getViewStoreJobvacancy'])->name('get-view-store-jobvacancy');
+
+    Route::post('/store-jobvacancy', [PostjobController::class, 'storeJobVacancy'])->name('store-jobvacancy');
+
+    Route::get('/edit-jobvacancy/{id}', [PostjobController::class, 'editJobVacancy'])->name('edit-jobvacancy');
+
+    Route::post('/update-job-vacancy', [PostjobController::class, 'updateJobVacancy'])->name('update-job-vacancy');
+
+    Route::get('/stop-data-job/{id}', [PostjobController::class, 'stopJobvacancy'])->name('stop-data-job');
+
+    Route::get('/delete-master-job-cavancy/{id}', [PostjobController::class, 'deleteJobVacancyMaster'])->name('delete-master-job-cavancy');
+
+    Route::get('/delete-master-job-cavancy-detail/{id}', [PostjobController::class, 'deleteJobVacancyDetail'])->name('delete-master-job-cavancy-detail');
+
+
+    Route::get('/pages-list-detail-delete/{id}', [HelperController::class, 'deleteListItemDetail'])->name('pages-list-detail-delete');
 
     Route::post('/save-company-profile', [UserCompanyController::class, 'saveCompanyProfile'])->name('save.company.profile');
     Route::put('/save-company-profile/{id}', [UserCompanyController::class, 'saveCompanyProfile'])->name('update.company.profile');
