@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Posting Training')
+@section('title', 'Tambah Training')
 
 
 @section('content')
@@ -684,7 +684,7 @@
 
                     setTimeout(function() {
                         $('#successModal').modal('hide');
-                        window.location.href = '/posttraining';
+                        window.location.href = '/postjobs';
                     }, 2000);
 
                     $('#previewModal').modal('hide');

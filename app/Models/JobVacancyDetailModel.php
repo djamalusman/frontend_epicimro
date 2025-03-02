@@ -16,7 +16,7 @@ class JobVacancyDetailModel extends Model
     public $incrementing = true;
 
     protected $fillable = [
-        'id_employee',
+        'idcompany',
         'id_m_employee_status',
         'id_m_work_location',
         'id_m_salaray_date_mont',
@@ -24,6 +24,11 @@ class JobVacancyDetailModel extends Model
         'id_m_sector',
         'id_m_education',
         'id_m_experience_level',
+        'id_provinsi',
+        'lokasi',
+        'companyName',
+        'file',
+        'linkpendaftaran',
         'job_title',
         'sertifikasi',
         'generatenumber',
@@ -34,8 +39,6 @@ class JobVacancyDetailModel extends Model
         'insert_by',
         'updated_by',
         'updated_by_ip',
-        'status',
-        'id_provinsi',
-        'slug'
+        'status'
     ];
 }
