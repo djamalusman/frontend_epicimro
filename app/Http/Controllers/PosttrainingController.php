@@ -69,10 +69,10 @@ class PosttrainingController extends Controller
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -88,9 +88,9 @@ class PosttrainingController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
-        
+
         return view('company.traningcourse', compact('user', 'menus','title_page','id','personalsummarys'));
     }
 
@@ -171,7 +171,7 @@ class PosttrainingController extends Controller
 
     public function ViewsStoretraningcourse($id)
     {
-      
+
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
         $title_page    = 'Traning Kerja | Pages';
@@ -179,10 +179,10 @@ class PosttrainingController extends Controller
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -203,9 +203,9 @@ class PosttrainingController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
-        
+
         return view('company.traningcourse_store', compact('personalsummarys','content','user', 'menus','id','liscategory','listsertifikasi','listprovinsi','listtype','title_page'));
     }
 
@@ -231,12 +231,24 @@ class PosttrainingController extends Controller
 
             $idProvinsi = $req->provinsi === 'Pilih Provinsi' ? 0 : $req->provinsi;
             $type = $req->type === 'Pilih Type' ? 0 : $req->type;
-              
+
             // Tentukan tab aktif
-            $tab_active = null;
-            if (!empty($req->abouttraining)) $tab_active = 1;
-            if (!empty($req->abouttrainer)) $tab_active = 2;
-            if (!empty($req->aboutcareer)) $tab_active = 3;
+            $tab_active;
+
+            if ($req->abouttraining !="" | $req->abouttraining != null) {
+                $tab_active=1;
+            }
+
+            elseif ($req->abouttrainer !="" | $req->abouttrainer != null) {
+                $tab_active=2;
+            }
+            elseif ($req->aboutcareer !="" | $req->aboutcareer != null) {
+                $tab_active=3;
+            }
+            else
+            {
+                $tab_active=1;
+            }
 
             // Simpan data training course
             $listItem = new TraningCourseDetailsModel();
@@ -257,7 +269,7 @@ class PosttrainingController extends Controller
             $listItem->aboutcareer = $req->aboutcareer;
             $listItem->tab_active = $tab_active;
             $listItem->company_name = $user->name;
-            
+
             $listItem->status = $req->status;
             $listItem->idcompany = $user->id;
             $listItem->generatenumber = $this->generateNumber();
@@ -312,44 +324,48 @@ class PosttrainingController extends Controller
                     'message' => 'Tidak ada file yang diunggah'
                 ]);
             }
-        
+
             $files = $req->file('photo');
-        
+
             // Jika hanya satu file, langsung proses tanpa looping
             if (!is_array($files)) {
                 $files = [$files]; // Ubah menjadi array untuk menyamakan proses
             }
-        
+
             $file = $files[0]; // Ambil hanya satu file pertama
-        
+
             if (!$file->isValid()) {
                 return response()->json([
                     'status' => 'failed',
                     'message' => 'File tidak valid'
                 ]);
             }
-        
+
             // Generate nama unik untuk file
             $filePhoto = uniqid() . '.webp';
-        
+
             // Konversi gambar ke WebP
             $manager = new ImageManager(new Driver());
-            $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
-        
+            $img = $manager->read($file->getPathname())
+                ->resize(1080, 750, function ($constraint) {
+                    $constraint->aspectRatio(); // Pertahankan rasio aspek
+                    $constraint->upsize(); // Jangan perbesar gambar lebih dari ukuran aslinya
+                })
+                ->encode(new WebpEncoder(80)); // Konversi ke WebP dengan kualitas 80
             // Simpan gambar ke storage/public/
             Storage::disk('public')->put($filePhoto, (string) $img);
-        
+
             //$filePath = public_path('storage/' . $filePhoto);
             $filePath = public_path('storage/' . $filePhoto);
             file_put_contents($filePath, (string) $img);
             // URL file yang diunggah
             $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
-        
+
             Log::info('File berhasil diunggah', [
                 'file_name' => $filePhoto,
                 'file_url' => $fileUrl
             ]);
-        
+
             // Pastikan $listItem tersedia sebelum menyimpan ke database
             if (!isset($listItem) || !$listItem->id) {
                 Log::error('ID training course tidak ditemukan');
@@ -358,12 +374,12 @@ class PosttrainingController extends Controller
                     'message' => 'ID training course tidak ditemukan'
                 ]);
             }
-        
+
             // **Cek database sebelum insert**
             $existingFile = dtc_File_TrainingCourseModel::where('fileold', $fileUrl)
                 ->where('id_training_course_dtl', $listItem->id)
                 ->first();
-        
+
             if ($existingFile) {
                 Log::warning('File sudah ada di database, tidak disimpan ulang', [
                     'file_name' => $filePhoto,
@@ -374,14 +390,14 @@ class PosttrainingController extends Controller
                     'message' => 'File sudah ada di database'
                 ]);
             }
-            
+
             // Simpan informasi file ke database
             $datapenulis = new dtc_File_TrainingCourseModel();
             $datapenulis->id_training_course_dtl = $listItem->id;
             $datapenulis->nama = $filePhoto;
             $datapenulis->fileold = "frontend";
             $datapenulis->save();
-        
+
             Log::info('Data berhasil disimpan ke database', [
                 'file_name' => $filePhoto,
                 'id_training_course_dtl' => $listItem->id
@@ -402,15 +418,15 @@ class PosttrainingController extends Controller
         $data['content'] = base64_decode($id);
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
-       
+
         // Get menus for candidate
         $data ['menus'] = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -448,9 +464,9 @@ class PosttrainingController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
-        
+
 
         return view('company.traningcourse_edit', $data);
     }
@@ -482,11 +498,15 @@ class PosttrainingController extends Controller
                 $tab_active=1;
             }
 
-            if ($req->abouttrainer !="" | $req->abouttrainer != null) {
+            elseif ($req->abouttrainer !="" | $req->abouttrainer != null) {
                 $tab_active=2;
             }
-            if ($req->aboutcareer !="" | $req->aboutcareer != null) {
+            elseif ($req->aboutcareer !="" | $req->aboutcareer != null) {
                 $tab_active=3;
+            }
+            else
+            {
+                $tab_active=1;
             }
 
             $listItem = TraningCourseDetailsModel::find($req->iddtl);
@@ -625,44 +645,48 @@ class PosttrainingController extends Controller
                     'message' => 'Tidak ada file yang diunggah'
                 ]);
             }
-        
+
             $files = $req->file('photo');
-        
+
             // Jika hanya satu file, langsung proses tanpa looping
             if (!is_array($files)) {
                 $files = [$files]; // Ubah menjadi array untuk menyamakan proses
             }
-        
+
             $file = $files[0]; // Ambil hanya satu file pertama
-        
+
             if (!$file->isValid()) {
                 return response()->json([
                     'status' => 'failed',
                     'message' => 'File tidak valid'
                 ]);
             }
-        
+
             // Generate nama unik untuk file
             $filePhoto = uniqid() . '.webp';
-        
+
             // Konversi gambar ke WebP
             $manager = new ImageManager(new Driver());
-            $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
-        
-            // Simpan gambar ke storage/public/
+            $img = $manager->read($file->getPathname())
+            ->resize(1080, 750, function ($constraint) {
+                $constraint->aspectRatio(); // Pertahankan rasio aspek
+                $constraint->upsize(); // Jangan perbesar gambar lebih dari ukuran aslinya
+            })
+            ->encode(new WebpEncoder(80)); // Konversi ke WebP dengan kualitas 80
+
             Storage::disk('public')->put($filePhoto, (string) $img);
-        
-            //$filePath = public_path('storage/' . $filePhoto);
+
             $filePath = public_path('storage/' . $filePhoto);
             file_put_contents($filePath, (string) $img);
+
             // URL file yang diunggah
             $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
-        
+
             Log::info('File berhasil diunggah', [
                 'file_name' => $filePhoto,
                 'file_url' => $fileUrl
             ]);
-        
+
             // Pastikan $listItem tersedia sebelum menyimpan ke database
             if (!isset($listItem) || !$listItem->id) {
                 Log::error('ID training course tidak ditemukan');
@@ -671,12 +695,12 @@ class PosttrainingController extends Controller
                     'message' => 'ID training course tidak ditemukan'
                 ]);
             }
-        
+
             // **Cek database sebelum insert**
             $existingFile = dtc_File_TrainingCourseModel::where('fileold', $fileUrl)
                 ->where('id_training_course_dtl', $listItem->id)
                 ->first();
-        
+
             if ($existingFile) {
                 Log::warning('File sudah ada di database, tidak disimpan ulang', [
                     'file_name' => $filePhoto,
@@ -694,7 +718,7 @@ class PosttrainingController extends Controller
             $datapenulis->nama = $filePhoto;
             $datapenulis->fileold = "frontend";
             $datapenulis->save();
-        
+
             Log::info('Data berhasil disimpan ke database', [
                 'file_name' => $filePhoto,
                 'id_training_course_dtl' => $listItem->id
@@ -717,14 +741,6 @@ class PosttrainingController extends Controller
               (($status == 2) ? 'pending' :
               (($status == 3) ? 'preview' : 'unknown'));
 
-        $log_app = new LogApp();
-        $log_app->method = $req->method();
-        $log_app->request = "Create Traning Course '{$statusText}'";
-        $log_app->response =  json_encode($response);
-        $log_app->pages = 'Traning';
-        $log_app->user_id = session()->get('id');
-        $log_app->ip_address = $req->ip();
-        $log_app->save();
         return json_encode($response);
     }
 
@@ -836,14 +852,7 @@ class PosttrainingController extends Controller
             ];
         }
 
-        $log_app = new LogApp();
-        $log_app->method = $req->method();
-        $log_app->request =  "Update Traning Course";
-        $log_app->response =  json_encode($response);
-        $log_app->pages = 'Traning';
-        $log_app->user_id = session()->get('id');
-        $log_app->ip_address = $req->ip();
-        $log_app->save();
+
         return json_encode($response);
     }
 
@@ -946,14 +955,6 @@ class PosttrainingController extends Controller
             ];
         }
 
-        $log_app = new LogApp();
-        $log_app->method = $req->method();
-        $log_app->request =  "Update Traning Course";
-        $log_app->response =  json_encode($response);
-        $log_app->pages = 'Traning';
-        $log_app->user_id = session()->get('id');
-        $log_app->ip_address = $req->ip();
-        $log_app->save();
         return json_encode($response);
     }
 }

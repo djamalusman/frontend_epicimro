@@ -65,10 +65,24 @@
                 <a href="/detail-course/{{ $value->id }}">
                     <div class="imgGrid-container">
                         <figure>
-                            <a href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
+                            {{-- <a href="/detail-job/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
                                 <img style="height:220px;" class="imgGrid"
                                     src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
+                            </a> --}}
+                            @if ( $value->fileold !="frontend")
+                                <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
+                                    <img class="imgGrid"
+                                    src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->file ?? '')) }}" />
+
+                                </a>
+                            @else
+                            <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->job_title) }}">
+
+                                <img src="{{ asset('/storage/' . ($value->image_path ?? '')) }}">
+
                             </a>
+
+                            @endif
                         </figure>
                     </div>
                 </a>

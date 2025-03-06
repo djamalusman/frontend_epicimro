@@ -66,10 +66,10 @@ class PostjobController extends Controller
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -85,9 +85,9 @@ class PostjobController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
-        
+
         return view('company.jobvacancy', compact('user', 'menus','title_page','id','personalsummarys'));
     }
 
@@ -205,10 +205,10 @@ class PostjobController extends Controller
         $data['menus'] = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -233,17 +233,17 @@ class PostjobController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
-        
+
         return view('company.jobvacancy_store', $data);
     }
 
-    
+
 
     public function storeJobVacancy(Request $req)
     {
-            
+
             $user = Auth::user();
             $jadwalMulai = Carbon::createFromDate(
                 $req->jadwal_mulai_tahun,
@@ -258,56 +258,56 @@ class PostjobController extends Controller
             )->toDateString();
             $idProvinsi = $req->provinsi === 'Pilih Provinsi' ? 0 : $req->provinsi;
 
-     
+
             // Simpan file gambar
 
-            if (!$req->hasFile('photo')) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'Tidak ada file yang diunggah'
-                ]);
-            }
-        
-            $files = $req->file('photo');
-        
-            // Jika hanya satu file, langsung proses tanpa looping
-            if (!is_array($files)) {
-                $files = [$files]; // Ubah menjadi array untuk menyamakan proses
-            }
-        
-            $file = $files[0]; // Ambil hanya satu file pertama
-        
-            if (!$file->isValid()) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'File tidak valid'
-                ]);
-            }
-        
-            // Generate nama unik untuk file
-            $filename = uniqid() . '.webp';
-        
-            // Konversi gambar ke WebP
-            $manager = new ImageManager(new Driver());
-            $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
-        
-            // Simpan gambar ke storage/public/
-            Storage::disk('public')->put($filename, (string) $img);
-        
-            //$filePath = public_path('storage/' . $filePhoto);
-            $filePath = public_path('storage/' . $filename);
-            file_put_contents($filePath, (string) $img);
-            // URL file yang diunggah
-            $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filename;
-        
-            Log::info('File berhasil diunggah', [
-                'file_name' => $filename,
-                'file_url' => $fileUrl
-            ]);
-        
-            
-        
-           
+            // if (!$req->hasFile('photo')) {
+            //     return response()->json([
+            //         'status' => 'failed',
+            //         'message' => 'Tidak ada file yang diunggah'
+            //     ]);
+            // }
+
+            // $files = $req->file('photo');
+
+            // // Jika hanya satu file, langsung proses tanpa looping
+            // if (!is_array($files)) {
+            //     $files = [$files]; // Ubah menjadi array untuk menyamakan proses
+            // }
+
+            // $file = $files[0]; // Ambil hanya satu file pertama
+
+            // if (!$file->isValid()) {
+            //     return response()->json([
+            //         'status' => 'failed',
+            //         'message' => 'File tidak valid'
+            //     ]);
+            // }
+
+            // // Generate nama unik untuk file
+            // $filename = uniqid() . '.webp';
+
+            // // Konversi gambar ke WebP
+            // $manager = new ImageManager(new Driver());
+            // $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
+
+            // // Simpan gambar ke storage/public/
+            // Storage::disk('public')->put($filename, (string) $img);
+
+            // //$filePath = public_path('storage/' . $filePhoto);
+            // $filePath = public_path('storage/' . $filename);
+            // file_put_contents($filePath, (string) $img);
+            // // URL file yang diunggah
+            // $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filename;
+
+            // Log::info('File berhasil diunggah', [
+            //     'file_name' => $filename,
+            //     'file_url' => $fileUrl
+            // ]);
+
+
+
+
         try {
 
             $listItem = new JobVacancyDetailModel();
@@ -330,7 +330,7 @@ class PostjobController extends Controller
             $listItem->generatenumber           = $this->generateNumber(); // Generate the number
 
             $listItem->status                   = $req->status;
-            $listItem->file                      = $filename;
+            // $listItem->file                      = $filename;
             $listItem->job_description      = $req->jobdescripsi;
             $listItem->skill_requirment      = $req->skillRequirement;
 
@@ -340,6 +340,93 @@ class PostjobController extends Controller
 
 
             $listItem->save();
+
+            // Simpan file gambar
+            if (!$req->hasFile('photo')) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Tidak ada file yang diunggah'
+                ]);
+            }
+
+            $files = $req->file('photo');
+
+            // Jika hanya satu file, ubah menjadi array agar seragam
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+
+            $file = $files[0]; // Ambil file pertama
+
+            if (!$file->isValid()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'File tidak valid'
+                ]);
+            }
+
+            // Generate nama unik untuk file
+            $filePhoto = uniqid() . '.webp';
+
+            // Konversi dan ubah ukuran gambar ke WebP
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file->getPathname())
+                ->resize(328, 153, function ($constraint) {
+                    $constraint->aspectRatio(); // Pertahankan rasio aspek
+                    $constraint->upsize(); // Jangan perbesar gambar lebih dari ukuran aslinya
+                })
+                ->encode(new WebpEncoder(80)); // Konversi ke WebP dengan kualitas 80
+
+            // Simpan gambar ke storage/public/
+            Storage::disk('public')->put($filePhoto, (string) $img);
+
+            $filePath = public_path('storage/' . $filePhoto);
+            file_put_contents($filePath, (string) $img);
+
+            // URL file yang diunggah
+            $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
+
+            Log::info('File berhasil diunggah', [
+                'file_name' => $filePhoto,
+                'file_url' => $fileUrl
+            ]);
+
+            // Pastikan $listItem tersedia sebelum menyimpan ke database
+            if (!isset($listItem) || !$listItem->id) {
+                Log::error('ID training course tidak ditemukan');
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'ID training course tidak ditemukan'
+                ]);
+            }
+
+            // Cek database sebelum insert
+            $existingFile = JobVacancyFilesModel::where('fileold', $fileUrl)
+                ->where('id_job_vacancy_dtl', $listItem->id)
+                ->first();
+
+            if ($existingFile) {
+                Log::warning('File sudah ada di database, tidak disimpan ulang', [
+                    'file_name' => $filePhoto,
+                    'id_job_vacancy_dtl' => $listItem->id
+                ]);
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'File sudah ada di database'
+                ]);
+            }
+
+            // Simpan informasi file ke database
+            $dataphoto = new JobVacancyFilesModel();
+            $dataphoto->id_job_vacancy_dtl = $listItem->id;
+            $dataphoto->nama = $filePhoto;
+            $dataphoto->fileold = "frontend";
+            $dataphoto->save();
+
+            Log::info('Data berhasil disimpan ke database', [
+                'file_name' => $filePhoto,
+                'id_training_course_dtl' => $listItem->id
+            ]);
 
 
 
@@ -360,22 +447,22 @@ class PostjobController extends Controller
 
     public function editJobVacancy($id)
     {
-        
+
         $user = Auth::user();
         $data['title']      = 'Traning Kerja | Pages';
         $data['title_page']= 'Edit Traning Course';
         $data['content'] = base64_decode($id);
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
-       
+
         // Get menus for candidate
         $data ['menus'] = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -415,7 +502,7 @@ class PostjobController extends Controller
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
 
         return view('company.jobvacancy_edit', $data);
@@ -425,7 +512,7 @@ class PostjobController extends Controller
     public function updateJobVacancy(Request $req)
     {
 
-        
+
         try {
 
             $jadwalMulai = Carbon::createFromDate(
@@ -441,49 +528,7 @@ class PostjobController extends Controller
             )->toDateString();
             $idProvinsi = $req->provinsi === 'Pilih Provinsi' ? 0 : $req->provinsi;
 
-            // if (!$req->hasFile('photo')) {
-            //     return response()->json([
-            //         'status' => 'failed',
-            //         'message' => 'Tidak ada file yang diunggah'
-            //     ]);
-            // }
-        
-            // $files = $req->file('photo');
-        
-            // // Jika hanya satu file, langsung proses tanpa looping
-            // if (!is_array($files)) {
-            //     $files = [$files]; // Ubah menjadi array untuk menyamakan proses
-            // }
-        
-            // $file = $files[0]; // Ambil hanya satu file pertama
-        
-            // if (!$file->isValid()) {
-            //     return response()->json([
-            //         'status' => 'failed',
-            //         'message' => 'File tidak valid'
-            //     ]);
-            // }
-        
-            // // Generate nama unik untuk file
-            // $filename = uniqid() . '.webp';
-        
-            // // Konversi gambar ke WebP
-            // $manager = new ImageManager(new Driver());
-            // $img = $manager->read($file->getPathname())->encode(new WebpEncoder(80));
-        
-            // // Simpan gambar ke storage/public/
-            // Storage::disk('public')->put($filename, (string) $img);
-        
-            // //$filePath = public_path('storage/' . $filePhoto);
-            // $filePath = public_path('storage/' . $filename);
-            // file_put_contents($filePath, (string) $img);
-            // // URL file yang diunggah
-            // $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filename;
-        
-            // Log::info('File berhasil diunggah', [
-            //     'file_name' => $filename,
-            //     'file_url' => $fileUrl
-            // ]);
+
             //dd($req->photo);
             $listItem = JobVacancyDetailModel::find($req->iddtl);
             $listItem->id_provinsi              = $idProvinsi;
@@ -500,9 +545,7 @@ class PostjobController extends Controller
             $listItem->posted_date              = $jadwalMulai;
             $listItem->close_date               = $jadwalSelesai;
             $listItem->sertifikasi              = $req->certification;
-            if ($req->photo !=null) {
-                $listItem->file                 = $filename;
-            }
+
 
             $listItem->status                   = $req->status;
             $listItem->job_description          = $req->jobdescripsi;
@@ -511,7 +554,98 @@ class PostjobController extends Controller
             $listItem->insert_by                = session()->get('id');
             $listItem->updated_by               = session()->get('id');
             $listItem->updated_by_ip            = $req->ip();
-             $listItem->save();
+            $listItem->save();
+
+
+            // Simpan file gambar
+            if (!$req->hasFile('photo')) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Tidak ada file yang diunggah'
+                ]);
+            }
+
+            $files = $req->file('photo');
+
+            // Jika hanya satu file, ubah menjadi array agar seragam
+            if (!is_array($files)) {
+                $files = [$files];
+            }
+
+            $file = $files[0]; // Ambil file pertama
+
+            if (!$file->isValid()) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'File tidak valid'
+                ]);
+            }
+
+            // Generate nama unik untuk file
+            $filePhoto = uniqid() . '.webp';
+
+            // Konversi dan ubah ukuran gambar ke WebP
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file->getPathname())
+                ->resize(328, 153, function ($constraint) {
+                    $constraint->aspectRatio(); // Pertahankan rasio aspek 328 × 153 px
+
+                    $constraint->upsize(); // Jangan perbesar gambar lebih dari ukuran aslinya
+                })
+                ->encode(new WebpEncoder(80)); // Konversi ke WebP dengan kualitas 80
+
+            // Simpan gambar ke storage/public/
+            Storage::disk('public')->put($filePhoto, (string) $img);
+
+            $filePath = public_path('storage/' . $filePhoto);
+            file_put_contents($filePath, (string) $img);
+
+            // URL file yang diunggah
+            $fileUrl = 'https://admin.trainingkerja.com/public/storage/' . $filePhoto;
+
+            Log::info('File berhasil diunggah', [
+                'file_name' => $filePhoto,
+                'file_url' => $fileUrl
+            ]);
+
+            // Pastikan $listItem tersedia sebelum menyimpan ke database
+            if (!isset($listItem) || !$listItem->id) {
+                Log::error('ID training course tidak ditemukan');
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'ID training course tidak ditemukan'
+                ]);
+            }
+
+            // Cek database sebelum insert
+            $existingFile = JobVacancyFilesModel::where('fileold', $fileUrl)
+                ->where('id_job_vacancy_dtl', $listItem->id)
+                ->first();
+
+            if ($existingFile) {
+                Log::warning('File sudah ada di database, tidak disimpan ulang', [
+                    'file_name' => $filePhoto,
+                    'id_job_vacancy_dtl' => $listItem->id
+                ]);
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'File sudah ada di database'
+                ]);
+            }
+
+            // Simpan informasi file ke database
+            JobVacancyFilesModel::where('id_job_vacancy_dtl', $req->iddtl)->delete();
+            $dataphoto = new JobVacancyFilesModel();
+            $dataphoto->id_job_vacancy_dtl = $listItem->id;
+            $dataphoto->nama = $filePhoto;
+            $dataphoto->fileold = "frontend";
+            $dataphoto->save();
+
+            Log::info('Data berhasil disimpan ke database', [
+                'file_name' => $filePhoto,
+                'id_training_course_dtl' => $listItem->id
+            ]);
+
 
             $response = [
                 'status' => 'success',
@@ -524,7 +658,7 @@ class PostjobController extends Controller
             ];
         }
 
-        
+
         return json_encode($response);
     }
 

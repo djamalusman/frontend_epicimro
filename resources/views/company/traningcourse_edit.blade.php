@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Update Training')
 
- 
+
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
@@ -32,7 +32,7 @@
         transition: transform 0.3s ease; /* Animasi zoom */
         cursor: pointer; /* Kursor pointer untuk menunjukkan gambar dapat diklik */
     }
-    
+
     .img-thumbnail:hover {
         transform: scale(1.6); /* Memperbesar gambar saat di-hover, gunakan nilai yang lebih tinggi untuk zoom lebih besar */
     }
@@ -41,7 +41,7 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-    
+
         .modal-content {
             text-align: center;
             padding: 20px;
@@ -75,13 +75,13 @@
             </div>
                 <div class="heading-main-info">
                     <h4 class="mb-20 mt-25">{{ $personalsummary->name }} {{ $personalsummary->lastname }}
-                        
+
                     </h4>
                     <div class="head-info-profile">
                         <span class="text-small mr-20"><i class="fi-rr-marker text-mutted"></i>{{$personalsummary->provinsi_name}},{{$personalsummary->company_address}}</span>
                         <span class="text-small mr-20"><i class="fi fi-rr-envelope"></i> {{ $personalsummary->email }}</span>
                         <span class="text-small"><i class="fi-rr-phone-call text-mutted"></i> {{ $personalsummary->phone }}</span>
-                        
+
                     </div>
                     <div class="row align-items-end">
                         <div class="col-lg-6">
@@ -152,7 +152,7 @@
                                 <div class="col-md-6 col-sm-6 col-12 mb-20">
                                     <strong class="text-md-bold">Durasi Training</strong>
                                     <span class="dis-block text-muted text-md-lh24">
-                                        <input type="number" class="form-control" value="{{ $databyid->training_duration }}" id="training_duration" name="training_duration"> 
+                                        <input type="number" class="form-control" value="{{ $databyid->training_duration }}" id="training_duration" name="training_duration">
                                     </span>
                                 </div>
                                 <!-- Persyaratan -->
@@ -168,7 +168,7 @@
                                     </div>
                                 </div>
                                 @if (Count($listpersyaratan) > 0)
-                                   
+
                                     @foreach ($listpersyaratan as $index => $datapersyaratan)
                                         <div class="col-md-12 col-sm-6 col-12 mb-20">
                                             <div class="form-group">
@@ -186,7 +186,7 @@
                                     @endforeach
                                 @else
                                 @endif
-                                
+
                                 <strong class="text-md-bold">Jadwal mulai training</strong>
                                 <div class="col-md-12">
                                     <div class="row">
@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                
+
                                 <strong class="text-md-bold">Jadwal selesai training</strong>
                                 <div class="col-md-12">
                                     <div class="row">
@@ -244,7 +244,7 @@
                                 </div>
                                 @if (Count($listmateri) > 0)
                                     @foreach ($listmateri as $index => $datamateri)
-                                        
+
                                         <div class="col-md-12 col-sm-6 col-12 mb-20">
                                             <div class="form-group">
                                                 <strong class="text-md-bold">Materi Training</strong>
@@ -254,12 +254,12 @@
                                                         <button type="button" class="btn btn-danger btn-remove" onclick="removeDataMateriTraining(this)">-</button>
                                                     </div>
                                                 </div>
-                                            </div>    
+                                            </div>
                                         </div>
                                     @endforeach
                                 @else
                                 @endif
-                                
+
                                 <div class="col-md-12 col-sm-6 col-12 mb-20">
                                     <strong class="text-md-bold">Fasilitas</strong>
                                     <div id="fasilitas-container">
@@ -273,7 +273,7 @@
                                 </div>
                                 @if (Count($listfasilitas) > 0)
                                     @foreach ($listfasilitas as $index => $datafasilitas)
-                                        
+
                                         <div class="col-md-12 col-sm-6 col-12 mb-20">
                                             <div class="form-group">
                                                 <strong class="text-md-bold">Fasilitas</strong>
@@ -317,7 +317,7 @@
                                         <textarea class="form-control abouttrainer" name="abouttrainer" id="abouttrainer" rows="4" cols="50">{{ $databyid->abouttrainer}}</textarea>
                                     </span>
                                 </div>
-                                
+
 
                                 <!-- provinsi -->
                                 <div class="col-md-12 col-sm-6 col-12 mb-20">
@@ -332,7 +332,7 @@
                                         </select>
                                     </span>
                                 </div>
-                                
+
                                 <!-- Lokasi -->
                                 <div class="col-md-12 col-sm-6 col-12 mb-10">
                                     <strong class="text-md-bold">Lokasi</strong>
@@ -355,15 +355,17 @@
                                 @if (Count($listfiles) > 0)
                                     @foreach ($listfiles as $index => $datphoto)
                                         <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="photoDb{{ $index }}" readonly value="{{ $datphoto->nama }}" name="photoData[]" data-iddphoto="{{ $datphoto->id }}">
-                                                    <div class="input-group-append">
-                                                        <button type="button" class="btn btn-primary btn-preview" data-index="{{ $index }}" onclick="previewModalPhoto(this)">View file</button>
-                                                        <button type="button" class="btn btn-danger btn-remove" onclick="removeDataPhoto(this)">-</button>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="photoDb{{ $index }}" readonly value="{{ $datphoto->nama }}" name="photoData[]" data-iddphoto="{{ $datphoto->id }}">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-primary btn-preview" data-index="{{ $index }}" onclick="previewModalPhoto(this)">View file</button>
+                                                            <button type="button" class="btn btn-danger btn-remove" onclick="removeDataPhoto(this)">-</button>
+                                                        </div>
                                                     </div>
+
                                                 </div>
-                                               
                                             </div>
                                         </div>
                                     @endforeach
@@ -832,7 +834,7 @@
         });
 
         $('#modal-content').html(`
-            
+
             <div class="form-group row">
                 <label>Nama Training</label>
                 <input type="text" class="form-control" value="${formData.nama_training}" readonly>

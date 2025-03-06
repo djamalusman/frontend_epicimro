@@ -211,13 +211,13 @@
             </div>
                 <div class="heading-main-info">
                     <h4 class="mb-20 mt-25">{{ $personalsummary->name }} {{ $personalsummary->lastname }}
-                        
+
                     </h4>
                     <div class="head-info-profile">
                         <span class="text-small mr-20"><i class="fi-rr-marker text-mutted"></i>{{$personalsummary->provinsi_name}},{{$personalsummary->company_address}}</span>
                         <span class="text-small mr-20"><i class="fi fi-rr-envelope"></i> {{ $personalsummary->email }}</span>
                         <span class="text-small"><i class="fi-rr-phone-call text-mutted"></i> {{ $personalsummary->phone }}</span>
-                        
+
                     </div>
                     <div class="row align-items-end">
                         <div class="col-lg-6">
@@ -239,7 +239,7 @@
                             <h4 class="mb-20 mt-25">Tambah Job</h4>
                             <form id="training-form" enctype="multipart/form-data">
                                 <div class="row">
-                                   
+
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Photo</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -253,7 +253,7 @@
                                             <input type="text" class="form-control" id="jobTitle" name="jobTitle">
                                         </span>
                                     </div>
-                                    
+
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Employment Status</strong>
                                             <select class="form-control2 dis-block text-muted text-md-lh24" style="height:44px;" id="employmentStatus" name="employmentStatus">
@@ -274,7 +274,7 @@
                                             </select>
                                     </div>
 
-                                    
+
                                     <div class="col-md-4 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Est. Salary</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -293,7 +293,7 @@
                                                 @foreach($listfee as $value)
                                                     <option value="{{$value->id}}">{{$value->nama}}</option>
                                                 @endforeach
-                                            </select>   
+                                            </select>
                                         </span>
                                     </div>
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
@@ -359,7 +359,7 @@
                                             </select>
                                         </span>
                                     </div>
-                                    
+
                                     <div class="col-md-12 col-sm-6 col-12 mb-20">
                                         <strong class="text-md-bold">Certification</strong>
                                         <span class="dis-block text-muted text-md-lh24">
@@ -396,7 +396,7 @@
                                         <span class="dis-block text-muted text-md-lh24">
                                             <select class="form-control" style="height:45px;" id="jadwal_mulai_bulan" name="jadwal_mulai_bulan">
                                                 <option>Bulan</option>
-                                            </select>   
+                                            </select>
                                         </span>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-12 mb-20 mt-25">
@@ -404,7 +404,7 @@
                                             <select class="form-control" style="height:45px;" id="jadwal_mulai_tahun" name="jadwal_mulai_tahun">
                                                 <option>Tahun</option><br>
                                                 <br>
-                                            </select>   
+                                            </select>
                                         </span>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-12 mb-20">
@@ -419,7 +419,7 @@
                                         <span class="dis-block text-muted text-md-lh24">
                                             <select class="form-control" style="height:45px;"  id="jadwal_selesai_bulan" name="jadwal_selesai_bulan">
                                                 <option>Bulan</option>
-                                            </select>   
+                                            </select>
                                         </span>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-12 mb-20 mt-25">
@@ -447,10 +447,10 @@
             </div>
 
             <!-- Sidebar -->
-            
+
         </div>
     </div>
-   
+
 </section>
 
 <!-- jQuery -->
@@ -544,7 +544,7 @@ $(document).ready(function() {
             };
 
             $('#modal-content').html(`
-                
+
                 <div class="form-group row">
                 <label>Job Title</label>
                 <input type="text" class="form-control" value="${formData.jobTitle}" readonly>
@@ -779,7 +779,7 @@ $(document).ready(function() {
     });
     // $(".desc").summernote({
     //     toolbar: [
-            
+
     //         ['font', ['clear']], // Tombol font tidak ditampilkan
     //         ['color', ['color']], // Tombol warna tidak ditampilkan
     //         ['para', ['ul', 'ol', 'paragraph']],
@@ -801,7 +801,7 @@ $(document).ready(function() {
     //     disableDragAndDrop: true
     // });descJobdesc descReqdesc
     $(".descJobdesc").summernote({
-        height: 250, 
+        height: 250,
             toolbar: [
                 ['font', [ 'fontsize', 'clear']], // Menampilkan opsi style font dan ukuran font
                 //['font', ['fontname', 'fontsize', 'clear']],
@@ -825,7 +825,7 @@ $(document).ready(function() {
             disableDragAndDrop: true
     });
     $(".descReqdesc").summernote({
-        height: 250, 
+        height: 250,
             toolbar: [
                 ['font', [ 'fontsize', 'clear']], // Menampilkan opsi style font dan ukuran font
                 //['font', ['fontname', 'fontsize', 'clear']],
@@ -860,18 +860,7 @@ $(document).ready(function() {
         }
         $(this).next(".custom-file-label").html(files.join(", "));
     });
-    $(function() {
-        $('#side-list-traning-course').DataTable({
-            "paging": true,
-            "pageLength": 5,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
+
     function deletePrompt(id) {
         var url = "{{ route('pages-list-detail-delete',':id') }}";
         url = url.replace(":id", id);

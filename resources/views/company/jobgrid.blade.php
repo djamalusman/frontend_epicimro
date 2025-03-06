@@ -223,7 +223,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
+    {{-- <script>
         // Initialize Flatpickr for Date Range with Optional Single Date
         const dateRangePicker = flatpickr("#datesearchJob", {
             mode: "range", // Enable range mode for date range selection
@@ -271,7 +271,7 @@
             }
             // No action needed if no dates or only one date is selected
         });
-    </script>
+    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.getElementById('filterLocation');

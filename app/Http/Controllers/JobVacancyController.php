@@ -20,10 +20,10 @@ class JobVacancyController extends Controller
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -52,17 +52,17 @@ class JobVacancyController extends Controller
 
     public function JobGrid(Request $request)
     {
-      
+
         $title = 'Jobs';
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -90,13 +90,15 @@ class JobVacancyController extends Controller
 
         $title = 'Details Jobs';
         $user = Auth::user();
-        
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
-            } else {
+
+            }elseif ($role == 'company') {
+                $query->where('role', $role);
+            }
+            else {
                 $query->where('role', ['guest']);
             }
         })
@@ -104,7 +106,6 @@ class JobVacancyController extends Controller
         ->orderBy('order')
         ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
         ->get();
-        
         $userEmail = session('email');
         $UserCleint = User::where('email', $userEmail)->first();
         $getdtApplyJobs= ApplyJob::where('idjob', base64_decode($id))->first();
@@ -115,7 +116,7 @@ class JobVacancyController extends Controller
         {
             $getdtApplyJob=null;
         }
-        
+
         //dd($data['getdtApplyJob']);
         $query = DB::table('djv_job_vacancy_detail')
             ->leftJoin('m_employee_status', 'djv_job_vacancy_detail.id_m_employee_status', '=', 'm_employee_status.id')
@@ -137,7 +138,7 @@ class JobVacancyController extends Controller
                 'm_experience_level.nama as name_experience_level',
                 'm_provinsi.nama as provinsi'
             );
-       
+
         $getdataDetail=$query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $datadetail = $query->where('djv_job_vacancy_detail.id',base64_decode($id))->first();
         $url = $request->input('url', url()->current());
@@ -150,7 +151,7 @@ class JobVacancyController extends Controller
           $share_buttons = $share_buttons;
           $dataIdJob =base64_decode($id);
           return view('jobvacancy.detailjob', compact('title','menus', 'getdtApplyJob', 'getdataDetail', 'share_buttons','dataIdJob','role','UserCleint'));
-        
+
     }
 
     public function previewFilter(Request $request)

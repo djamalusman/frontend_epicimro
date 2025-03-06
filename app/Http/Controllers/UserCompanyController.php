@@ -43,7 +43,7 @@ class UserCompanyController extends Controller
        if (Auth::check()) {
            // Pengguna sudah login
            $user = Auth::user();
-           
+
            // Redirect berdasarkan role
            switch($user->role) {
                case 'candidate':
@@ -94,7 +94,7 @@ class UserCompanyController extends Controller
 
          // Generate ID user
          $no = User::count() + 1;
-         
+
          $role = 'company';
 
          // Buat user baru
@@ -110,7 +110,7 @@ class UserCompanyController extends Controller
          if ($user) {
             try {
                 Mail::to($user->email)->send(new RegistrationSuccessMail($user,$request->password));
-    
+
                 return response()->json([
                     'message' => 'Registration successful! Email sent.',
                 ]);
@@ -131,18 +131,18 @@ class UserCompanyController extends Controller
 
     public function profileEmployee()
     {
-        
+
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
-        
+
         // Get menus for candidate
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -158,26 +158,26 @@ class UserCompanyController extends Controller
         $provinces = Province::all();
         $sectors = Sector::all();
 
-        
+
         $personalsummarys = User::where('users_client.id', $user->id)
         ->leftJoin('company_profiles', 'company_profiles.user_id', '=', 'users_client.id')
         ->leftJoin('m_provinsi', 'company_profiles.provinsi_id', '=', 'm_provinsi.id')
         ->leftJoin('m_sector', 'company_profiles.sector_id', '=', 'm_sector.id')
         ->orderBy('users_client.updated_at', 'desc')
-        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name') 
+        ->select('users_client.*', 'company_profiles.*','m_provinsi.id as provinsi_id', 'm_sector.id as sector_id','m_provinsi.nama as provinsi_name', 'm_sector.nama as sector_name')
         ->get();
 
-    
+
 
         // Get experiences, educations, and certifications
         $experiences = Experience::where('user_id', $user->id)
                                ->orderBy('start_date', 'desc')
                                ->get();
-                               
+
         $educations = Education::where('user_id', $user->id)
                              ->orderBy('start_date', 'desc')
                              ->get();
-                             
+
         $certifications = Certification::where('user_id', $user->id)
                                     ->orderBy('issue_date', 'desc')
                                     ->get();
@@ -186,7 +186,7 @@ class UserCompanyController extends Controller
 
         return view('company.profilecompany', compact('user', 'menus', 'companyprofiles', 'provinces', 'sectors', 'personalsummarys' ,'experiences', 'educations', 'certifications','userData','skills'));
     }
-    
+
     public function saveCompanyProfile(Request $request, $id = null)
     {
         try {
@@ -277,10 +277,10 @@ class UserCompanyController extends Controller
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -295,8 +295,8 @@ class UserCompanyController extends Controller
             ->select(
                 'm_employee_status.nama as employees_status'
             )->get();
-        return view('company.coursegrid', compact('title','menus', 'Counttraining', 'filter'));       
-       
+        return view('company.coursegrid', compact('title','menus', 'Counttraining', 'filter'));
+
     }
 
     public function getContentGridCourse(Request $request)
@@ -467,20 +467,20 @@ class UserCompanyController extends Controller
         ]);
 
     }
-    
+
     public function JobGrid(Request $request)
     {
-      
+
         $title = 'Jobs';
         $user = Auth::user();
         $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
         $menus = Menu_client::where(function($query) use ($role) {
             if ($role == 'candidate') {
                 $query->where('role', $role);
-                
+
             }elseif ($role == 'company') {
                 $query->where('role', $role);
-            } 
+            }
             else {
                 $query->where('role', ['guest']);
             }
@@ -502,7 +502,7 @@ class UserCompanyController extends Controller
         return view('company.jobgrid', compact('title','menus', 'dataCount', 'CountJob', 'filter'));
 
     }
-    
+
     public function getContentJobGrid(Request $request)
     {
         $user = Auth::user();
@@ -517,6 +517,15 @@ class UserCompanyController extends Controller
             ->leftJoin('m_education', 'm_education.id', '=', 'djv_job_vacancy_detail.id_m_education')
             ->leftJoin('m_experience_level', 'm_experience_level.id', '=', 'djv_job_vacancy_detail.id_m_experience_level')
             ->leftJoin('m_provinsi', 'm_provinsi.id', '=', 'djv_job_vacancy_detail.id_provinsi')
+            ->leftJoin(DB::raw('(
+                SELECT *
+                FROM m_job_vacancy_file
+                WHERE id IN (
+                    SELECT MIN(id)
+                    FROM m_job_vacancy_file
+                    GROUP BY id_job_vacancy_dtl
+                )
+            ) AS m_job_vacancy_file'), 'm_job_vacancy_file.id_job_vacancy_dtl', '=', 'djv_job_vacancy_detail.id')
             ->where('djv_job_vacancy_detail.idcompany',$user->id)
             ->select(
                 'djv_job_vacancy_detail.*',
@@ -527,6 +536,8 @@ class UserCompanyController extends Controller
                 'm_sector.nama as sector',
                 'm_education.nama as education',
                 'm_experience_level.nama as name_experience_level',
+                'm_job_vacancy_file.nama as image_path',
+                'm_job_vacancy_file.fileold as fileold',
                 'm_provinsi.nama as namaprovinsi'
             );
         $whereData=$query->where('djv_job_vacancy_detail.status',1);

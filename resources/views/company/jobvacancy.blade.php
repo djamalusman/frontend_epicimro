@@ -2,26 +2,7 @@
 @section('title', 'Posting Job')
 
 <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-<style>
-    /* Style the input field */
-    #myInput {
-      padding: 20px;
-      margin-top: -6px;
-      border: 0;
-      border-radius: 0;
-      background: #f1f1f1;
-    }
-    .dropdown-menu {
-    max-height: 300px;
-    overflow-y: auto;
-}
 
-.list-group-item {
-    cursor: pointer;
-}
-
-    </style>
 
 
 @section('content')
@@ -38,13 +19,13 @@
             </div>
                 <div class="heading-main-info">
                     <h4 class="mb-20 mt-25">{{ $personalsummary->name }} {{ $personalsummary->lastname }}
-                        
+
                     </h4>
                     <div class="head-info-profile">
                         <span class="text-small mr-20"><i class="fi-rr-marker text-mutted"></i>{{$personalsummary->provinsi_name}},{{$personalsummary->company_address}}</span>
                         <span class="text-small mr-20"><i class="fi fi-rr-envelope"></i> {{ $personalsummary->email }}</span>
                         <span class="text-small"><i class="fi-rr-phone-call text-mutted"></i> {{ $personalsummary->phone }}</span>
-                        
+
                     </div>
                     <div class="row align-items-end">
                         <div class="col-lg-6">
@@ -101,14 +82,14 @@
                             </table>
                         </div>
                     </div>
-                   
+
                 </div>
                 <br>
-                
+
             </div>
 
             <!-- Sidebar -->
-            
+
         </div>
     </div>
     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -382,10 +363,10 @@
 
                     $.each(data, function(key, value) {
                         var statusBadge =
-                            value.status == '1' ? '<span class="badge badge-primary">Publish</span>' :
-                            value.status == '2' ? '<span class="badge badge-warning">Pending</span>' :
-                            value.status == '3' ? '<span class="badge badge-secondary">Non Publish</span>' :
-                            value.status == '4' ? '<span class="badge badge-danger">Kadaluarsa</span>' : '';
+                            value.status == '1' ? '<span class="btn btn-tags-sm mb-10 mr-5">Publish</span>' :
+                            value.status == '2' ? '<span class="btn btn-tags-sm mb-10 mr-5">Pending</span>' :
+                            value.status == '3' ? '<span class="btn btn-tags-sm mb-10 mr-5">Non Publish</span>' :
+                            value.status == '4' ? '<span class="btn btn-tags-sm mb-10 mr-5">Kadaluarsa</span>' : '';
 
                         table.row.add([
                             key + 1,
