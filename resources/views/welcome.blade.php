@@ -27,7 +27,11 @@
 @endsection
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
     <style>
+        
+
         /* Menyusun gaya untuk card dan gambarnya */
         .card-grid-2 {
             position: relative;
@@ -236,7 +240,7 @@
         }
 
         .dot {
-            cursor: pointer;
+            cursor: pointer;.imgGrid-container img
             height: 15px;
             width: 15px;
             margin: 0 2px;
@@ -418,7 +422,16 @@
             bottom: 10px;
             /* Position the pagination */
         }
+        .swiper-pagination-youtube {
+            bottom: 10px;
+            /* Position the pagination */
+        }
 
+        .swiper-pagination-gallery {
+            bottom: 10px;
+            color: #ff873e;
+            /* Position the pagination */
+        }
         .custom-bullet {
             background: #d3d3d3;
             /* Light gray color for inactive dots */
@@ -480,119 +493,6 @@
 
 
 
-    <section class="section-box" hidden>
-        <div class="container">
-            <div class="row align-items-end">
-                <div class="col-lg-7">
-                    <h2 class="section-title mb-20 wow animate__animated animate__fadeInUp">Upcoming Browse Training By
-                        Category</h2>
-                    <p class="text-md-lh28 color-black-5 wow animate__animated animate__fadeInUp">Find the type of work
-                        you need, clearly defined and ready to start. Work begins as soon as you purchase and provide
-                        requirements.</p>
-                </div>
-                <div class="col-lg-5 text-lg-end text-start wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                    <a href="job-grid-2.html" class="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right">Browse all</a>
-                </div>
-            </div>
-            <div class="row mt-70">
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img alt="jobhub" src="assets/imgs/theme/icons/marketing.svg" /></figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Marketing & Communication</a>
-                        </h5>
-                        <p class="text-center text-stroke-40 mt-20">156 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img alt="jobhub" src="assets/imgs/theme/icons/content-writer.svg" /></figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Content <br>Writer</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">268 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12 wow animate__animated animate__fadeInUp"
-                    data-wow-delay=".2s">
-                    <div class="card-grid hover-up">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img src="assets/imgs/theme/icons/marketing-director.svg" alt="jobhub" />
-                                </figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Marketing <br>Director</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">145 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img src="assets/imgs/theme/icons/system-analyst.svg" alt="jobhub" /></figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">System <br>Analyst</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">236 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img src="assets/imgs/theme/icons/business-development.svg" alt="jobhub" />
-                                </figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Digital<br> Designer</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">56 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
-                        <div class="text-center">
-                            <a href="job-grid.html">
-                                <figure><img src="assets/imgs/theme/icons/proof-reading.svg" alt="jobhub" /></figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Market <br>Research</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">168 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                        <div class="text-center card-img">
-                            <a href="job-grid.html">
-                                <figure>
-                                    <img src="assets/imgs/theme/icons/testing.svg" alt="jobhub" />
-                                </figure>
-                            </a>
-                        </div>
-                        <h5 class="text-center mt-20 card-heading"><a href="job-grid.html">Human<br> Resource</a></h5>
-                        <p class="text-center text-stroke-40 mt-20">628 Available Vacancy</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="card-grid hover-up wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                        <div class="text-center mt-15">
-                            <h3>18,265+</h3>
-                        </div>
-                        <p class="text-center mt-30 text-stroke-40">Jobs are waiting for you</p>
-                        <div class="text-center mt-30">
-                            <div class="box-button-shadow"><a href="job-grid.html" class="btn btn-default">Explore
-                                    more</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section class="section-box  md-50 mt-50">
         <div class="container">
@@ -758,36 +658,19 @@
             </div>
             <div class="row mt-20">
                 <div class="box-swiper">
-                    <div class="swiper-container swiper-group-3">
+                    <div class="swiper-container gallery swiper-group-3">
                         <div class="swiper-wrapper pb-70 pt-5">
-                            @foreach ($galerry as $valgallery)
-                                @if ($valgallery->id_category == 31)
-                                    <div class="swiper-slide">
-                                        <div class="card-grid-69 hover-up">
-                                            <div class="box-image-findgalery box-image-galery ml-0">
-                                                <figure>
-                                                    <div class="imgGrid-container">
-                                                        <img alt="jobhub" class="imgGrid"
-                                                            src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($valgallery->file ?? '')) }}">
-                                                    </div>
-                                                </figure>
-                                                <a href="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($valgallery->file ?? '')) }}"
-                                                    class="btn-play-galery popup-youtube"></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                            <div class="swiper-wrapper"> 
+                                <!-- Slide akan ditambahkan dengan JavaScript -->
+                            </div>
                         </div>
-                        <div class="swiper-pagination swiper-pagination3"></div>
+                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
+{{--     
     <section class="section-box mt-20 mt-md-0">
         <div class="container">
             <div class="col-lg-7 col-md-7">
@@ -795,63 +678,140 @@
             </div>
             <div class="row mt-20">
                 <div class="box-swiper">
-                    <div class="swiper-container swiper-group-3">
+                    <div class="swiper-container youtube swiper-group-3">
                         <div class="swiper-wrapper pb-70 pt-5">
-                            @foreach ($yotube as $valyotube)
-                                @if ($valyotube->id_category == 30)
-                                    <div class="swiper-slide">
-                                        <div class="card-grid-69 hover-up">
-                                            <a href="video-page.html">
-                                                <div class="embed-responsive embed-responsive-16by9">
-                                                    <iframe class="embed-responsive-item" height="240px;" width="420px;"
-                                                        src="{{ $valyotube->url }}"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                        allowfullscreen>
-                                                    </iframe>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
+                            <div class="swiper-wrapper"> 
+                                <!-- Slide akan ditambahkan dengan JavaScript -->
+                            </div>
                         </div>
-                        <div class="swiper-pagination swiper-pagination3"></div>
+                        <div class="swiper-pagination-youtube"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
+    
 
 
-
-    <section class="section-box mt-50 mb-60" hidden>
-        <div class="container">
-            <div class="box-newsletter">
-                <h5 class="text-md-newsletter">Sign up to get</h5>
-                <h6 class="text-lg-newsletter">the latest jobs</h6>
-                <div class="box-form-newsletter mt-30">
-                    <form class="form-newsletter">
-                        <input type="text" class="input-newsletter" value=""
-                            placeholder="contact.alithemes@gmail.com" />
-                        <button class="btn btn-default font-heading icon-send-letter">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-            <div class="box-newsletter-bottom">
-                <div class="newsletter-bottom"></div>
-            </div>
-        </div>
-    </section>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
     <script>
+        
+        $(document).ready(function () {
+            // Inisialisasi Swiper untuk Gallery
+            let swiperGallery = new Swiper('.swiper-container.gallery', {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination-gallery',
+                    clickable: true,
+                },
+                lazy: true,
+            });
+
+            // let swiperYoutube = new Swiper('.swiper-container.youtube', {
+            //     slidesPerView: 3,
+            //     spaceBetween: 10,
+            //     loop: true,
+            //     autoplay: {
+            //         delay: 3000,
+            //         disableOnInteraction: false,
+            //     },
+            //     pagination: {
+            //         el: '.swiper-pagination-youtube',
+            //         clickable: true,
+            //     },
+            //     lazy: true,
+            // });
+
+
+            // Load data setelah Swiper diinisialisasi
+            loadGallery(swiperGallery);
+            //loadYoutube(swiperYoutube);
+        });
+
+
+        function loadGallery(swiperGallery) {
+            $.getJSON(`/gallery?page=1`, function (data) {
+                if (!data.length) {
+                    console.log("Gallery data is empty.");
+                    return;
+                }
+
+                data.forEach(function (item) {
+                    let slide = `
+                        <div class="swiper-slide">
+                            <div class="card-grid-69 hover-up">
+                                <div class="box-image-findgalery box-image-galery ml-0">
+                                    <figure>
+                                        <div class="imgGrid-container">
+                                            <img alt="gallery" class="imgGrid swiper-lazy"
+                                                data-src="https://admin.trainingkerja.com/public/storage/${item.file}"
+                                                loading="lazy">
+                                        </div>
+                                    </figure>
+                                    <a href="https://admin.trainingkerja.com/public/storage/${item.file}"
+                                        class="btn-play-galery popup-youtube"></a>
+                                </div>
+                            </div>
+                        </div>`;
+
+                    swiperGallery.appendSlide(slide);
+                });
+
+                swiperGallery.update(); // Update Swiper setelah slide ditambahkan
+                swiperGallery.lazy.load(); // Paksa lazy load jika perlu
+            }).fail(function () {
+                console.log("Failed to load gallery data.");
+            });
+        }
+
+        // function loadYoutube(swiperYoutube) {
+        //     $.getJSON(`/youtube?page=1`, function (data) {
+        //         if (!data.length) {
+        //             console.log("YouTube data is empty.");
+        //             return;
+        //         }
+
+        //         data.forEach(function (item) {
+        //             let slide = `
+        //                 <div class="swiper-slide">
+        //                     <div class="card-grid-69 hover-up">
+        //                         <iframe class="embed-responsive-item"
+        //                                 height="240px" width="420px"
+        //                                 src="${item.url}"
+        //                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        //                                 allowfullscreen>
+        //                         </iframe>
+        //                     </div>
+        //                 </div>`;
+
+        //             swiperYoutube.appendSlide(slide);
+        //         });
+
+        //         swiperYoutube.update();
+        //         swiperYoutube.lazy.load();
+        //     }).fail(function () {
+        //         console.log("Failed to load YouTube data.");
+        //     });
+        // }
+
+
+
+
         $(document).ready(function() {
+            
+
             // Mengambil data upcoming trainings
             $.ajax({
                 url: '/fetch-upcoming-trainings',

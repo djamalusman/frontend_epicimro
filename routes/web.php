@@ -23,11 +23,14 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ResumeCandidateController;
 use App\Http\Controllers\PosttrainingController;
 use App\Http\Controllers\PostjobController;
+use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\YoutubeController;
 
 // Route untuk menu default
 // Route untuk menu default (guest)
 Route::get('/', [WelcomeController::class, 'welcome']);
-
+Route::get('/gallery', [GalleryController::class, 'index']);
+Route::get('/youtube', [YoutubeController::class, 'index']);
 // Route untuk mengambil menu berdasarkan role
 Route::get('/menu/{role}', [MenuManagementController::class, 'getMenuByRole']);
 
