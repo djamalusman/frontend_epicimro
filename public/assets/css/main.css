@@ -1268,6 +1268,84 @@ label {
   margin-right: 3px;
   border-radius: 50%; /* Menjadikan elemen bundar */
 }
+
+
+.swiper-pagination-youtube {
+  text-align: center;
+  width: 100%;
+}
+
+.swiper-pagination-youtube-bullet {
+  margin: 10px;
+}
+
+/*Style of the location of the div that wraps the custom pager*/
+.swiper-pagination-youtube-custom {
+  bottom: -5px;
+}
+
+.swiper-pagination-youtube-customs {
+  background: url(../imgs/slider/swiper/dot.svg) no-repeat 0px 0px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/*Customize the style representation when pager is activated*/
+.swiper-pagination-youtube-customs-active,
+.swiper-pagination-youtube-customs:hover {
+  background: url(../imgs/slider/swiper/dot-active.png) no-repeat 0px 0px;
+  width: 12px;
+  height: 12px;
+  margin-bottom: -1px;
+  margin-left: 3px;
+  margin-right: 3px;
+  border-radius: 50%; /* Menjadikan elemen bundar */
+}
+
+
+
+.swiper-pagination-gallery {
+  text-align: center;
+  width: 100%;
+}
+
+.swiper-pagination-gallery-bullet {
+  margin: 10px;
+}
+
+/*Style of the location of the div that wraps the custom pager*/
+.swiper-pagination-gallery-custom {
+  bottom: -5px;
+}
+
+.swiper-pagination-gallery-customs {
+  background: url(../imgs/slider/swiper/dot.svg) no-repeat 0px 0px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/*Customize the style representation when pager is activated*/
+.swiper-pagination-gallery-customs-active,
+.swiper-pagination-gallery-customs:hover {
+  background: url(../imgs/slider/swiper/dot-active.png) no-repeat 0px 0px;
+  width: 12px;
+  height: 12px;
+  margin-bottom: -1px;
+  margin-left: 3px;
+  margin-right: 3px;
+  border-radius: 50%; /* Menjadikan elemen bundar */
+}
+
 /* This line can be removed it was just for display on CodePen: */
 .slider-labels {
   margin-top: 10px;

@@ -55,30 +55,6 @@ class LoadGlobalData
     }
 }
 
-class LoadGlobalDatagalery
-{
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
-    {
-
-        $datagalerry  = DB::table('d_gallery')
-        ->join('d_gallery_detail', 'd_gallery_detail.id_gallery', '=', 'd_gallery.id')
-        ->select('d_gallery_detail.file','d_gallery.id_category','d_gallery.id_menu')->orderBy('d_gallery.updated_at', 'desc')->limit(6)
-        // ->where('d_gallery.id_category', '31')
-        // ->where('d_gallery.id_menu', '1')->orderBy('d_gallery.created_at', 'desc')->limit(6)
-        ->get();
-
-
-        view()->share('galerry',$datagalerry);
-
-            return $next($request);
-    }
-}
-
 class LoadGlobalDatayotube
 {
     /**
@@ -89,21 +65,13 @@ class LoadGlobalDatayotube
     public function handle(Request $request, Closure $next): Response
     {
 
-        $datayotube  = DB::table('d_testimonials')
-        ->join('d_testimonials_video', 'd_testimonials_video.id_testimoni', '=', 'd_testimonials.id')
-        ->select('d_testimonials_video.url','d_testimonials.description','d_testimonials.id_category','d_testimonials.id_menu')->orderBy('d_testimonials.updated_at', 'desc')
-        // ->where('d_testimonials.id_category', '30')
-        // ->where('d_testimonials.id_menu', '1')->orderBy('d_testimonials.created_at', 'desc')->limit(6)
-        ->get();
 
         $datayotubeDtNew  = DB::table('d_testimonials')
         ->join('d_testimonials_video', 'd_testimonials_video.id_testimoni', '=', 'd_testimonials.id')
         ->select('d_testimonials_video.url','d_testimonials.description','d_testimonials.id_category','d_testimonials.id_menu')->orderBy('d_testimonials.updated_at', 'desc')->limit(1)
-        // ->where('d_testimonials.id_category', '30')
-        // ->where('d_testimonials.id_menu', '1')->orderBy('d_testimonials.created_at', 'desc')->limit(6)
+        
         ->get();
 
-        view()->share('yotube',$datayotube);
         view()->share('datayotubeDtNew',$datayotubeDtNew);
             return $next($request);
     }

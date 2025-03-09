@@ -7,79 +7,32 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Menu_client;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UpcomingNews;
+use App\Models\YoutubeTestimonial;
+use App\Models\Gallery;
+
 class WelcomeController extends Controller
 {
-    // public function welcome()
-    // {
-    //     $query = DB::table('m_provinsi')
-    //         ->select(
-    //             'm_provinsi.nama as namaprovinsi',
-    //             'm_provinsi.id as idprovinsi',
-
-    //         );
-    //     $data['getDtProvinsi']=$query->get();
-
-    //     $sponsor = DB::table('d_cooperation')
-    //         ->select(
-    //             'd_cooperation.*'
-
-    //         );
-    //     $data['sponsor']=$sponsor->get();
-
-    //     $query = DB::table('news_detail')
-    //     ->join('m_news', 'm_news.id', '=', 'news_detail.id_m_news')
-    //     ->select('news_detail.*', 'm_news.nama as category') ;
-    //     $data ['news'] = $query->where('news_detail.status',1)->orderBy('news_detail.updated_at', 'desc')->limit(6)->get();
-
-    //     // $email = session('email');
-    //     //  dd($email);
-
-    //     return view('welcome',$data);
-    // }
+   
     public function welcome()
     {
-        // Ambil role user yang sedang login
         $user = Auth::user();
-        $role = $user ? $user->role : 'guest'; // Jika belum login, role = guest
-        //dd($role);
-        // Ambil menu berdasarkan role dengan menghindari duplikasi
-        $menus = Menu_client::where(function($query) use ($role) {
-            if ($role == 'candidate') {
+        $role = $user ? $user->role : 'guest';
+
+        $menus = Menu_client::where(function ($query) use ($role) {
+            if (in_array($role, ['candidate', 'company'])) {
                 $query->where('role', $role);
-                
-            }elseif ($role == 'company') {
-                $query->where('role', $role);
-            } 
-            else {
-                $query->where('role', ['guest']);
+            } else {
+                $query->where('role', 'guest');
             }
-        })
-        ->where('is_active', true)
-        ->orderBy('order')
-        ->distinct() // Menghindari duplikasi jika ada menu yang berlaku untuk multiple roles
-        ->get();
-       
-        // Ambil data provinsi
-        $getDtProvinsi = DB::table('m_provinsi')
-            ->select('m_provinsi.nama as namaprovinsi', 'm_provinsi.id as idprovinsi')
-            ->get();
+        })->where('is_active', true)->orderBy('order')->distinct()->get();
 
-        // Ambil data sponsor
-        $sponsor = DB::table('d_cooperation')
-            ->select('d_cooperation.*')
-            ->get();
+        $getDtProvinsi = DB::table('m_provinsi')->select('nama as namaprovinsi', 'id as idprovinsi')->get();
+        $sponsor = DB::table('d_cooperation')->select('d_cooperation.*')->get();
+        $news = UpcomingNews::orderBy('updated_at', 'desc')->limit(6)->get();
 
-        // Ambil data berita
-        $news = DB::table('news_detail')
-            ->join('m_news', 'm_news.id', '=', 'news_detail.id_m_news')
-            ->select('news_detail.*', 'm_news.nama as category')
-            ->where('news_detail.status', 1)
-            ->orderBy('news_detail.updated_at', 'desc')
-            ->limit(6)
-            ->get();
-
+        // Jangan ambil Gallery & YouTube di sini!
         return view('welcome', compact('menus', 'getDtProvinsi', 'sponsor', 'news'));
     }
-
 
 }

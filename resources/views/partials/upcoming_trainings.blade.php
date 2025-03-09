@@ -70,11 +70,7 @@
 
                         <figure>
 
-                            {{-- <a
-                                href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
-                                <img class="imgGrid"
-                                    src="{{ asset('https://admin.trainingkerja.com/public/storage/' . ($value->image_path ?? '')) }}" />
-                            </a> --}}
+                          
                             @if ( $value->fileold !="frontend")
                                 <a href="/detail-course/{{ base64_encode($value->id) }}/{{ Str::slug($value->traning_name) }}">
                                     <img class="imgGrid"

@@ -77,19 +77,4 @@ class CompanyProfileController extends Controller
         }
     }
 
-    // public function destroy($id)
-    // {
-    //     try {
-    //         $company_profile = CompanyProfile::findOrFail($id);
-            
-    //         if ($company_profile->user_id !== auth()->id()) {
-    //             return response()->json(['error' => 'Unauthorized'], 403);
-    //         }
-
-    //         $company_profile->delete();
-    //         return response()->json(['message' => 'Company profile berhasil dihapus']);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Gagal menghapus company profile'], 500);
-    //     }
-    // }
 }
