@@ -36,7 +36,9 @@ class User extends Authenticatable
         'remember_token',
         'email_verified_at',
         'role',
-        'privacypolicy'
+        'privacypolicy',
+        'status_email',
+        'comfir_email',
     ];
     public $incrementing = true;
     /**

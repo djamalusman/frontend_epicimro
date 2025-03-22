@@ -14,5 +14,6 @@
 <script src="{{ asset('assets/js/plugins/isotope.js')}}"></script>
 <script src="{{ asset('assets/js/plugins/scrollup.js')}}"></script>
 <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js')}}"></script>
+<script src="{{ asset('assets/js/loadingoverlay.min.js')}}"></script>
 <!-- Template  JS -->
 <script src="{{ asset('assets/js/main.js?v=1.4')}}"></script>

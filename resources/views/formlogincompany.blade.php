@@ -30,6 +30,7 @@ Sign In & Sign Up
 
 
 @section('content')
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
      body {
         font-family: Arial, sans-serif;
@@ -149,8 +150,9 @@ a {
                     <!-- Right Side -->
                     <div class="right-side">
                         <!-- Sign In Form -->
-                        <h1>Pasang lowongan kerja dan training kerja <span>Gratis!</span></h1>
+                       
                         <form id="signInForm" method="POST" action="{{ route('signIn') }}">
+                            <h1>Pasang lowongan kerja dan training kerja <span>Gratis!</span></h1>
                             <div class="form-group">
                                 <label>Email Address</label>
                                 <input type="email" class="form-control" id="signInEmail" name="email" placeholder="Enter email">
@@ -160,12 +162,15 @@ a {
                                 <input type="password" class="form-control" id="signInPassword" name="password" placeholder="Enter password">
                             </div>
                             <button type="submit" class="btn btn-warning">Sign In</button>
-                            <p class="mt-3">Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+                            <p class="mt-3">Don't have an account? <a href="#" id="showSignUp">Sign Up</a>  &nbsp;&nbsp &nbsp; 
+                            
+                                <a href="#" id="showForgotPassword">forgot password?</a></p>
+                           
                         </form>
 
                         <!-- Sign Up Form (Hidden by Default) -->
                         <form id="signUpForm" class="hidden">
-                            
+                            <h1>Pasang lowongan kerja dan training kerja <span>Gratis!</span></h1>
                             <div class="form-check mt-3 hidden">
                                 <input type="checkbox" class="form-check-input" id="isEmployee">
                                 <label class="form-check-label" for="isEmployee">Sign up as Employee</label>
@@ -205,6 +210,21 @@ a {
                             <button type="submit" class="btn btn-warning">Sign Up</button>
                             <p class="mt-3">Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
                         </form>
+
+                        <!-- forgot password (Hidden by Default) -->
+                        <form id="sendEmailForm" class="hidden">
+                            <h1>Send email to reset password</h1>
+                            <div class="form-check mt-3 hidden">
+                                <label class="form-check-label" for="isEmployee">Forgot password</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                            </div>
+                            <button type="submit" class="btn btn-warning" id="sendEmail">Kirim</button>
+                            <p class="mt-3">Already have an account? <a href="/logincompany" id="showSignIn">Sign In</a></p>
+                        </form>
                     </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -214,22 +234,59 @@ a {
                 </div>
             </div>
 
-    
+           
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+       
+
+        // Reset modal on close
+      
+
+       
+        function showLoading() {
+            $.LoadingOverlay("show", {
+                background: "rgba(0, 0, 0, 0.5)",
+                image: "",
+                fontawesome: "fa fa-spinner fa-spin",
+                fontawesomeColor: "#fff"
+            });
+        }
+
+        function hideLoading() {
+            $.LoadingOverlay("hide");
+        }
+
+        $("#showSignIn").click(function() {
+            $("#signUpForm, #sendEmailForm").addClass("hidden"); // Sembunyikan semua form selain Sign In
+            $("#signInForm").removeClass("hidden");
+            $("#formTitle").text("Sign Up as Company");
+        });
+        // Toggle antara Sign In dan Sign Up
+        $("#showSignUp").click(function() {
+            $("#signInForm, #sendEmailForm").addClass("hidden"); // Sembunyikan semua form selain Sign In
+            $("#signUpForm").removeClass("hidden");
+            $("#formTitle").text("Sign Up as Company");
+        });
+
+        $("#showForgotPassword").click(function() {
+            $("#signInForm, #signUpForm").addClass("hidden"); // Sembunyikan form lain
+            $("#sendEmailForm").removeClass("hidden"); // Tampilkan form forgot password
+            $("#formTitle").text("Reset Password");
+        });
 
         document.getElementById("signUpForm").addEventListener("submit", function(e) {
             e.preventDefault(); // Mencegah form terkirim sebelum validasi
-            
+
             let checkbox = document.getElementById("termsCheckbox");
             let errorText = document.getElementById("errorText");
 
             if (!checkbox.checked) {
                 errorText.style.display = "block"; // Tampilkan pesan error
-                return; // Hentikan eksekusi jika checkbox tidak dicentang
+                return;
             } else {
                 errorText.style.display = "none"; // Sembunyikan pesan error
             }
@@ -237,10 +294,10 @@ a {
             let signUpUsernamecompany = $("#signUpUsernamecompany").val();
             let signUpEmailcompany = $("#signUpEmailcompany").val();
             let signUpPasswordcompany = $("#signUpPasswordcompany").val();
-            let istermsCheckbox = checkbox.checked ? 1 : 0; // Konversi ke nilai boolean 1/0
-            let isEmployee = $("#isEmployee").is(":checked"); // Cek apakah Employee dicentang
-            let employeeId = isEmployee ? $("#employeeId").val() : null; // Kirim jika Employee
-
+            let istermsCheckbox = checkbox.checked ? 1 : 0; 
+            let isEmployee = $("#isEmployee").is(":checked"); 
+            let employeeId = isEmployee ? $("#employeeId").val() : null;
+            showLoading(); 
             $.ajax({
                 url: "{{ route('signupcompany') }}",
                 type: "POST",
@@ -249,48 +306,51 @@ a {
                     username: signUpUsernamecompany,
                     email: signUpEmailcompany,
                     password: signUpPasswordcompany,
-                    privacypolicy: istermsCheckbox, // Kirim sebagai 1 (true) atau 0 (false)
+                    privacypolicy: istermsCheckbox,
                     isEmployee: isEmployee,
                     employeeId: employeeId
                 },
                 success: function(response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pendaftaran Berhasil',
-                        text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href = "{{ route('logincompany') }}";
-                    });
+                    hideLoading(); 
+                    if (response.success) {
+                        let message = response.message;
+                        if (response.email_error) {
+                            message += " Namun, email gagal dikirim.";
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Pendaftaran Berhasil',
+                            text: message,
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = "{{ route('logincompany') }}";
+                        });
+                    } else {
+                        Swal.fire("Error!", response.error, "error");
+                    }
                 },
-                error: function(response) {
-                    Swal.fire("Error!", "Failed to create account.", "error");
+                error: function(xhr) {
+                    let errorMessage = "Failed to create account.";
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    }
+                    Swal.fire("Error!", errorMessage, "error");
                 }
             });
         });
 
-        // Toggle antara Sign In dan Sign Up
-        $("#showSignUp").click(function() {
-            $("#signInForm").addClass("hidden");
-            $("#signUpForm").removeClass("hidden");
-            $("#formTitle").text("Sign Up as Company");
-        });
-
-        $("#showSignIn").click(function() {
-            $("#signUpForm").addClass("hidden");
-            $("#signInForm").removeClass("hidden");
-            $("#formTitle").text("Sign In Company");
-        });
-
+        
+        
         // Handle Sign In Form Submission
         $("#signInForm").submit(function(e) {
             e.preventDefault();
 
             let email = $("#signInEmail").val();
             let password = $("#signInPassword").val();
-
+            showLoading(); 
             $.ajax({
-                url: "{{ route('signIn') }}",
+                url: "{{ route('signInCompany') }}",
                 type: "POST",
                 data: {
                     _token: $("meta[name='csrf-token']").attr("content"),
@@ -298,13 +358,68 @@ a {
                     password: password
                 }
             })
-            .done(function(response) {  
-                Swal.fire("Success!", "Logged in successfully!", "success").then(() => {
+            .done(function(response) { 
+                hideLoading(); 
+                Swal.fire("Success!", response.message || "Logged in successfully!", "success").then(() => {
                     window.location.href = "/welcome"; 
                 });
             })
             .fail(function(xhr) {  
-                let errorMessage = xhr.responseJSON?.error || "Invalid credentials.";
+                hideLoading();
+                let errorMessage = "Gagal login. Silakan coba lagi.";
+                if (xhr.responseJSON?.error) {
+                    errorMessage = xhr.responseJSON.error;
+                } else if (xhr.status === 422) {
+                    errorMessage = "Email atau password tidak valid.";
+                } else if (xhr.status === 500) {
+                    errorMessage = "Terjadi kesalahan server. Silakan coba lagi nanti.";
+                }
+                Swal.fire("Error!", errorMessage, "error");
+            });
+        });
+
+        $("#sendEmailForm").submit(function(e) {
+            e.preventDefault();
+
+            let email = $("#email").val();
+            let token = $("meta[name='csrf-token']").attr("content");
+
+            if (!email) {
+                Swal.fire("Error!", "Email is required!", "error");
+                return;
+            }
+            showLoading(); 
+            $.ajax({
+                url: "{{ route('password.email') }}", // Sesuaikan dengan route backend
+                type: "POST",
+                data: {
+                    _token: token,
+                    email: email
+                }
+            })
+            .done(function(response) {
+                hideLoading(); 
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    setTimeout(() => {
+                        window.location.href = "{{ route('logincompany') }}"; // Redirect
+                    }, 500); // Beri jeda kecil agar transisi lebih smooth
+                });
+            })
+            .fail(function(xhr) {
+                hideLoading(); 
+                let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+                if (xhr.responseJSON?.error) {
+                    errorMessage = xhr.responseJSON.error;
+                } else if (xhr.status === 422) {
+                    errorMessage = "Email tidak valid atau belum terdaftar.";
+                } else if (xhr.status === 500) {
+                    errorMessage = "Terjadi kesalahan server. Silakan coba lagi nanti.";
+                }
                 Swal.fire("Error!", errorMessage, "error");
             });
         });

@@ -34,6 +34,8 @@ use App\Models\Certification;
 use App\Models\CompanyProfile;
 use App\Models\Province;
 use App\Models\Sector;
+use Faker\Factory as Faker;
+use App\Jobs\SendRegistrationEmail;
 
 class UserCompanyController extends Controller
 {
@@ -66,70 +68,170 @@ class UserCompanyController extends Controller
        return view('formlogincompany', compact('menus'));
     }
 
+    // public function signUp(Request $request)
+    // {
+    //     try {
+    //         // Validasi data form registrasi
+    //         $validator = Validator::make($request->all(), [
+    //             'username' => 'nullable|string',
+    //             'email' => 'required|email',
+    //             'password' => 'nullable|string',
+    //             'employeeId' => 'nullable|string',
+    //             'privacypolicy' => 'required|boolean',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'error' => $validator->errors()->first(),
+    //             ], 422);
+    //         }
+
+    //         // Periksa apakah email sudah terdaftar
+    //         if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'error' => 'Email sudah terdaftar!',
+    //             ], 409);
+    //         }
+
+    //         // Generate ID user
+    //         $faker = Faker::create();
+    //         $randomMixed = $faker->regexify('[A-Z]{3}[0-9]{3}');
+
+    //         // Buat user baru
+    //         $user = User::create([
+    //             'name' => $request->username,
+    //             'email' => $request->email,
+    //             'password' => Hash::make($request->password),
+    //             'role' => 'company',
+    //             'privacypolicy' => true,
+    //             'remember_token' => $randomMixed,
+    //         ]);
+
+    //         // Kirim email
+    //         try {
+    //             Mail::to($user->email)->send(new RegistrationSuccessMail($user, $request->password));
+
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Registration successful! Email sent.',
+    //             ], 201);
+    //         } catch (\Exception $e) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'message' => 'Registration successful! But failed to send email.',
+    //                 'email_error' => $e->getMessage(),
+    //             ], 200);
+    //         }
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'error' => 'Something went wrong!',
+    //             'details' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
+
     public function signUp(Request $request)
     {
-         // Validasi data form registrasi
-         $validator = Validator::make($request->all(), [
-             'username' => 'nullable|string',
-             'email' => 'required|email',
-             'password' => 'nullable|string',
-             'employeeId' => 'nullable|string',
-             'privacypolicy' => 'required',
-         ]);
+        try {
+            // Validasi data form registrasi
+            $validator = Validator::make($request->all(), [
+                'username' => 'nullable|string',
+                'email' => 'required|email',
+                'password' => 'nullable|string',
+                'employeeId' => 'nullable|string',
+                'privacypolicy' => 'required|boolean',
+            ]);
 
-        //  dd($request->all());
-         // Jika validasi gagal
-         if ($validator->fails()) {
-             return response()->json([
-                 'error' => $validator->errors()->first(),
-             ]);
-         }
-
-         // Periksa apakah email sudah terdaftar
-         if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
-             return response()->json([
-                 'error' => 'Email sudah terdaftar!',
-             ]);
-         }
-
-         // Generate ID user
-         $no = User::count() + 1;
-         
-         $role = 'company';
-
-         // Buat user baru
-         User::create([
-             'name' => $request->username,
-             'email' => $request->email,
-             'password' => Hash::make($request->password),
-             'role' => $role,
-             'privacypolicy'=> true
-         ]);
-         $user = User::where('email', $request->email)->first();
-         //dd($user);
-         if ($user) {
-            try {
-                Mail::to($user->email)->send(new RegistrationSuccessMail($user,$request->password));
-    
+            if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Registration successful! Email sent.',
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'message' => 'Registration successful! But failed to send email.',
-                    'error' => $e->getMessage(),
-                ]);
+                    'success' => false,
+                    'error' => $validator->errors()->first(),
+                ], 422);
             }
-        }
 
-         // Berikan respons sukses
-         return response()->json([
-             'message' => 'Registration successful!',
-         ]);
+            // Periksa apakah email sudah terdaftar
+            if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Email sudah terdaftar!',
+                ], 409);
+            }
+
+            // Generate ID user
+            $faker = Faker::create();
+            $randomMixed = $faker->regexify('[A-Z]{3}[0-9]{3}');
+
+            // Buat user baru
+            $user = User::create([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'company',
+                'privacypolicy' => true,
+                'remember_token' => $randomMixed,
+            ]);
+
+            // Dispatch Job ke Queue
+            //dispatch(new SendRegistrationEmail($user, $request->password));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration successful! Email will be sent shortly.',
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Something went wrong!',
+                'details' => $e->getMessage(),
+            ], 500);
+        }
     }
 
+    public function login(Request $request)
+     {
+         $request->validate([
+             'email' => 'required|email',
+             'password' => 'required|min:6',
+         ]);
+     
+         $credentials = $request->only('email', 'password');
+         $user = User::where('email', $request->email)->first();
+         if ($user && Hash::check($request->password, $user->password)) {
+            if ($user->comfir_email != null) {
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user();
+        
+                    // Login sukses
+                    session([
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'name' => $user->name,
+                        'lastname' => $user->lastname,
+                        'phone' => $user->phone,
+                        'photouser' => $user->photo,
+                    ]);
+        
+                    return response()->json(['message' => 'Login successful'], 200);
+                } 
+                else {
+                    return response()->json(['error' => 'Login failed. Please check your credentials.'], 401);
+                }
+            }
+                
+             else {
+                 return response()->json(['error' => 'Akun Anda belum dikonfirmasi. Silakan periksa kembali email Anda!'], 401);
+             }
+         } 
+     
+         return response()->json(['error' => 'Email atau password salah.'], 422);
+     }
 
-    public function profileEmployee()
+    
+     public function profileEmployee()
     {
         
         $user = Auth::user();
