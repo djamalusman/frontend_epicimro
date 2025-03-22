@@ -29,6 +29,8 @@ use App\Mail\ForgotPasswordMail;
 use App\Models\Experience;
 use App\Models\Education;
 use App\Models\Certification;
+use Faker\Factory as Faker;
+use App\Jobs\SendRegistrationEmail;
 
 class UserCandidateController extends Controller
 {
@@ -68,80 +70,98 @@ class UserCandidateController extends Controller
              'email' => 'required|email',
              'password' => 'required|min:6',
          ]);
-
+     
          $credentials = $request->only('email', 'password');
          $user = User::where('email', $request->email)->first();
-         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-             // Login sukses
-             session(['id' => $user->id,'email' => $user->email, 'name' => $user->name,'lastname' => $user->lastname,'phone' => $user->phone,'photouser' => $user->photo],);
-             return response()->json(['message' => 'Login successful']);
-         } else {
-             // Login gagal
-             return response()->json(['error' => 'Invalid credentials']);
-         }
+         if ($user && Hash::check($request->password, $user->password)) {
+            if ($user->comfir_email != null) {
+                if (Auth::attempt($credentials)) {
+                    $user = Auth::user();
+        
+                    // Login sukses
+                    session([
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'name' => $user->name,
+                        'lastname' => $user->lastname,
+                        'phone' => $user->phone,
+                        'photouser' => $user->photo,
+                    ]);
+        
+                    return response()->json(['message' => 'Login successful'], 200);
+                } 
+                else {
+                    return response()->json(['error' => 'Login failed. Please check your credentials.'], 401);
+                }
+            }
+                
+             else {
+                 return response()->json(['error' => 'Akun Anda belum dikonfirmasi. Silakan periksa kembali email Anda!'], 401);
+             }
+         } 
+     
+         return response()->json(['error' => 'Email atau password salah.'], 422);
      }
+     
 
      // Handle Signup
     public function signUp(Request $request)
     {
-         // Validasi data form registrasi
-         $validator = Validator::make($request->all(), [
-             'username' => 'nullable|string',
-             'email' => 'required|email',
-             'password' => 'nullable|string',
-             'employeeId' => 'nullable|string',
-         ]);
+        try {
+            // Validasi data form registrasi
+            $validator = Validator::make($request->all(), [
+                'username' => 'nullable|string',
+                'email' => 'required|email',
+                'password' => 'nullable|string',
+                'employeeId' => 'nullable|string',
+                'privacypolicy' => 'required|boolean',
+            ]);
 
-        //  dd($request->all());
-         // Jika validasi gagal
-         if ($validator->fails()) {
-             return response()->json([
-                 'error' => $validator->errors()->first(),
-             ]);
-         }
-
-         // Periksa apakah email sudah terdaftar
-         if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
-             return response()->json([
-                 'error' => 'Email sudah terdaftar!',
-             ]);
-         }
-
-         // Generate ID user
-         $no = User::count() + 1;
-         
-         $role = $request->employeeId ? 'company' : 'candidate';
-
-         // Buat user baru
-         User::create([
-             'name' => $request->username,
-             'email' => $request->email,
-             'password' => Hash::make($request->password),
-             'role' => $role,
-         ]);
-         $user = User::where('email', $request->email)->first();
-         //dd($user);
-         if ($user) {
-            try {
-                Mail::to($user->email)->send(new RegistrationSuccessMail($user,$request->password));
-    
+            if ($validator->fails()) {
                 return response()->json([
-                    'message' => 'Registration successful! Email sent.',
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'message' => 'Registration successful! But failed to send email.',
-                    'error' => $e->getMessage(),
-                ]);
+                    'success' => false,
+                    'error' => $validator->errors()->first(),
+                ], 422);
             }
-        }
+            
+            if (User::whereRaw('LOWER(email) = ?', [strtolower($request->email)])->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'Email sudah terdaftar!',
+                ], 409);
+            }
 
-         // Berikan respons sukses
-         return response()->json([
-             'message' => 'Registration successful!',
-         ]);
+            $no = User::count() + 1;
+            
+            $role = $request->employeeId ? 'company' : 'candidate';
+            $faker = Faker::create();
+            $randomMixed = $faker->regexify('[A-Z]{3}[0-9]{3}');
+
+            // Buat user baru
+            $user = User::create([
+                'name' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $role,
+                'privacypolicy'=> true,
+                'remember_token' =>$randomMixed,
+            ]);
+            
+            //dispatch(new SendRegistrationEmail($user, $request->password))->afterResponse();
+
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration successful! Email will be sent shortly.',
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Something went wrong!',
+                'details' => $e->getMessage(),
+            ], 500);
+        }
+         
     }
 
 
@@ -275,50 +295,7 @@ class UserCandidateController extends Controller
         ]);
     }
 
-    public function sendPasswordResetLink(Request $request)
-    {
-        $request->validate(['email' => 'required|email']);
-        
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return back()->with('error', 'Email tidak ditemukan');
-        }
-
-        try {
-            $token = Str::random(60);
-            $user->remember_token = $token;
-            $user->save();
-
-            Mail::to($user->email)->send(new ForgotPasswordMail($user, $token));
-
-            return back()->with('success', 'Link reset password telah dikirim ke email Anda');
-        } catch (\Exception $e) {
-            Log::error('Email error: '.$e->getMessage());
-            return back()->with('error', 'Gagal mengirim email. Silakan coba lagi nanti.');
-        }
-    }
-
-    public function resetPassword(Request $request)
-    {
-        $request->validate([
-            'password' => 'required|confirmed|min:8',
-            'token' => 'required'
-        ]);
-
-        $user = User::where('remember_token', $request->token)->first();
-
-        if (!$user) {
-            return back()->withErrors(['token' => 'Token tidak valid']);
-        }
-
-        $user->update([
-            'password' => Hash::make($request->password),
-            'remember_token' => null
-        ]);
-
-        return redirect()->route('login')->with('status', 'Password berhasil direset');
-    }
+    
 
 
     public function profileCandidate()

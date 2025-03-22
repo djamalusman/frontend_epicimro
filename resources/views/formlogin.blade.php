@@ -106,40 +106,6 @@ Sign In & Sign Up
                 padding: 10px;
             }
         }
-
-        /*         
-        .banner {
-            width: 100%;
-            background-color: #fdf8f3; 
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .banner-content {
-            max-width: 1200px; 
-            margin: 0 auto;
-        }
-
-        .banner img {
-            width: 100%; 
-            max-width: 100%;
-            height: 300px; 
-            display: block;
-        }
-
-
-        
-        @media (max-width: 768px) {
-            .banner h2 {
-                font-size: 22px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .banner h2 {
-                font-size: 18px;
-            }
-        } */
         .btn-warning {
             background-color: #f05537 !important; /* Warna background tombol */
             border-color: #f05537 !important; /* Warna border */
@@ -150,18 +116,23 @@ Sign In & Sign Up
             background-color: #d84830 !important; /* Warna saat hover */
             border-color: #d84830 !important;
         }
+        .form-check-label {
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
 
     </style>
 
     <div class="containers">
 
         <div class="register-containers row">
-            <!-- <div class="banner">
-                <div class="banner-content">
-                    <img src="{{ asset('assets/imgs/avatar/banners.jpeg')}}" alt="Banner Image">
-                </div>
-            </div> -->
-            <!-- Left Side -->
+            
             <div class="col-md-5 left-side d-flex align-items-center justify-content-center">
                 <img src="{{ asset('assets/imgs/avatar/Construction-worker-pana-1.png')}}" alt="Construction Illustration">
             </div>
@@ -183,7 +154,9 @@ Sign In & Sign Up
                         <input type="password" class="form-control" id="signInPassword" name="password" placeholder="Enter password">
                     </div>
                     <button type="submit" class="btn btn-warning">Sign In</button>
-                    <p class="mt-3">Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+                    <p class="mt-3">Don't have an account? <a href="#" id="showSignUp">Sign Up</a>  &nbsp;&nbsp &nbsp; 
+                            
+                        <a href="#" id="showForgotPassword">forgot password?</a></p>
                 </form>
 
                 <!-- Sign Up Form (Hidden by Default) -->
@@ -204,6 +177,17 @@ Sign In & Sign Up
                         <input type="email" class="form-control" id="signUpEmail" name="email" placeholder="Enter email">
                     </div>
                     <div class="form-group">
+                        <label style="display: flex; align-items: flex-start;">
+                            <p><input type="checkbox" id="termsCheckbox" style="margin-top: 5px; margin-right: 5px;">
+                            By registering, you agree to the 
+                            <a href="/privacy-policy" target="_blank">Privacy Policy</a> 
+                            and consent to receive marketing messages from us.</p>
+                        </label>
+                    
+                        <p id="errorText" style="color: red; display: none;">You must agree to the Privacy Policy!</p>
+                    
+                    </div>
+                    <div class="form-group">
                         <label id="passwordLabel">Password</label>
                         <input type="password" class="form-control" id="signUpPassword" name="password" placeholder="Enter password">
                     </div>
@@ -218,11 +202,28 @@ Sign In & Sign Up
                     <button type="submit" class="btn btn-warning">Sign Up</button>
                     <p class="mt-3">Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
                 </form>
+
+
+                <form id="sendEmailForm" class="hidden">
+                    <div class="form-check mt-3 hidden">
+                        <label class="form-check-label" for="isEmployee">Forgot password</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                    </div>
+                    <button type="submit" class="btn btn-warning" id="sendEmail">Kirim</button>
+                    <p class="mt-3">Already have an account? <a href="/login" id="showSignIn">Sign In</a></p>
+                </form>
+
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script> --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -247,81 +248,154 @@ Sign In & Sign Up
         });
 
         // Toggle between Sign In and Sign Up forms
-        $("#showSignUp").click(function() {
-            $("#signInForm").addClass("hidden");
-            $("#signUpForm").removeClass("hidden");
-            $("#formTitle").text("Sign Up as Professional");
-        });
-
         $("#showSignIn").click(function() {
-            $("#signUpForm").addClass("hidden");
+            $("#signUpForm, #sendEmailForm").addClass("hidden"); // Sembunyikan semua form selain Sign In
             $("#signInForm").removeClass("hidden");
-            $("#formTitle").text("Register as Professional");
+            $("#formTitle").text("Sign Up as Company");
+        });
+        // Toggle antara Sign In dan Sign Up
+        $("#showSignUp").click(function() {
+            $("#signInForm, #sendEmailForm").addClass("hidden"); // Sembunyikan semua form selain Sign In
+            $("#signUpForm").removeClass("hidden");
+            $("#formTitle").text("Sign Up as Company");
         });
 
-        // Handle Sign Up Form Submission
-        $("#signUpForm").submit(function(e) {
-            e.preventDefault();
-            
-            let username = $("#signUpUsername").val();
-            let email = $("#signUpEmail").val();
-            let password = $("#signUpPassword").val();
-            let isEmployee = $("#isEmployee").is(":checked"); // Cek apakah dicentang
-            let employeeId = isEmployee ? $("#employeeId").val() : null; // Kirim jika Employee
+        $("#showForgotPassword").click(function() {
+            $("#signInForm, #signUpForm").addClass("hidden"); // Sembunyikan form lain
+            $("#sendEmailForm").removeClass("hidden"); // Tampilkan form forgot password
+            $("#formTitle").text("Reset Password");
+        });
 
-            $.ajax({
-                url: "{{ route('signup') }}",
-                type: "POST",
-                data: {
-                    _token: $("meta[name='csrf-token']").attr("content"),
-                    username: username,
-                    email: email,
-                    password: password,
-                    isEmployee: isEmployee, // Kirim status Employee
-                    employeeId: employeeId, // Kirim Employee ID hanya jika checkbox dicentang
-                },
-                success: function(response) {
+        function showLoading() {
+            $.LoadingOverlay("show", {
+                background: "rgba(0, 0, 0, 0.5)",
+                image: "",
+                fontawesome: "fa fa-spinner fa-spin",
+                fontawesomeColor: "#fff"
+            });
+        }
+
+        function hideLoading() {
+            $.LoadingOverlay("hide");
+        }
+
+
+        $(document).ready(function () {
+            // Handle Sign Up Form Submission
+            $("#signUpForm").submit(function (e) {
+                e.preventDefault();
+                let checkbox = document.getElementById("termsCheckbox");
+                let errorText = document.getElementById("errorText");
+
+                if (!checkbox.checked) {
+                    errorText.style.display = "block"; // Tampilkan pesan error
+                    return;
+                } else {
+                    errorText.style.display = "none"; // Sembunyikan pesan error
+                }
+
+                let username = $("#signUpUsername").val();
+                let email = $("#signUpEmail").val();
+                let password = $("#signUpPassword").val();
+                let isEmployee = $("#isEmployee").is(":checked");
+                let employeeId = isEmployee ? $("#employeeId").val() : null;
+                let istermsCheckbox = checkbox.checked ? 1 : 0;
+
+                showLoading(); // Tampilkan loading overlay
+
+                $.ajax({
+                    url: "{{ route('signup') }}",
+                    type: "POST",
+                    data: {
+                        _token: $("meta[name='csrf-token']").attr("content"),
+                        username: username,
+                        email: email,
+                        password: password,
+                        isEmployee: isEmployee,
+                        employeeId: employeeId,
+                        privacypolicy: istermsCheckbox,
+                    },
+                    success: function (response) {
+                        hideLoading(); // Sembunyikan loading setelah sukses
+
+                        if (response.success) {
+                            let message = response.message;
+                            if (response.email_error) {
+                                message += " Namun, email gagal dikirim.";
+                            }
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pendaftaran Berhasil',
+                                text: message,
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = "{{ route('login') }}";
+                            });
+                        } else {
+                            Swal.fire("Error!", response.error, "error");
+                        }
+                    },
+                    error: function (xhr) {
+                        hideLoading(); // Sembunyikan loading saat terjadi error
+
+                        let errorMessage = "Failed to create account.";
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMessage = xhr.responseJSON.error;
+                        }
+                        Swal.fire("Error!", errorMessage, "error");
+                    }
+                });
+            });
+
+            // Handle Sign In Form Submission
+            $("#signInForm").submit(function (e) {
+                e.preventDefault();
+
+                let email = $("#signInEmail").val();
+                let password = $("#signInPassword").val();
+
+                showLoading(); // Tampilkan loading overlay
+
+                $.ajax({
+                    url: "{{ route('signIn') }}",
+                    type: "POST",
+                    data: {
+                        _token: $("meta[name='csrf-token']").attr("content"),
+                        email: email,
+                        password: password
+                    }
+                })
+                .done(function (response) {
+                    hideLoading(); // Sembunyikan loading setelah sukses
+
                     Swal.fire({
                         icon: 'success',
-                        title: 'Pendaftaran Berhasil',
-                        text: 'Akun Anda telah berhasil dibuat. Anda akan diarahkan ke halaman login.',
+                        title: 'Success',
+                        text: response.message,
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        window.location.href = "{{ route('login') }}";
+                        setTimeout(() => {
+                            window.location.href = "{{ route('logincompany') }}";
+                        }, 500);
                     });
-                },
-                error: function(response) {
-                    Swal.fire("Error!", "Failed to create account.", "error");
-                }
-            });
-        });
+                })
+                .fail(function (xhr) {
+                    hideLoading(); // Sembunyikan loading saat terjadi error
 
-        // Handle Sign In Form Submission
-        $("#signInForm").submit(function(e) {
-            e.preventDefault();
-
-            let email = $("#signInEmail").val();
-            let password = $("#signInPassword").val();
-
-            $.ajax({
-                url: "{{ route('signIn') }}",
-                type: "POST",
-                data: {
-                    _token: $("meta[name='csrf-token']").attr("content"),
-                    email: email,
-                    password: password
-                }
-            })
-            .done(function(response) {  // Jika login sukses
-                Swal.fire("Success!", "Logged in successfully!", "success").then(() => {
-                    window.location.href = "/welcome"; 
+                    let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+                    if (xhr.responseJSON?.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    } else if (xhr.status === 422) {
+                        errorMessage = "Email tidak valid atau belum terdaftar.";
+                    } else if (xhr.status === 500) {
+                        errorMessage = "Terjadi kesalahan server. Silakan coba lagi nanti.";
+                    }
+                    Swal.fire("Error!", errorMessage, "error");
                 });
-            })
-            .fail(function(xhr) {  // Jika login gagal
-                let errorMessage = xhr.responseJSON?.error || "Invalid credentials.";
-                Swal.fire("Error!", errorMessage, "error");
             });
-        });
+});
+
 
     </script>
 

@@ -22,8 +22,8 @@ class ForgotPasswordMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Registrasi Berhasil')
-                    ->view('template2.viewsendforgotpassword')
+        return $this->subject('Reset Password')
+                    ->view('viewsendforgotpassword')
                     ->with([
                         'user' => $this->user,
                         'token' => $this->token

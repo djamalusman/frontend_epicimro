@@ -29,7 +29,7 @@ class RegistrationSuccessMail extends Mailable
     public function build()
     {
         return $this->subject('Registrasi Berhasil')
-                    ->view('template2.registration_success')
+                    ->view('registration_success')
                     ->with([
                         'user' => $this->user,
                         'password' => $this->password

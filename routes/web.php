@@ -226,6 +226,7 @@ Route::get('fetch-upcoming-jobs-sidebar', [JobVacancyController::class, 'Sidebar
 Route::get('/login', [UserCandidateController::class, 'showLoginForm'])->name('login');
 Route::get('/logincompany', [UserCompanyController::class, 'showLoginForm'])->name('logincompany');
 Route::post('/signIn', [UserCandidateController::class, 'login'])->name('signIn');
+Route::post('/signInCompany', [UserCompanyController::class, 'login'])->name('signInCompany');
 Route::get('/redirectToLogin', [UserCandidateController::class, 'redirectToLogin'])->name('redirectToLogin');
 Route::post('/signup', [UserCandidateController::class, 'signup'])->name('signup');
 Route::post('/signupcompany', [UserCompanyController::class, 'signup'])->name('signupcompany');
@@ -234,18 +235,26 @@ Route::get('/profleclientindex', [UserCandidateController::class, 'profleclienti
 Route::post('/updatedtuser', [UserCandidateController::class, 'updtaeUserClient'])->name('updatedtuser');
 Route::get('/getdtuserclient', [UserCandidateController::class, 'getdtUserclient'])->name('getdtuserclient');
 
-Route::get('/forgot-password', function () {
-    return view('template2.forgot-password');
-})->name('forgot.password');
 
-Route::post('/forgot-password', [UserCandidateController::class, 'sendPasswordResetLink'])->name('password.email');
+Route::post('/forgot-password', [GeneralController::class, 'sendPasswordResetLink'])->name('password.email');
 
-Route::get('/reset-password/{token}', function ($token) {
-    Log::info('Token received for reset: ' . $token);
-    return view('template2.reset-password', ['token' => $token]);
-})->name('password.reset');
+// Route::get('/reset-password/{token}/{email}', function ($token, $email) {
+//     Log::info("Token: $token, Email: $email");
+//     return view('reset-password', compact('token', 'email'));
+// })->name('password.reset');
 
-Route::post('/reset-password', [UserCandidateController::class, 'resetPassword'])->name('password.update');
+// Route::get('/confirm-email/{token}/{email}', function ($token, $email) {
+//     Log::info("Token: $token, Email: $email");
+//     return view('confirm-email', compact('token', 'email'));
+// })->name('confirm.email');
+
+
+
+Route::get('/reset-password/{token}/{email}', [GeneralController::class, 'viewcresetPassword'])->name('password.reset');
+Route::post('/reset-password', [GeneralController::class, 'resetPassword'])->name('password.update');
+
+Route::get('/confirm-email/{token}/{email}', [GeneralController::class, 'viewconfirmEmail'])->name('confirm.email');
+Route::post('/confirm-email', [GeneralController::class, 'confirmEmail'])->name('confirm.emails');
 
 Route::get('/get-chart-data', [DashboardController::class, 'getChartData']);
 Route::get('/dashboardindex', [DashboardController::class, 'index'])->middleware('auth')->name('dashboardindex');
