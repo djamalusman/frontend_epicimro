@@ -237,7 +237,8 @@ Route::get('/getdtuserclient', [UserCandidateController::class, 'getdtUserclient
 
 
 Route::post('/forgot-password', [GeneralController::class, 'sendPasswordResetLink'])->name('password.email');
-
+Route::post('/send-registration-email', [GeneralController::class, 'sendRegistrationEmail']);
+Route::post('/send-password-reset-email', [GeneralController::class, 'sendPasswordResetEmail']);
 // Route::get('/reset-password/{token}/{email}', function ($token, $email) {
 //     Log::info("Token: $token, Email: $email");
 //     return view('reset-password', compact('token', 'email'));
