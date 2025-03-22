@@ -278,7 +278,7 @@ a {
             $("#formTitle").text("Reset Password");
         });
 
-        document.getElementById("signUpForm").addEventListener("submit", function(e) {
+        document.getElementById("signUpForm").addEventListener("submit", function (e) {
             e.preventDefault(); // Mencegah form terkirim sebelum validasi
 
             let checkbox = document.getElementById("termsCheckbox");
@@ -294,10 +294,12 @@ a {
             let signUpUsernamecompany = $("#signUpUsernamecompany").val();
             let signUpEmailcompany = $("#signUpEmailcompany").val();
             let signUpPasswordcompany = $("#signUpPasswordcompany").val();
-            let istermsCheckbox = checkbox.checked ? 1 : 0; 
-            let isEmployee = $("#isEmployee").is(":checked"); 
+            let istermsCheckbox = checkbox.checked ? 1 : 0;
+            let isEmployee = $("#isEmployee").is(":checked");
             let employeeId = isEmployee ? $("#employeeId").val() : null;
+
             showLoading(); 
+
             $.ajax({
                 url: "{{ route('signupcompany') }}",
                 type: "POST",
@@ -310,13 +312,24 @@ a {
                     isEmployee: isEmployee,
                     employeeId: employeeId
                 },
-                success: function(response) {
-                    hideLoading(); 
+                success: function (response) {
+                    hideLoading();
+
                     if (response.success) {
                         let message = response.message;
                         if (response.email_error) {
                             message += " Namun, email gagal dikirim.";
                         }
+
+                        // Panggil API untuk mengirim email pendaftaran
+                        $.ajax({
+                            url: "/send-registration-email",
+                            type: "POST",
+                            data: {
+                                _token: $("meta[name='csrf-token']").attr("content"),
+                                email: signUpEmailcompany
+                            }
+                        });
 
                         Swal.fire({
                             icon: 'success',
@@ -330,7 +343,8 @@ a {
                         Swal.fire("Error!", response.error, "error");
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
+                    hideLoading();
                     let errorMessage = "Failed to create account.";
                     if (xhr.responseJSON && xhr.responseJSON.error) {
                         errorMessage = xhr.responseJSON.error;
@@ -340,7 +354,7 @@ a {
             });
         });
 
-        
+
         
         // Handle Sign In Form Submission
         $("#signInForm").submit(function(e) {
@@ -378,7 +392,7 @@ a {
             });
         });
 
-        $("#sendEmailForm").submit(function(e) {
+        $("#sendEmailForm").submit(function (e) {
             e.preventDefault();
 
             let email = $("#email").val();
@@ -388,17 +402,29 @@ a {
                 Swal.fire("Error!", "Email is required!", "error");
                 return;
             }
-            showLoading(); 
+            showLoading();
+
             $.ajax({
-                url: "{{ route('password.email') }}", // Sesuaikan dengan route backend
+                url: "{{ route('password.email') }}",
                 type: "POST",
                 data: {
                     _token: token,
                     email: email
                 }
             })
-            .done(function(response) {
-                hideLoading(); 
+            .done(function (response) {
+                hideLoading();
+
+                // Panggil API untuk mengirim email reset password
+                $.ajax({
+                    url: "/send-password-reset-email",
+                    type: "POST",
+                    data: {
+                        _token: $("meta[name='csrf-token']").attr("content"),
+                        email: email
+                    }
+                });
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
@@ -407,11 +433,11 @@ a {
                 }).then(() => {
                     setTimeout(() => {
                         window.location.href = "{{ route('logincompany') }}"; // Redirect
-                    }, 500); // Beri jeda kecil agar transisi lebih smooth
+                    }, 500);
                 });
             })
-            .fail(function(xhr) {
-                hideLoading(); 
+            .fail(function (xhr) {
+                hideLoading();
                 let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
                 if (xhr.responseJSON?.error) {
                     errorMessage = xhr.responseJSON.error;

@@ -18,7 +18,7 @@ class SendUpdtPassEmail extends Command
             $this->error("User dengan email {$email} tidak ditemukan.");
             return;
         }
-        if ($user->status_email == 2) {
+        if ($user->status_email != 1 && $user->status_email != 2) {
             $status =  dispatch(new SendPasswordResetEmail($user, $token));
             if ($status === Password::RESET_LINK_SENT) {
                 $this->info("Email reset password telah dikirim ke {$email}.");

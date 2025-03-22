@@ -88,7 +88,39 @@ class GeneralController extends Controller
     //     }
     // }
 
-    public function sendPasswordResetLink(Request $request)
+    // public function sendPasswordResetLink(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email'
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false, 'error' => $validator->errors()->first()], 422);
+    //     }
+
+    //     $user = User::where('email', $request->email)->first();
+    //     if ($user->comfir_email !=0 || $user->comfir_email != null) {
+    //         return response()->json(['success' => false, 'error' => 'Sialahkan konfirmasi email and terlebih dahulu'], 404);
+    //     }
+    //     if (!$user) {
+    //         return response()->json(['success' => false, 'error' => 'Email tidak ditemukan'], 404);
+    //     }
+
+    //     try {
+    //         $token = Str::random(60);
+    //         $user->remember_token = $token;
+    //         $user->save();
+
+    //         dispatch(new SendPasswordResetEmail($user, $token));
+
+    //         return response()->json(['success' => true, 'message' => 'Link reset password telah dikirim ke email Anda']);
+    //     } catch (\Exception $e) {
+    //         Log::error('Email error: ' . $e->getMessage());
+    //         return response()->json(['success' => false, 'error' => 'Gagal mengirim email. Silakan coba lagi nanti.'], 500);
+    //     }
+    // }
+
+    public function sendRegistrationEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email'
@@ -99,9 +131,30 @@ class GeneralController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        if ($user->comfir_email !=0 || $user->comfir_email != null) {
-            return response()->json(['success' => false, 'error' => 'Sialahkan konfirmasi email and terlebih dahulu'], 404);
+        //dd($user);
+        if (!$user) {
+            return response()->json(['success' => false, 'error' => 'Email tidak ditemukan'], 404);
         }
+
+        try {
+            dispatch(new SendRegistrationEmail($user, $request->password));
+            return response()->json(['success' => true, 'message' => 'Email pendaftaran akan segera dikirim']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'Gagal mengirim email.'], 500);
+        }
+    }
+
+    public function sendPasswordResetEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->errors()->first()], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
         if (!$user) {
             return response()->json(['success' => false, 'error' => 'Email tidak ditemukan'], 404);
         }
@@ -109,15 +162,12 @@ class GeneralController extends Controller
         try {
             $token = Str::random(60);
             $user->remember_token = $token;
-            $user->status_email = 2; // Set status_email ke 1
             $user->save();
 
-            // dispatch(new SendPasswordResetEmail($user, $token));
-
+            dispatch(new SendPasswordResetEmail($user, $token));
             return response()->json(['success' => true, 'message' => 'Link reset password telah dikirim ke email Anda']);
         } catch (\Exception $e) {
-            Log::error('Email error: ' . $e->getMessage());
-            return response()->json(['success' => false, 'error' => 'Gagal mengirim email. Silakan coba lagi nanti.'], 500);
+            return response()->json(['success' => false, 'error' => 'Gagal mengirim email.'], 500);
         }
     }
 
@@ -171,7 +221,7 @@ class GeneralController extends Controller
         $user->update(['password' => Hash::make($request->password)]);
         $user->update(['comfir_email' => 1]);
         $user->update(['status_email' => 1]);
-        
+
         return response()->json(['success' => true, 'message' => 'Password berhasil direset']);
     }
 

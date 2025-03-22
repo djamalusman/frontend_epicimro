@@ -288,10 +288,10 @@ Sign In & Sign Up
                 let errorText = document.getElementById("errorText");
 
                 if (!checkbox.checked) {
-                    errorText.style.display = "block"; // Tampilkan pesan error
+                    errorText.style.display = "block"; 
                     return;
                 } else {
-                    errorText.style.display = "none"; // Sembunyikan pesan error
+                    errorText.style.display = "none";
                 }
 
                 let username = $("#signUpUsername").val();
@@ -301,7 +301,7 @@ Sign In & Sign Up
                 let employeeId = isEmployee ? $("#employeeId").val() : null;
                 let istermsCheckbox = checkbox.checked ? 1 : 0;
 
-                showLoading(); // Tampilkan loading overlay
+                showLoading(); 
 
                 $.ajax({
                     url: "{{ route('signup') }}",
@@ -316,18 +316,28 @@ Sign In & Sign Up
                         privacypolicy: istermsCheckbox,
                     },
                     success: function (response) {
-                        hideLoading(); // Sembunyikan loading setelah sukses
+                        hideLoading(); 
 
                         if (response.success) {
-                            let message = response.message;
-                            if (response.email_error) {
-                                message += " Namun, email gagal dikirim.";
-                            }
+                            // **🔹 Kirim Email Konfirmasi setelah sukses mendaftar**
+                            $.ajax({
+                                url: "/send-registration-email",
+                                type: "POST",
+                                data: {
+                                    _token: $("meta[name='csrf-token']").attr("content"),
+                                    email: email,
+                                    password: password
+                                }
+                            }).done(function(emailResponse) {
+                                console.log("Email Registrasi:", emailResponse.message);
+                            }).fail(function(error) {
+                                console.error("Gagal mengirim email registrasi:", error);
+                            });
 
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Pendaftaran Berhasil',
-                                text: message,
+                                text: response.message,
                                 confirmButtonText: 'OK'
                             }).then(() => {
                                 window.location.href = "{{ route('login') }}";
@@ -337,8 +347,7 @@ Sign In & Sign Up
                         }
                     },
                     error: function (xhr) {
-                        hideLoading(); // Sembunyikan loading saat terjadi error
-
+                        hideLoading(); 
                         let errorMessage = "Failed to create account.";
                         if (xhr.responseJSON && xhr.responseJSON.error) {
                             errorMessage = xhr.responseJSON.error;
@@ -347,7 +356,6 @@ Sign In & Sign Up
                     }
                 });
             });
-
             // Handle Sign In Form Submission
             $("#signInForm").submit(function (e) {
                 e.preventDefault();
@@ -394,7 +402,73 @@ Sign In & Sign Up
                     Swal.fire("Error!", errorMessage, "error");
                 });
             });
-});
+
+            $("#sendEmailForm").submit(function(e) {
+                e.preventDefault();
+                let email = $("#email").val();
+                let token = $("meta[name='csrf-token']").attr("content");
+
+                if (!email) {
+                    Swal.fire("Error!", "Email is required!", "error");
+                    return;
+                }
+
+                showLoading(); 
+
+                $.ajax({
+                    url: "{{ route('password.email') }}",
+                    type: "POST",
+                    data: {
+                        _token: token,
+                        email: email
+                    }
+                })
+                .done(function(response) {
+                    hideLoading();
+
+                    if (response.success) {
+                        // **🔹 Kirim Email Reset Password setelah sukses**
+                        $.ajax({
+                            url: "/send-password-reset-email",
+                            type: "POST",
+                            data: {
+                                _token: token,
+                                email: email
+                            }
+                        }).done(function(emailResponse) {
+                            console.log("Email Reset Password:", emailResponse.message);
+                        }).fail(function(error) {
+                            console.error("Gagal mengirim email reset password:", error);
+                        });
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            setTimeout(() => {
+                                window.location.href = "{{ route('logincompany') }}";
+                            }, 500);
+                        });
+                    } else {
+                        Swal.fire("Error!", response.error, "error");
+                    }
+                })
+                .fail(function(xhr) {
+                    hideLoading();
+                    let errorMessage = "Terjadi kesalahan. Silakan coba lagi.";
+                    if (xhr.responseJSON?.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    } else if (xhr.status === 422) {
+                        errorMessage = "Email tidak valid atau belum terdaftar.";
+                    } else if (xhr.status === 500) {
+                        errorMessage = "Terjadi kesalahan server. Silakan coba lagi nanti.";
+                    }
+                    Swal.fire("Error!", errorMessage, "error");
+                });
+            });
+        });
 
 
     </script>
